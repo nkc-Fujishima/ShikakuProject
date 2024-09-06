@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 976aa8a7b1017304097fa93121ee42f2
+timeCreated: 1479512289
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Prefabs/Ninja.prefab
+  uploadId: 147132

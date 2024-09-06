@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0fc69fc0948cd4440876cf9b7af7baef
+timeCreated: 1479512012
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Materials/RidingHood.mat
+  uploadId: 147132

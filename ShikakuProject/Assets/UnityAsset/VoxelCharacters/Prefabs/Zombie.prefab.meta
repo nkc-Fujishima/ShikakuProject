@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3122fb798fb42ef4f876c7f2ab564680
+timeCreated: 1479512199
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Prefabs/Zombie.prefab
+  uploadId: 147132

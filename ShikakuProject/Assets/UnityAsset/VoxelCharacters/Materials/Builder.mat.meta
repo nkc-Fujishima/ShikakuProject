@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7e7994a829ec7c243bab04e00a72cc3b
+timeCreated: 1475733581
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Materials/Builder.mat
+  uploadId: 147132

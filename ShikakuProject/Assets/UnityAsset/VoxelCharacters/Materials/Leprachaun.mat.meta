@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3d31e8b6ad20fe34bbdfde26c81bf615
+timeCreated: 1475040032
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Materials/Leprachaun.mat
+  uploadId: 147132

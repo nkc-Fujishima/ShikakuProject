@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0ed4332597fc22144ad26b1c2d24f057
+timeCreated: 1475917350
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/ToonShading/Shaders/Mirror 1.shader
+  uploadId: 147132

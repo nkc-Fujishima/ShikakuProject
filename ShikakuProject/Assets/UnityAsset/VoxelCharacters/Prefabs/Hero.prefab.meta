@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9f43667162960fa4cb2ae023d99198ee
+timeCreated: 1479512311
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Prefabs/Hero.prefab
+  uploadId: 147132

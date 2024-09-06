@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f8394447b9dcb5b45bf40e9e41f7c74a
+timeCreated: 1475809450
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Prefabs/Policeman.prefab
+  uploadId: 147132

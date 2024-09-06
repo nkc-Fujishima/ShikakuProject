@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2cd73f52117e2f44badcd3cb9773b69c
+timeCreated: 1475029814
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Materials/Scientist.mat
+  uploadId: 147132

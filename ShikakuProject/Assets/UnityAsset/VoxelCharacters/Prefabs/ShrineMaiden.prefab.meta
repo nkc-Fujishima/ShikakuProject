@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cfa7bd7f18a88784cbeba120b8cad2df
+timeCreated: 1479512254
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Prefabs/ShrineMaiden.prefab
+  uploadId: 147132

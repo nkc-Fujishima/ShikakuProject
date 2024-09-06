@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f8035da67e798b3428995d4ba8d20dfd
+timeCreated: 1475809530
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Prefabs/Priest.prefab
+  uploadId: 147132

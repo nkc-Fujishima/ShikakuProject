@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 87995d2f43a88e047a0db4310f347d61
+timeCreated: 1475809501
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Prefabs/Farmer.prefab
+  uploadId: 147132

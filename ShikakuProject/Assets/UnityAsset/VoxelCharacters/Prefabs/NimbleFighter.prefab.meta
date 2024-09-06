@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6ad986ce7e21b174ba2e1e34497b7762
+timeCreated: 1479512319
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Prefabs/NimbleFighter.prefab
+  uploadId: 147132

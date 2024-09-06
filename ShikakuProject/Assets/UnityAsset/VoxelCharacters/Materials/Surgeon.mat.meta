@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f947de83f7d37f345939a6e157638583
+timeCreated: 1475733540
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Materials/Surgeon.mat
+  uploadId: 147132

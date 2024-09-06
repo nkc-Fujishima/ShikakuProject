@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 51708632ef4c65d4ca2466290e69e8c7
+timeCreated: 1475733055
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Materials/Policeman.mat
+  uploadId: 147132

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7db850d509e477d498989fcc646887a6
+timeCreated: 1479512035
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Materials/Samurai.mat
+  uploadId: 147132

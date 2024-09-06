@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 154278986d1095241b1df9f4de4b6d6f
+timeCreated: 1475727654
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Materials/CrazyHat.mat
+  uploadId: 147132

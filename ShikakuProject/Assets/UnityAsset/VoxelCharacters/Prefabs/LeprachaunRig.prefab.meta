@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7b83dbf021467fe46987f5025a6c2eed
+timeCreated: 1475809585
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Prefabs/LeprachaunRig.prefab
+  uploadId: 147132

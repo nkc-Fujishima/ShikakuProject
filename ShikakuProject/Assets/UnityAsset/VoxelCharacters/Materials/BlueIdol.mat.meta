@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c7432e68e647a1945b2962e842c11726
+timeCreated: 1475025806
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Materials/BlueIdol.mat
+  uploadId: 147132

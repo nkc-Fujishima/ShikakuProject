@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 65ed9eeb6a4a32d4789f1208a944fef4
+timeCreated: 1479512267
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73842
+  packageName: Voxel Character Collection!
+  packageVersion: 1.1
+  assetPath: Assets/VoxelCharacters/Prefabs/Samurai.prefab
+  uploadId: 147132
