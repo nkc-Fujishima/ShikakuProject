@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyControllerBase : MonoBehaviour
+public abstract class EnemyControllerBase : MonoBehaviour,IStateChangeable
 {
     protected IState iState = null;
 
-    protected void ChangeState(IState nextState)
+    protected Animator animator = null;
+
+    protected void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    public void ChangeState(IState nextState)
     {
         if (iState != null) iState.OnExit();
 
