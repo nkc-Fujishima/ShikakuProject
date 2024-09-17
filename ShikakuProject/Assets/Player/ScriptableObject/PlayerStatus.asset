@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1860dc29324b80143b57112db6bf850c, type: 3}
+  m_Name: PlayerStatus
+  m_EditorClassIdentifier: 
+  _skillData:
+  - _bulletPlefab: {fileID: 7280281843749051914, guid: 74d24c7dce3dc8f4abc05a8db8e56269, type: 3}
+    _coolTime: 1
+  - _bulletPlefab: {fileID: 4434634971654827573, guid: 5d092041bee278f44b4c9e906eaad3ed, type: 3}
+    _coolTime: 1
+  - _bulletPlefab: {fileID: 2362984168328327310, guid: cbfda06413f3256429846f2b10b8b3f3, type: 3}
+    _coolTime: 1
+  _moveSpeed: 2
