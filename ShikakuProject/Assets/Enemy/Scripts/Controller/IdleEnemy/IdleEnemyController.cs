@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class IdleEnemyController : EnemyControllerBase
 {
-    [Header("オブジェクト設定"), SerializeField] IdleEnemyParameter parameter;
-
     // ゲーム中の経過フレーム
     ulong frameCount = 0;
 
@@ -66,7 +64,7 @@ public class IdleEnemyController : EnemyControllerBase
     private class IdleEnemyStateHolder
     {
         public Idle idleState { get; }
-        public Alart alartState { get; }
+        public Alert alartState { get; }
         public Attack attackState { get; }
 
         IdleEnemyParameter parameter = null;
@@ -87,7 +85,7 @@ public class IdleEnemyController : EnemyControllerBase
             this.stateChanger = stateChanger;
             this.chaceableObjects = chaceableObjects;
             idleState = new Idle(this.animator, transform, parameter, this, stateChanger, chaceableObjects);
-            alartState = new Alart(this.animator, transform, parameter, this, stateChanger, chaceableObjects);
+            alartState = new Alert(this.animator, transform, parameter, this, stateChanger, chaceableObjects);
             attackState = new Attack(this.animator, transform, parameter, this, stateChanger, chaceableObjects);
         }
 
@@ -144,9 +142,9 @@ public class IdleEnemyController : EnemyControllerBase
     }
     #endregion
 
-    private class Alart : IdleEnemyStateBase
+    private class Alert : IdleEnemyStateBase
     {
-        public Alart(Animator animator, Transform transform, IdleEnemyParameter parameter, IdleEnemyStateHolder stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects) : base(animator, transform, parameter, stateHollder, stateChanger, chaceableObjects)
+        public Alert(Animator animator, Transform transform, IdleEnemyParameter parameter, IdleEnemyStateHolder stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects) : base(animator, transform, parameter, stateHollder, stateChanger, chaceableObjects)
         {
         }
 
@@ -181,9 +179,7 @@ public class IdleEnemyController : EnemyControllerBase
     #region
     private class Attack : IdleEnemyStateBase
     {
-        const float limit = 3;
         float countTime = 0;
-
 
         public Attack(Animator animator, Transform transform, IdleEnemyParameter parameter, IdleEnemyStateHolder stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects) : base(animator, transform, parameter, stateHolder, stateChanger, chaceableObjects) { }
 
@@ -196,12 +192,15 @@ public class IdleEnemyController : EnemyControllerBase
 
         public override void OnExit()
         {
+            countTime = 0;
             animator.SetBool("AttackFlag", false);
         }
 
         public override void OnUpdate()
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99) stateChanger.ChangeState(stateHolder.idleState);
+            countTime += Time.deltaTime;
+            if (countTime > parameter.AttackCoolTime) stateChanger.ChangeState(stateHolder.idleState);
+
         }
     }
     #endregion
