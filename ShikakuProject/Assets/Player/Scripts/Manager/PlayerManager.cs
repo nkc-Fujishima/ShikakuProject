@@ -9,7 +9,8 @@ public class PlayerManager
     {
         _playerCharaController = playerCharaController;
 
-        _playerCharaController.PlayerStatus.OnBulletSpawn.AddListener(OnBulletSpawn);
+        _playerCharaController.Datas.OnBulletSpawn.AddListener(OnBulletSpawn);
+        _playerCharaController.Datas.OnDeath.AddListener(OnDeath);
     }
 
     public void SetIBulletSpawn(IBulletSpawn bulletSpawn)
@@ -22,5 +23,11 @@ public class PlayerManager
     private void OnBulletSpawn(BulletControllerBase bullet)
     {
         _bulletSpawn.BulletSpawn(bullet);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    // プレイヤーが死んだ場合に呼び出す関数
+    private void OnDeath()
+    {
     }
 }

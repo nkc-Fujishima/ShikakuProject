@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "PlayerParameter", menuName = "Player/Paramenter")]
 public class PlayerStatusParameter : ScriptableObject
@@ -51,14 +50,6 @@ public class PlayerStatusParameter : ScriptableObject
     [SerializeField]
     private float _moveSpeed;
 
-    private Rigidbody _rigidbody;
-
-    private Transform _playerTransform;
-
-    private Transform _spawnBulletPoint;
-
-    private Animator _animator;
-
 
     internal int GetSkillLength => _skillData.Length;
 
@@ -77,32 +68,12 @@ public class PlayerStatusParameter : ScriptableObject
 
     internal float MoveSpeed => _moveSpeed;
 
-    internal Rigidbody Rigidbody => _rigidbody;
-
-    internal Transform PlayerTransform => _playerTransform;
-
-    internal Transform SpawnBulletPoint => _spawnBulletPoint;
-
-    internal Animator Animator => _animator;
-
     [HideInInspector]
     internal int SelectBulletType { get; set; }
 
 
-    [HideInInspector]
-    public UnityEvent<BulletControllerBase> OnBulletSpawn;
-
-
-    internal void OnStart(Rigidbody rigidbody, Transform playerTransform, Transform spawnBulletPoint, Animator animator)
+    internal void OnStart()
     {
         SelectBulletType = 0;
-
-        _rigidbody = rigidbody;
-
-        _playerTransform = playerTransform;
-
-        _spawnBulletPoint = spawnBulletPoint;
-
-        _animator = animator;
     }
 }

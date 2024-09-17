@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
@@ -6,8 +7,38 @@ using UnityEngine.InputSystem;
 
 public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateChangeable
 {
+    public class PlayerData
+    {
+        private Rigidbody _rigidbody;
+
+        private Transform _playerTransform;
+
+        private Transform _spawnBulletPoint;
+
+        private Animator _animator;
+
+
+        [HideInInspector]
+        public UnityEvent OnDeath;
+
+        [HideInInspector]
+        public UnityEvent<BulletControllerBase> OnBulletSpawn;
+
+
+        public Rigidbody Rigidbody => _rigidbody;
+
+        public Transform PlayerTransform => _playerTransform;
+
+        public Transform SpawnBulletPoint => _spawnBulletPoint;
+
+        public Animator Animator => _animator;
+    }
+
+    public PlayerData Datas;
+
+
     [SerializeField]
-    public PlayerStatusParameter PlayerStatus;
+    private PlayerStatusParameter PlayerStatus;
 
     [SerializeField]
     private Transform _spawnBulletPoint;
@@ -21,9 +52,11 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     private PlayerButtonDetector _buttonDetector;
 
 
+
+
     void Start()
     {
-        PlayerStatus.OnStart(GetComponent<Rigidbody>(), transform, _spawnBulletPoint, _animator);
+        PlayerStatus.OnStart();
 
         PlayerInput playerInput = GetComponent<PlayerInput>();
         _buttonDetector = new(playerInput);
@@ -31,7 +64,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         SetDelegate();
 
 
-        PlayerStateHolder stateHolder = new (this, _buttonDetector, PlayerStatus);
+        PlayerStateHolder stateHolder = new(this, _buttonDetector, PlayerStatus, Datas);
         _iState = stateHolder.IdleState;
     }
 
@@ -68,15 +101,18 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
         readonly PlayerStatusParameter playerStatus = null;
 
-        public PlayerStateHolder(IStateChangeable stateChanger, PlayerButtonDetector button, PlayerStatusParameter playerStatus)
+        readonly PlayerData data;
+
+        public PlayerStateHolder(IStateChangeable stateChanger, PlayerButtonDetector button, PlayerStatusParameter playerStatus, PlayerData datas)
         {
             this.stateChanger = stateChanger;
             this.chaceableObjects = button;
             this.playerStatus = playerStatus;
+            this.data = datas;
 
-            IdleState = new Idle(stateChanger, this, button, playerStatus);
-            WalkState = new Walk(stateChanger, this, button, playerStatus);
-            FireState = new Fire(stateChanger, this, button, playerStatus);
+            IdleState = new Idle(stateChanger, this, button, playerStatus, datas);
+            WalkState = new Walk(stateChanger, this, button, playerStatus, datas);
+            FireState = new Fire(stateChanger, this, button, playerStatus, datas);
         }
     }
 
@@ -89,13 +125,15 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
         protected PlayerButtonDetector buttonDetector = null;
         protected PlayerStatusParameter playerStatus = null;
+        protected PlayerData data;
 
-        public PlayerStateBase(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus)
+        public PlayerStateBase(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data)
         {
             this.stateChanger = stateChanger;
             this.stateHolder = stateHolder;
             this.buttonDetector = buttonDetector;
             this.playerStatus = playerStatus;
+            this.data = data;
         }
 
         // 弾を生成するボタンを押した場合の関数
@@ -111,11 +149,11 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // 止まるステート
     private class Idle : PlayerStateBase
     {
-        public Idle(IStateChangeable stateChanger,PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector ,PlayerStatusParameter playerStatus) : base(stateChanger, stateHolder,buttonDetector,playerStatus) { }
+        public Idle(IStateChangeable stateChanger,PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector ,PlayerStatusParameter playerStatus, PlayerData data) : base(stateChanger, stateHolder,buttonDetector,playerStatus, data) { }
 
         public override void OnEnter()
         {
-            playerStatus.Animator.SetTrigger("Idle");
+            data.Animator.SetTrigger("Idle");
 
             buttonDetector.OnButtonFireDown.RemoveListener(OnFire);
             buttonDetector.OnButtonFireDown.AddListener(OnFire);
@@ -138,11 +176,11 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // 移動するステート
     private class Walk : PlayerStateBase
     {
-        public Walk(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus) : base(stateChanger, stateHolder, buttonDetector, playerStatus) { }
+        public Walk(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data) : base(stateChanger, stateHolder, buttonDetector, playerStatus,data) { }
 
         public override void OnEnter()
         {
-            playerStatus.Animator.SetTrigger("Walk");
+            data.Animator.SetTrigger("Walk");
 
             buttonDetector.OnButtonFireDown.RemoveListener(OnFire);
             buttonDetector.OnButtonFireDown.AddListener(OnFire);
@@ -166,12 +204,12 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         {
             Vector3 movePower = buttonDetector.InputStick * playerStatus.MoveSpeed;
 
-            playerStatus.Rigidbody.velocity = movePower;
+            data.Rigidbody.velocity = movePower;
 
             // 体を進行方向に回転させる
             if (movePower == Vector3.zero) return;
             float moveRotationY = Mathf.Atan2(-movePower.z, movePower.x) * Mathf.Rad2Deg + 90;
-            playerStatus.PlayerTransform.rotation = Quaternion.Euler(0, moveRotationY, 0);
+            data.PlayerTransform.rotation = Quaternion.Euler(0, moveRotationY, 0);
         }
     }
 
@@ -179,17 +217,17 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // 弾を出現させるステート
     private class Fire : PlayerStateBase
     {
-        public Fire(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus) : base(stateChanger, stateHolder, buttonDetector, playerStatus) { }
+        public Fire(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data) : base(stateChanger, stateHolder, buttonDetector, playerStatus, data) { }
 
         public override void OnEnter()
         {
-            playerStatus.Animator.SetTrigger("Fire");
+            data.Animator.SetTrigger("Fire");
             playerStatus.GetSkillSpawnBullet();
 
             // 生成
-            GameObject bullet = Instantiate(playerStatus.GetSkillSelectBulletPlefab, playerStatus.SpawnBulletPoint.position, playerStatus.SpawnBulletPoint.rotation);
+            GameObject bullet = Instantiate(playerStatus.GetSkillSelectBulletPlefab, data.SpawnBulletPoint.position, data.SpawnBulletPoint.rotation);
 
-            playerStatus.OnBulletSpawn.Invoke(bullet.GetComponent<BulletControllerBase>());
+            data.OnBulletSpawn.Invoke(bullet.GetComponent<BulletControllerBase>());
         }
 
         public override void OnExit()
@@ -262,6 +300,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // IDamage
     public void Damage()
     {
+        Datas.OnDeath.Invoke();
+
         gameObject.SetActive(false);
     }
 }
