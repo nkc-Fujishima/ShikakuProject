@@ -7,22 +7,32 @@ using UnityEngine.InputSystem;
 
 public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateChangeable
 {
+    [System.Serializable]
     public class PlayerData
     {
+        public void OnStart(Transform playerTransform)
+        {
+            _playerTransform = playerTransform;
+
+            _rigidbody = playerTransform.GetComponent<Rigidbody>();
+        }
+
         private Rigidbody _rigidbody;
 
         private Transform _playerTransform;
 
+        [SerializeField]
         private Transform _spawnBulletPoint;
 
+        [SerializeField]
         private Animator _animator;
 
 
         [HideInInspector]
-        public UnityEvent OnDeath;
+        public UnityEvent OnDeath = new();
 
         [HideInInspector]
-        public UnityEvent<BulletControllerBase> OnBulletSpawn;
+        public UnityEvent<BulletControllerBase> OnBulletSpawn = new();
 
 
         public Rigidbody Rigidbody => _rigidbody;
@@ -34,17 +44,11 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         public Animator Animator => _animator;
     }
 
+    [SerializeField]
     public PlayerData Datas;
-
 
     [SerializeField]
     private PlayerStatusParameter PlayerStatus;
-
-    [SerializeField]
-    private Transform _spawnBulletPoint;
-
-    [SerializeField]
-    private Animator _animator;
 
 
     private IState _iState = null;
@@ -56,6 +60,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
     void Start()
     {
+        Datas.OnStart(transform);
+
         PlayerStatus.OnStart();
 
         PlayerInput playerInput = GetComponent<PlayerInput>();
@@ -101,7 +107,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
         readonly PlayerStatusParameter playerStatus = null;
 
-        readonly PlayerData data;
+        readonly PlayerData data = null;
 
         public PlayerStateHolder(IStateChangeable stateChanger, PlayerButtonDetector button, PlayerStatusParameter playerStatus, PlayerData datas)
         {

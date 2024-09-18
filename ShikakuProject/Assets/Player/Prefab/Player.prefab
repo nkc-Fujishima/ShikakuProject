@@ -80,9 +80,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7eb90d40a65ff64dbf05fff95a42763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Datas:
+    _spawnBulletPoint: {fileID: 6063014141128993604}
+    _animator: {fileID: 8241638771113780961}
+    OnDeath:
+      m_PersistentCalls:
+        m_Calls: []
+    OnBulletSpawn:
+      m_PersistentCalls:
+        m_Calls: []
   PlayerStatus: {fileID: 11400000, guid: 2a895e04eec9fe74c94ffb77d26f359e, type: 2}
-  _spawnBulletPoint: {fileID: 6063014141128993604}
-  _animator: {fileID: 8241638771113780961}
 --- !u!114 &6773100393266785118
 MonoBehaviour:
   m_ObjectHideFlags: 0
