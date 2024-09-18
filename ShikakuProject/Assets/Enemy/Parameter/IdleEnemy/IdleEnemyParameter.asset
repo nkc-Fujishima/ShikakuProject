@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 3
   AttackRange: 3
-  alertResetTime: 3
+  AttackCoolTime: 2
+  AlertResetTime: 0
+  InvincibleAngle: 90
   ListRefreshRate: 10

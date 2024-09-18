@@ -40,6 +40,4 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
 
         OnDestroyHundle?.Invoke();
     }
-
-
 }
