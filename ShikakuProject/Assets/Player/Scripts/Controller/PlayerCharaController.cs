@@ -72,6 +72,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
         PlayerStateHolder stateHolder = new(this, _buttonDetector, PlayerStatus, Datas);
         _iState = stateHolder.IdleState;
+        _iState.OnEnter();
     }
 
     private void Update()
