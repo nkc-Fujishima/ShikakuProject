@@ -2,14 +2,21 @@ using UnityEngine;
 
 public class VisionMeshCreator : MonoBehaviour
 {
+    [Header("数値設定")]
     public float viewAngle = 90f; // 視野角
     public float viewDistance = 5f; // 視野の距離
     public float viewHeight = 1f; // 視野の高さ
+    [Header("オブジェクト設定")]
+    public Material noAlertMaterial;
+    public Material AlertMaterial;
+
+
     private MeshFilter viewMeshFilter;
     private Mesh viewMesh;
     private MeshCollider viewMeshCollider;
+    private MeshRenderer meshRenderer;
 
-    void Start()
+    public void SetUp()
     {
         viewMeshFilter = gameObject.AddComponent<MeshFilter>();
         viewMesh = new Mesh();
@@ -20,22 +27,11 @@ public class VisionMeshCreator : MonoBehaviour
         viewMeshCollider.isTrigger = true;
         viewMeshCollider.sharedMesh = viewMesh;
 
-        UpdateViewMesh();
-    }
+        meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        meshRenderer.material = noAlertMaterial;
+        meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
-    void Update()
-    {
-        // 視野角が変わった場合にメッシュを更新
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            viewAngle += 10f;
-            UpdateViewMesh();
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            viewAngle -= 10f;
-            UpdateViewMesh();
-        }
+        UpdateViewMesh();
     }
 
     void UpdateViewMesh()
@@ -116,5 +112,14 @@ public class VisionMeshCreator : MonoBehaviour
 
         // メッシュコライダーを更新
         viewMeshCollider.sharedMesh = viewMesh;
+    }
+
+    public void ChangeMeshNoAlertMaterial()
+    {
+        meshRenderer.material = noAlertMaterial;
+    }
+    public void ChangeMeshAlertMaterial()
+    {
+        meshRenderer.material = AlertMaterial;
     }
 }
