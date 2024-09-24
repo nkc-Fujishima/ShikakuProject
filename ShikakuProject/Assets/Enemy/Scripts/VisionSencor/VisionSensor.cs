@@ -14,7 +14,7 @@ public class VisionSensor : MonoBehaviour
 
         if (!other.TryGetComponent<IChaceable>(out chaceableObject)) return;
 
-        OnSensorInHundle?.Invoke(chaceableObject);
+        OnSensorInHundle.Invoke(chaceableObject);
     }
 
     private void OnTriggerExit(Collider other)
@@ -23,6 +23,6 @@ public class VisionSensor : MonoBehaviour
 
         if (!other.TryGetComponent<IChaceable>(out chaceableObject)) return;
 
-        OnSensorOutHundle?.Invoke(chaceableObject);
+        OnSensorOutHundle.Invoke(chaceableObject);
     }
 }

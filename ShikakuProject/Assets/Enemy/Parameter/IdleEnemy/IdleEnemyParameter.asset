@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: IdleEnemyParameter
   m_EditorClassIdentifier: 
   MoveSpeed: 3
-  AttackRange: 2.3
-  AttackCoolTime: 2
-  AlertResetTime: 0
-  InvincibleAngle: 90
-  RotateSpeed: 2
-  ListRefreshRate: 1
+  AttackRange: 3
+  alertResetTime: 3
+  ListRefreshRate: 10
