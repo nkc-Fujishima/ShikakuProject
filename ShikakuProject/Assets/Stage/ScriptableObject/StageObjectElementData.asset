@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ebd5b03b4d84db4dadb60b9a773a920, type: 3}
+  m_Name: StageObjectElementData
+  m_EditorClassIdentifier: 
+  PlayerData:
+    PlayerPlefab: {fileID: 7817401969915323588, guid: 8954afc44d158f34d8d47af68602b84b, type: 3}
+    Texture: {fileID: 2800000, guid: a505b0053ae7cc540affa0939f6757c5, type: 3}
+  EnemyDatas:
+    EnemyPlefabs:
+    - {fileID: -6401847856528944039, guid: c621f4f2642214d43a3192f1a5113a58, type: 3}
+    - {fileID: -6401847856528944039, guid: c621f4f2642214d43a3192f1a5113a58, type: 3}
+    Texture: {fileID: 2800000, guid: 6569980ec0cde8c41b240d9dd4ee4e26, type: 3}
+  GroundData:
+    Prefabs:
+    - {fileID: 3905796902598946416, guid: 584fa86b0e359184d9f90265ee0b651c, type: 3}
+    - {fileID: 3905796902598946416, guid: 584fa86b0e359184d9f90265ee0b651c, type: 3}
+    Texture: {fileID: 2800000, guid: e9046a58c49a44f46816cc6c34c8c1b4, type: 3}
+  ObstacleData:
+    Prefabs:
+    - {fileID: 3905796902598946416, guid: 76d29fec6a7a7ea4fb0fabd064d90cc6, type: 3}
+    - {fileID: 3905796902598946416, guid: 76d29fec6a7a7ea4fb0fabd064d90cc6, type: 3}
+    Texture: {fileID: 2800000, guid: dbfedf940f3f7da48bd380d94112b3e8, type: 3}
