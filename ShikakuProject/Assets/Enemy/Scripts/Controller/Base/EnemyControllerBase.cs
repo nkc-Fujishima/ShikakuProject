@@ -38,6 +38,10 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
         // パラメータ内のダメージを受けない角度以上のみダメージを受けてイベントを発火
         if (angle < parameter.InvincibleAngle) return;
 
+        Debug.Log("エネミーがダメージを受けたよ");
+
+        this.gameObject.SetActive(false);
+
         OnDestroyHundle?.Invoke();
     }
 }
