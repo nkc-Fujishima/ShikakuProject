@@ -336,7 +336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 4b1984df42f73ca4095da0bdd7b2cebd, type: 2}
   _navMesh: {fileID: 1272633152}
-  _stageCount: 3
+  _stageCount: 0
 --- !u!4 &1272633151
 Transform:
   m_ObjectHideFlags: 0
