@@ -1,3 +1,66 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5d8747580ff264741232dd7d6e64c486a612f9815cb12b619f68d9f1d1a7be2a
-size 1902
+using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(BoxCollider))]
+public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage, IStoppable
+{
+    protected Transform EnemyTransform { get; private set; }
+
+    protected Rigidbody BulletRigidbody { get; private set; }
+
+    protected bool IsStop { get; private set; } = false;
+
+
+    public void Start()
+    {
+        BulletRigidbody = GetComponent<Rigidbody>();
+    }
+
+
+    //----------------------------------------------------------------------------------
+    // EnemyTransform
+    public virtual void SetEnemyTransform(Transform enemyTransform)
+    {
+        if (enemyTransform != null)
+            EnemyTransform = enemyTransform;
+        else
+        {
+            // null
+            EnemyTransform = transform;
+            EnemyTransform.position = transform.forward;
+        }
+    }
+
+    //----------------------------------------------------------------------------------
+    // 
+    protected abstract void OnMove();
+
+    //----------------------------------------------------------------------------------
+    // IChaceable
+    public Transform chacebleTransform { get { return transform; } }
+
+    //----------------------------------------------------------------------------------
+    // IDamage
+    public void Damage()
+    {
+        Destroy(gameObject);
+    }
+
+    //----------------------------------------------------------------------------------
+    // IStoppable
+    public void OnStop()
+    {
+        IsStop = true;
+    }
+
+
+    //----------------------------------------------------------------------------------
+    // Trigger
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            other.GetComponent<IDamage>().Damage(transform.position);
+        }
+    }
+}
