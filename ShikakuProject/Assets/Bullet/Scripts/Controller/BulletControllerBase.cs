@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BoxCollider))]
-public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage, IStoppable
+public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage, IStoppable, IDestroy
 {
     protected Transform EnemyTransform { get; private set; }
 
@@ -10,6 +11,7 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
     protected bool IsStop { get; private set; } = false;
 
+    public event Action<IChaceable> OnDestroyHundle;
 
     public void Start()
     {
@@ -18,21 +20,21 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
 
     //----------------------------------------------------------------------------------
-    // EnemyTransform
+    // EnemyTransformを設定する関数
     public virtual void SetEnemyTransform(Transform enemyTransform)
     {
         if (enemyTransform != null)
             EnemyTransform = enemyTransform;
         else
         {
-            // null
+            // nullだった場合はそのオブジェクトの眼の前に設定する
             EnemyTransform = transform;
             EnemyTransform.position = transform.forward;
         }
     }
 
     //----------------------------------------------------------------------------------
-    // 
+    // 継承先に持ってほしい関数
     protected abstract void OnMove();
 
     //----------------------------------------------------------------------------------
@@ -43,7 +45,10 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     // IDamage
     public void Damage()
     {
-        Destroy(gameObject);
+        Debug.Log("Bullet 死んだイベント登録数 : " + OnDestroyHundle?.GetInvocationList().Length);
+        OnDestroyHundle?.Invoke(this);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
     //----------------------------------------------------------------------------------

@@ -296,8 +296,8 @@ public class IdleEnemyController : EnemyControllerBase
         copyList.Add(chaceableObject);
         chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle += HundleTargetDestroy;
     }
-    // コピーリストから追跡対象の要素をnullに変更
 
+    // コピーリストから追跡対象の要素をnullに変更
     private void RemoveTarget(IChaceable chaceableObject)
     {
         if (!copyList.Contains(chaceableObject)) return;

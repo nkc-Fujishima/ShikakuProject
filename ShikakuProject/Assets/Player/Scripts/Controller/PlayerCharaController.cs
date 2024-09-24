@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -5,7 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody))]
 
-public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateChangeable
+public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateChangeable,IDestroy
 {
     [System.Serializable]
     public class PlayerData
@@ -55,8 +56,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
     private PlayerButtonDetector _buttonDetector;
 
-
-
+    public event Action<IChaceable> OnDestroyHundle;
 
     void Start()
     {
@@ -83,7 +83,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
 
     //----------------------------------------------------------------------------------
-    // 
+    // ステートを指定された状態に変化させる
     public void ChangeState(IState nextState)
     {
         if (_iState != null) _iState.OnExit();
@@ -94,7 +94,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     }
 
     //----------------------------------------------------------------------------------
-    // 
+    // ステート保持
     private class PlayerStateHolder
     {
         public Idle IdleState { get; }
@@ -123,7 +123,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     }
 
     //----------------------------------------------------------------------------------
-    // 
+    // ステートの基底クラス
     private abstract class PlayerStateBase : StateBase
     {
         protected IStateChangeable stateChanger = null;
@@ -142,7 +142,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
             this.data = data;
         }
 
-        // 
+        // 弾を生成するボタンを押した場合の関数
         public void OnFire()
         {
             if (!playerStatus.GetSkillIsSelectable(playerStatus.SelectBulletType)) return;
@@ -152,10 +152,10 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     }
 
     //----------------------------------------------------------------------------------
-    // 
+    // 止まるステート
     private class Idle : PlayerStateBase
     {
-        public Idle(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data) : base(stateChanger, stateHolder, buttonDetector, playerStatus, data) { }
+        public Idle(IStateChangeable stateChanger,PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector ,PlayerStatusParameter playerStatus, PlayerData data) : base(stateChanger, stateHolder,buttonDetector,playerStatus, data) { }
 
         public override void OnEnter()
         {
@@ -179,10 +179,10 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     }
 
     //----------------------------------------------------------------------------------
-    // 
+    // 移動するステート
     private class Walk : PlayerStateBase
     {
-        public Walk(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data) : base(stateChanger, stateHolder, buttonDetector, playerStatus, data) { }
+        public Walk(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data) : base(stateChanger, stateHolder, buttonDetector, playerStatus,data) { }
 
         public override void OnEnter()
         {
@@ -205,14 +205,14 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
                 stateChanger.ChangeState(stateHolder.IdleState);
         }
 
-        // 
+        // 移動を確認する
         private void CheckCharaMove()
         {
             Vector3 movePower = buttonDetector.InputStick * playerStatus.MoveSpeed;
 
             data.Rigidbody.velocity = movePower;
 
-            // 
+            // 体を進行方向に回転させる
             if (movePower == Vector3.zero) return;
             float moveRotationY = Mathf.Atan2(-movePower.z, movePower.x) * Mathf.Rad2Deg + 90;
             data.PlayerTransform.rotation = Quaternion.Euler(0, moveRotationY, 0);
@@ -220,7 +220,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     }
 
     //----------------------------------------------------------------------------------
-    // 
+    // 弾を出現させるステート
     private class Fire : PlayerStateBase
     {
         public Fire(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data) : base(stateChanger, stateHolder, buttonDetector, playerStatus, data) { }
@@ -230,7 +230,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
             data.Animator.SetTrigger("Fire");
             playerStatus.GetSkillSpawnBullet();
 
-            // 
+            // 生成
             GameObject bullet = Instantiate(playerStatus.GetSkillSelectBulletPlefab, data.SpawnBulletPoint.position, data.SpawnBulletPoint.rotation);
 
             data.OnBulletSpawn.Invoke(bullet.GetComponent<BulletControllerBase>());
@@ -257,7 +257,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
 
     //----------------------------------------------------------------------------------
-    // 
+    // スキルのクールダウンを計算
     private void CheckSkillCoolTime()
     {
         for (int i = 0; i < PlayerStatus.GetSkillLength; ++i)
@@ -269,7 +269,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     }
 
     //----------------------------------------------------------------------------------
-    // 
+    // デリゲートを設定する
     private void SetDelegate()
     {
         _buttonDetector.OnButtonBulletSelectLeftDown.RemoveListener(OnBulletSelectLeft);
@@ -279,7 +279,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         _buttonDetector.OnButtonBulletSelectRightDown.AddListener(OnBulletSelectRight);
     }
 
-    // 
+    // 右に選択
     private void OnBulletSelectLeft()
     {
         --PlayerStatus.SelectBulletType;
@@ -288,7 +288,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
             PlayerStatus.SelectBulletType = PlayerStatus.GetSkillLength - 1;
     }
 
-    // 
+    // 左に選択
     private void OnBulletSelectRight()
     {
         ++PlayerStatus.SelectBulletType;
@@ -306,6 +306,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // IDamage
     public void Damage()
     {
+        Debug.Log(OnDestroyHundle.GetInvocationList().Length);
+
         Datas.OnDeath.Invoke();
 
         gameObject.SetActive(false);
