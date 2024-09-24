@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody))]
 
-public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateChangeable,IDestroy
+public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateChangeable, IDestroy
 {
     [System.Serializable]
     public class PlayerData
@@ -309,6 +309,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         Debug.Log(OnDestroyHundle.GetInvocationList().Length);
 
         Datas.OnDeath.Invoke();
+
+        OnDestroyHundle?.Invoke(this);
 
         gameObject.SetActive(false);
     }

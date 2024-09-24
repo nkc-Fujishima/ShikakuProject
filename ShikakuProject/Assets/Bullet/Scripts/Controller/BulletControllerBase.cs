@@ -45,10 +45,9 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     // IDamage
     public void Damage()
     {
-        Debug.Log("Bullet éÄÇÒÇæÉCÉxÉìÉgìoò^êî : " + OnDestroyHundle?.GetInvocationList().Length);
         OnDestroyHundle?.Invoke(this);
+
         gameObject.SetActive(false);
-        //Destroy(gameObject);
     }
 
     //----------------------------------------------------------------------------------
