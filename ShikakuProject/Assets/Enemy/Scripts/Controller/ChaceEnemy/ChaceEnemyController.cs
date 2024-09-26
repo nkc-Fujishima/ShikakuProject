@@ -1,19 +1,18 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class IdleEnemyController : EnemyControllerBase
+public class ChaceEnemyController : EnemyControllerBase
 {
+    [Header("ƒIƒuƒWƒFƒNƒgİ’è"), SerializeField] GameObject weapon;
 
-    [Header("ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè¨­å®š"), SerializeField] GameObject weapon;
-
-    // ã‚²ãƒ¼ãƒ ä¸­ã®çµŒéãƒ•ãƒ¬ãƒ¼ãƒ 
+    // ƒQ[ƒ€’†‚ÌŒo‰ßƒtƒŒ[ƒ€
     ulong frameCount = 0;
 
-    // è¿½è·¡å¯èƒ½ãªå¯¾è±¡ãƒªã‚¹ãƒˆ
+    // ’ÇÕ‰Â”\‚È‘ÎÛƒŠƒXƒg
     List<IChaceable> chaceableObjects = new List<IChaceable>(6);
-    // foreachä¸­ã«ãƒªã‚¹ãƒˆãŒå¤‰æ›´ã•ã‚Œã‚‹ã“ã¨ã‚’é˜²ããŸã‚ã®è¤‡è£½ã€åŸºæœ¬ã“ã¡ã‚‰ãŒå¤‰æ›´ã•ã‚Œä¸€å®šé–“éš”ã§æœ¬ãƒªã‚¹ãƒˆã«åæ˜ 
+    // foreach’†‚ÉƒŠƒXƒg‚ª•ÏX‚³‚ê‚é‚±‚Æ‚ğ–h‚®‚½‚ß‚Ì•¡»AŠî–{‚±‚¿‚ç‚ª•ÏX‚³‚êˆê’èŠÔŠu‚Å–{ƒŠƒXƒg‚É”½‰f
     List<IChaceable> copyList = new List<IChaceable>(6);
 
     VisionMeshCreator visionMeshCreator = null;
@@ -29,11 +28,14 @@ public class IdleEnemyController : EnemyControllerBase
         visionMeshCreator = transform.Find("Sensor").GetComponent<VisionMeshCreator>();
         visionMeshCreator.SetUp();
 
-        // è¦–ç•Œã‚»ãƒ³ã‚µãƒ¼ã®Actionã«ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒªã‚¹ãƒˆã®è¿½åŠ ã¨å‰Šé™¤ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç™»éŒ²
+        // ‹ŠEƒZƒ“ƒT[‚ÌAction‚Éƒ^[ƒQƒbƒgƒŠƒXƒg‚Ì’Ç‰Á‚Æíœƒƒ\ƒbƒh‚ğ“o˜^
         visionSensor.OnSensorInHundle += AddTarget;
         visionSensor.OnSensorOutHundle += RemoveTarget;
 
-        IdleEnemyStateManager stateHolder = new IdleEnemyStateManager(animator, this.transform, parameter as IdleEnemyParameter, this, chaceableObjects, visionMeshCreator, weaponCollider);
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        Rigidbody rigidBody = GetComponent<Rigidbody>();
+
+        ChaceEnemyStateManager stateHolder = new ChaceEnemyStateManager(animator, this.transform, parameter as ChaceEnemyParameter, this, chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody);
 
         iState = stateHolder.idleState;
         if (iState != null) iState.OnEnter();
@@ -48,13 +50,14 @@ public class IdleEnemyController : EnemyControllerBase
     {
         iState.OnUpdate();
 
-        // ä¸€å®šãƒ•ãƒ¬ãƒ¼ãƒ çµŒéæ™‚ã«ãƒªã‚¹ãƒˆå†…ã®nullã‚’å‰Šé™¤
+        // ˆê’èƒtƒŒ[ƒ€Œo‰ß‚ÉƒŠƒXƒg“à‚Ìnull‚ğíœ
         frameCount += 1;
         if (frameCount % parameter.ListRefreshRate == 0)
         {
             chaceableObjects.Clear();
             chaceableObjects.AddRange(RemoveNullElements(copyList));
         }
+        Debug.Log(iState);
     }
 
     protected List<IChaceable> RemoveNullElements(List<IChaceable> list)
@@ -74,16 +77,47 @@ public class IdleEnemyController : EnemyControllerBase
     }
 
 
-
-    #region ã‚¹ãƒ†ãƒ¼ãƒˆç®¡ç†ã‚¯ãƒ©ã‚¹
-    private class IdleEnemyStateManager
+    // ---------------------------------------------------
+    // ƒŠƒXƒg•ÏXƒƒ\ƒbƒhŒQ
+    #region ƒŠƒXƒg•ÏXƒƒ\ƒbƒhŒQ
+    // ƒRƒs[ƒŠƒXƒg‚É’ÇÕ‘ÎÛ‚ğ’Ç‰Á
+    private void AddTarget(IChaceable chaceableObject)
     {
-        // å„ç¨®ã‚¹ãƒ†ãƒ¼ãƒˆã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+        if (copyList.Contains(chaceableObject)) return;
+
+        copyList.Add(chaceableObject);
+        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle += HundleTargetDestroy;
+    }
+
+    // ƒRƒs[ƒŠƒXƒg‚©‚ç’ÇÕ‘ÎÛ‚Ì—v‘f‚ğnull‚É•ÏX
+    private void RemoveTarget(IChaceable chaceableObject)
+    {
+        if (!copyList.Contains(chaceableObject)) return;
+
+        copyList[copyList.IndexOf(chaceableObject)] = null;
+
+        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle -= HundleTargetDestroy;
+    }
+
+    private void HundleTargetDestroy(IChaceable chaceableObject)
+    {
+        RemoveTarget(chaceableObject);
+    }
+    #endregion
+
+
+    // -------------------------------------------------------------
+    // ‚±‚±‚©‚çŠeíƒXƒe[ƒgƒNƒ‰ƒX
+
+    #region ƒXƒe[ƒgŠÇ—ƒNƒ‰ƒX
+    private class ChaceEnemyStateManager
+    {
+        // ŠeíƒXƒe[ƒgƒCƒ“ƒXƒ^ƒ“ƒX
         public Idle idleState { get; }
         public Alert alertState { get; }
         public Attack attackState { get; }
 
-        IdleEnemyParameter parameter = null;
+        ChaceEnemyParameter parameter = null;
 
         Transform transform = null;
 
@@ -95,11 +129,15 @@ public class IdleEnemyController : EnemyControllerBase
 
         Animator animator = null;
 
+        Rigidbody rigidBody = null;
+
         BoxCollider weaponCollider = null;
+
+        NavMeshAgent agent = null;
 
         public IChaceable chaceTarget = null;
 
-        public IdleEnemyStateManager(Animator animator, Transform transform, IdleEnemyParameter parameter, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider)
+        public ChaceEnemyStateManager(Animator animator, Transform transform, ChaceEnemyParameter parameter, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider, NavMeshAgent agent, Rigidbody rigidBody)
         {
             this.animator = animator;
             this.transform = transform;
@@ -108,8 +146,10 @@ public class IdleEnemyController : EnemyControllerBase
             this.chaceableObjects = chaceableObjects;
             this.visionMeshCreator = visionMeshCreator;
             this.weaponCollider = weaponCollider;
+            this.agent = agent;
+            this.rigidBody = rigidBody;
             idleState = new Idle(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator);
-            alertState = new Alert(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator);
+            alertState = new Alert(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, agent, rigidBody);
             attackState = new Attack(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, weaponCollider);
         }
 
@@ -118,22 +158,22 @@ public class IdleEnemyController : EnemyControllerBase
 
 
 
-    #region ã‚¹ãƒ†ãƒ¼ãƒˆåŸºåº•ã‚¯ãƒ©ã‚¹
-    private abstract class IdleEnemyStateBase : StateBase
+    #region ƒXƒe[ƒgŠî’êƒNƒ‰ƒX
+    private abstract class ChaceEnemyStateBase : StateBase
     {
         protected const int layerMask = ~(1 << 2);
 
-        protected IdleEnemyStateManager manager = null;
-        protected IdleEnemyParameter parameter = null;
+        protected ChaceEnemyStateManager manager = null;
+        protected ChaceEnemyParameter parameter = null;
         protected Transform transform = null;
         protected Animator animator = null;
         protected IStateChangeable stateChanger = null;
         protected VisionMeshCreator visionMeshCreator = null;
 
-        // è¿½è·¡å¯èƒ½ãªå¯¾è±¡ãƒªã‚¹ãƒˆ
+        // ’ÇÕ‰Â”\‚È‘ÎÛƒŠƒXƒg
         protected List<IChaceable> chaceableObjects = new List<IChaceable>(6);
 
-        public IdleEnemyStateBase(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameter parameter, IdleEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator)
+        public ChaceEnemyStateBase(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameter parameter, ChaceEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator)
         {
             this.manager = manager;
             this.parameter = parameter;
@@ -148,10 +188,10 @@ public class IdleEnemyController : EnemyControllerBase
 
 
 
-    #region å¾…æ©Ÿã‚¹ãƒ†ãƒ¼ãƒˆ
-    private class Idle : IdleEnemyStateBase
+    #region ‘Ò‹@ƒXƒe[ƒg
+    private class Idle : ChaceEnemyStateBase
     {
-        public Idle(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameter parameter, IdleEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator) { }
+        public Idle(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameter parameter, ChaceEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator) { }
 
         public override void OnEnter()
         {
@@ -188,15 +228,19 @@ public class IdleEnemyController : EnemyControllerBase
 
 
 
-    #region è­¦æˆ’ã‚¹ãƒ†ãƒ¼ãƒˆ
-    private class Alert : IdleEnemyStateBase
+    #region Œx‰úƒXƒe[ƒg
+    private class Alert : ChaceEnemyStateBase
     {
-        const int layerMask = ~(1 << 2);
 
         float distance = 0;
 
-        public Alert(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameter parameter, IdleEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator)
+        Rigidbody rigidBody = null;
+        NavMeshAgent agent = null;
+
+        public Alert(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameter parameter, ChaceEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, NavMeshAgent agent, Rigidbody rigidBody) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator)
         {
+            this.agent = agent;
+            this.rigidBody = rigidBody;
         }
 
         public override void OnEnter()
@@ -207,6 +251,7 @@ public class IdleEnemyController : EnemyControllerBase
         public override void OnExit()
         {
             distance = 0;
+            agent.ResetPath();
         }
 
         public override void OnUpdate()
@@ -242,8 +287,9 @@ public class IdleEnemyController : EnemyControllerBase
 
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed * Time.deltaTime);
 
+                agent.SetDestination(manager.chaceTarget.chacebleTransform.position);
 
-                // ã‚‚ã—ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãŒæ”»æ’ƒç¯„å›²å†…ãªã‚‰ã°æ”»æ’ƒã‚¹ãƒ†ãƒ¼ãƒˆã¸ç§»è¡Œ
+                // ‚à‚µƒ^[ƒQƒbƒg‚ªUŒ‚”ÍˆÍ“à‚È‚ç‚ÎUŒ‚ƒXƒe[ƒg‚ÖˆÚs
                 if (distance > parameter.AttackRange) return;
 
                 stateChanger.ChangeState(manager.attackState);
@@ -251,7 +297,7 @@ public class IdleEnemyController : EnemyControllerBase
             }
 
 
-            // è­¦æˆ’ç¯„å›²å†…ã«è¿½è·¡å¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒãªã„å ´åˆã€å¾…æ©Ÿã‚¹ãƒ†ãƒ¼ãƒˆã¸ç§»è¡Œ
+            // Œx‰ú”ÍˆÍ“à‚É’ÇÕ‘ÎÛ‚ÌƒIƒuƒWƒFƒNƒg‚ª‚È‚¢ê‡A‘Ò‹@ƒXƒe[ƒg‚ÖˆÚs
             else stateChanger.ChangeState(manager.idleState);
         }
     }
@@ -259,16 +305,16 @@ public class IdleEnemyController : EnemyControllerBase
 
 
 
-    #region æ”»æ’ƒã‚¹ãƒ†ãƒ¼ãƒˆ
-    // ã‚¹ãƒ†ãƒ¼ãƒˆåˆ‡ã‚Šæ›¿ãˆæ™‚ã«æ­¦å™¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å½“ãŸã‚Šåˆ¤å®šã®ONãƒ»OFFåˆ‡ã‚Šæ›¿ãˆ
-    // æ”»æ’ƒã‚¹ãƒ†ãƒ¼ãƒˆã«å…¥ã‚Šä¸€å®šæ™‚é–“çµŒéã§å¾…æ©Ÿã‚¹ãƒ†ãƒ¼ãƒˆã«ç§»è¡Œ
-    private class Attack : IdleEnemyStateBase
+    #region UŒ‚ƒXƒe[ƒg
+    // ƒXƒe[ƒgØ‚è‘Ö‚¦‚É•ŠíƒIƒuƒWƒFƒNƒg‚Ì“–‚½‚è”»’è‚ÌONEOFFØ‚è‘Ö‚¦
+    // UŒ‚ƒXƒe[ƒg‚É“ü‚èˆê’èŠÔŒo‰ß‚Å‘Ò‹@ƒXƒe[ƒg‚ÉˆÚs
+    private class Attack : ChaceEnemyStateBase
     {
         float countTime = 0;
 
         BoxCollider weaponCollider = null;
 
-        public Attack(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameter parameter, IdleEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator)
+        public Attack(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameter parameter, ChaceEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator)
         {
             this.weaponCollider = weaponCollider;
         }
@@ -279,9 +325,12 @@ public class IdleEnemyController : EnemyControllerBase
             visionMeshCreator.ChangeMeshAlertMaterial();
             weaponCollider.enabled = true;
 
-            // è¿½è·¡å¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è¡Œå‹•åœæ­¢ç”¨ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
-            IStoppable iStoppableObject = manager.chaceTarget.chacebleTransform.GetComponent<IStoppable>();
-            iStoppableObject?.OnStop();
+            // ’ÇÕ‘ÎÛ‚ÌƒIƒuƒWƒFƒNƒg‚Ìs“®’â~—pƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
+            IStoppable iStoppableObject = null;
+            if (manager.chaceTarget.chacebleTransform.TryGetComponent<IStoppable>(out iStoppableObject))
+            {
+                iStoppableObject?.OnStop();
+            }
 
             manager.chaceTarget = null;
 
@@ -306,29 +355,4 @@ public class IdleEnemyController : EnemyControllerBase
 
 
 
-
-
-    // ã‚³ãƒ”ãƒ¼ãƒªã‚¹ãƒˆã«è¿½è·¡å¯¾è±¡ã‚’è¿½åŠ 
-    private void AddTarget(IChaceable chaceableObject)
-    {
-        if (copyList.Contains(chaceableObject)) return;
-
-        copyList.Add(chaceableObject);
-        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle += HundleTargetDestroy;
-    }
-
-    // ã‚³ãƒ”ãƒ¼ãƒªã‚¹ãƒˆã‹ã‚‰è¿½è·¡å¯¾è±¡ã®è¦ç´ ã‚’nullã«å¤‰æ›´
-    private void RemoveTarget(IChaceable chaceableObject)
-    {
-        if (!copyList.Contains(chaceableObject)) return;
-
-        copyList[copyList.IndexOf(chaceableObject)] = null;
-
-        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle -= HundleTargetDestroy;
-    }
-
-    private void HundleTargetDestroy(IChaceable chaceableObject)
-    {
-        RemoveTarget(chaceableObject);
-    }
 }

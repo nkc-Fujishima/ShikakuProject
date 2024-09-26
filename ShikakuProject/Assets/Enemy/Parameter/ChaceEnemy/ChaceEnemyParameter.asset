@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e3997ad038bb9f499f0e5a43e7ffed2, type: 3}
-  m_Name: IdleEnemyParameter
+  m_Script: {fileID: 11500000, guid: b15f2d8f36cfe5442986deb93a72d8f5, type: 3}
+  m_Name: ChaceEnemyParameter
   m_EditorClassIdentifier: 
   MoveSpeed: 3
   AttackRange: 2.3

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDamage
 {
-    [Header("オブジェクト設定"), SerializeField] protected IdleEnemyParameter parameter;
+    [Header("オブジェクト設定"), SerializeField] protected EnemyParameterBase parameter;
 
     protected IState iState = null;
 
