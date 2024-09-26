@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3997ad038bb9f499f0e5a43e7ffed2, type: 3}
   m_Name: IdleEnemyParameter
   m_EditorClassIdentifier: 
-  MoveSpeed: 3
+  MoveSpeed: 200
   AttackRange: 2.3
   AttackCoolTime: 2
   AlertResetTime: 0

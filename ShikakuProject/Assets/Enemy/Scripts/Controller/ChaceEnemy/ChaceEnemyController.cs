@@ -282,18 +282,26 @@ public class ChaceEnemyController : EnemyControllerBase
 
             if (manager.chaceTarget != null)
             {
-                Vector3 targetVector = new Vector3(manager.chaceTarget.chacebleTransform.position.x - transform.position.x, 0, manager.chaceTarget.chacebleTransform.position.z - transform.position.z);
-                Quaternion targetRotation = Quaternion.LookRotation(targetVector);
+                //Vector3 targetVector = new Vector3(manager.chaceTarget.chacebleTransform.position.x - transform.position.x, 0, manager.chaceTarget.chacebleTransform.position.z - transform.position.z);
+                //Quaternion targetRotation = Quaternion.LookRotation(targetVector);
 
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed * Time.deltaTime);
 
                 agent.SetDestination(manager.chaceTarget.chacebleTransform.position);
+                NavMeshPath path = agent.path;
+
+                if (path.corners.Length > 1)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(path.corners[1] - path.corners[0]);
+
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed * Time.deltaTime);
+                }
+
+                rigidBody.velocity = transform.forward * parameter.MoveSpeed * Time.deltaTime;
 
                 // もしターゲットが攻撃範囲内ならば攻撃ステートへ移行
                 if (distance > parameter.AttackRange) return;
 
                 stateChanger.ChangeState(manager.attackState);
-
             }
 
 

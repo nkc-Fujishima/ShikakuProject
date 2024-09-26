@@ -242,7 +242,6 @@ public class IdleEnemyController : EnemyControllerBase
 
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed * Time.deltaTime);
 
-
                 // もしターゲットが攻撃範囲内ならば攻撃ステートへ移行
                 if (distance > parameter.AttackRange) return;
 
