@@ -156,12 +156,12 @@ public class IdleEnemyController : EnemyControllerBase
         public override void OnEnter()
         {
             visionMeshCreator.ChangeMeshNoAlertMaterial();
-            animator.SetBool("WalkFlag", true);
+            animator.SetBool("WaitFlag", true);
         }
 
         public override void OnExit()
         {
-            animator.SetBool("WalkFlag", false);
+            animator.SetBool("WaitFlag", false);
         }
 
         public override void OnUpdate()

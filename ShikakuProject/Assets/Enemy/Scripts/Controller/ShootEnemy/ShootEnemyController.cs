@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class ChaceEnemyController : EnemyControllerBase
+public class ShootEnemyController : EnemyControllerBase
 {
-    [Header("オブジェクト設定"), SerializeField] GameObject weapon;
 
     // ゲーム中の経過フレーム
     ulong frameCount = 0;
@@ -17,13 +15,15 @@ public class ChaceEnemyController : EnemyControllerBase
 
     VisionMeshCreator visionMeshCreator = null;
 
+    ShootEnemyStateManager stateManager = null;
+
+    IChaceable target = null;
+
     private void Start()
     {
         base.Start();
 
         VisionSensor visionSensor = transform.Find("Sensor").GetComponent<VisionSensor>();
-        BoxCollider weaponCollider = weapon.GetComponent<BoxCollider>();
-        weaponCollider.enabled = false;
 
         visionMeshCreator = transform.Find("Sensor").GetComponent<VisionMeshCreator>();
         visionMeshCreator.SetUp();
@@ -32,12 +32,9 @@ public class ChaceEnemyController : EnemyControllerBase
         visionSensor.OnSensorInHundle += AddTarget;
         visionSensor.OnSensorOutHundle += RemoveTarget;
 
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-        Rigidbody rigidBody = GetComponent<Rigidbody>();
+        stateManager = new ShootEnemyStateManager(animator, this.transform, parameter as ShootEnemyParameter, this, chaceableObjects, visionMeshCreator);
 
-        ChaceEnemyStateManager stateHolder = new ChaceEnemyStateManager(animator, this.transform, parameter as ChaceEnemyParameter, this, chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody);
-
-        iState = stateHolder.idleState;
+        iState = stateManager.idleState;
         if (iState != null) iState.OnEnter();
     }
 
@@ -57,7 +54,6 @@ public class ChaceEnemyController : EnemyControllerBase
             chaceableObjects.Clear();
             chaceableObjects.AddRange(RemoveNullElements(copyList));
         }
-        Debug.Log(iState);
     }
 
     protected List<IChaceable> RemoveNullElements(List<IChaceable> list)
@@ -77,80 +73,23 @@ public class ChaceEnemyController : EnemyControllerBase
     }
 
 
-    // ---------------------------------------------------
-    // リスト変更メソッド群
-    #region リスト変更メソッド群
-    // コピーリストに追跡対象を追加
-    private void AddTarget(IChaceable chaceableObject)
-    {
-        if (copyList.Contains(chaceableObject)) return;
-
-        copyList.Add(chaceableObject);
-        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle += HundleTargetDestroy;
-    }
-
-    // コピーリストから追跡対象の要素をnullに変更
-    private void RemoveTarget(IChaceable chaceableObject)
-    {
-        if (!copyList.Contains(chaceableObject)) return;
-
-        copyList[copyList.IndexOf(chaceableObject)] = null;
-
-        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle -= HundleTargetDestroy;
-    }
-
-    private void HundleTargetDestroy(IChaceable chaceableObject)
-    {
-        RemoveTarget(chaceableObject);
-    }
-    #endregion
-
-
-    // -------------------------------------------------------------
-    // ここから各種ステートクラス
 
     #region ステート管理クラス
-    private class ChaceEnemyStateManager
+    private class ShootEnemyStateManager
     {
         // 各種ステートインスタンス
         public Idle idleState { get; }
         public Alert alertState { get; }
         public Attack attackState { get; }
 
-        ChaceEnemyParameter parameter = null;
-
-        Transform transform = null;
-
-        List<IChaceable> chaceableObjects = null;
-
-        IStateChangeable stateChanger = null;
-
-        VisionMeshCreator visionMeshCreator = null;
-
-        Animator animator = null;
-
-        Rigidbody rigidBody = null;
-
-        BoxCollider weaponCollider = null;
-
-        NavMeshAgent agent = null;
 
         public IChaceable chaceTarget = null;
 
-        public ChaceEnemyStateManager(Animator animator, Transform transform, ChaceEnemyParameter parameter, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider, NavMeshAgent agent, Rigidbody rigidBody)
+        public ShootEnemyStateManager(Animator animator, Transform transform, ShootEnemyParameter parameter, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator)
         {
-            this.animator = animator;
-            this.transform = transform;
-            this.parameter = parameter;
-            this.stateChanger = stateChanger;
-            this.chaceableObjects = chaceableObjects;
-            this.visionMeshCreator = visionMeshCreator;
-            this.weaponCollider = weaponCollider;
-            this.agent = agent;
-            this.rigidBody = rigidBody;
-            idleState = new Idle(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator);
-            alertState = new Alert(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, agent, rigidBody);
-            attackState = new Attack(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, weaponCollider);
+            idleState = new Idle(this, animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator);
+            alertState = new Alert(this, animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator);
+            attackState = new Attack(this, animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator);
         }
 
     }
@@ -159,12 +98,12 @@ public class ChaceEnemyController : EnemyControllerBase
 
 
     #region ステート基底クラス
-    private abstract class ChaceEnemyStateBase : StateBase
+    private abstract class ShootEnemyStateBase : StateBase
     {
         protected const int layerMask = ~(1 << 2);
 
-        protected ChaceEnemyStateManager manager = null;
-        protected ChaceEnemyParameter parameter = null;
+        protected ShootEnemyStateManager manager = null;
+        protected ShootEnemyParameter parameter = null;
         protected Transform transform = null;
         protected Animator animator = null;
         protected IStateChangeable stateChanger = null;
@@ -173,7 +112,7 @@ public class ChaceEnemyController : EnemyControllerBase
         // 追跡可能な対象リスト
         protected List<IChaceable> chaceableObjects = new List<IChaceable>(6);
 
-        public ChaceEnemyStateBase(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameter parameter, ChaceEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator)
+        public ShootEnemyStateBase(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameter parameter, ShootEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator)
         {
             this.manager = manager;
             this.parameter = parameter;
@@ -189,9 +128,9 @@ public class ChaceEnemyController : EnemyControllerBase
 
 
     #region 待機ステート
-    private class Idle : ChaceEnemyStateBase
+    private class Idle : ShootEnemyStateBase
     {
-        public Idle(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameter parameter, ChaceEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator) { }
+        public Idle(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameter parameter, ShootEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator) { }
 
         public override void OnEnter()
         {
@@ -229,31 +168,24 @@ public class ChaceEnemyController : EnemyControllerBase
 
 
     #region 警戒ステート
-    private class Alert : ChaceEnemyStateBase
+    private class Alert : ShootEnemyStateBase
     {
+        const int layerMask = ~(1 << 2);
 
         float distance = 0;
 
-        Rigidbody rigidBody = null;
-        NavMeshAgent agent = null;
-
-        public Alert(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameter parameter, ChaceEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, NavMeshAgent agent, Rigidbody rigidBody) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator)
+        public Alert(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameter parameter, ShootEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator)
         {
-            this.agent = agent;
-            this.rigidBody = rigidBody;
         }
 
         public override void OnEnter()
         {
             visionMeshCreator.ChangeMeshAlertMaterial();
-            animator.SetBool("WalkFlag", true);
         }
 
         public override void OnExit()
         {
             distance = 0;
-            agent.ResetPath();
-            animator.SetBool("WalkFlag", false);
         }
 
         public override void OnUpdate()
@@ -284,26 +216,16 @@ public class ChaceEnemyController : EnemyControllerBase
 
             if (manager.chaceTarget != null)
             {
-                //Vector3 targetVector = new Vector3(manager.chaceTarget.chacebleTransform.position.x - transform.position.x, 0, manager.chaceTarget.chacebleTransform.position.z - transform.position.z);
-                //Quaternion targetRotation = Quaternion.LookRotation(targetVector);
+                Vector3 targetVector = new Vector3(manager.chaceTarget.chacebleTransform.position.x - transform.position.x, 0, manager.chaceTarget.chacebleTransform.position.z - transform.position.z);
+                Quaternion targetRotation = Quaternion.LookRotation(targetVector);
 
-
-                agent.SetDestination(manager.chaceTarget.chacebleTransform.position);
-                NavMeshPath path = agent.path;
-
-                if (path.corners.Length > 1)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(path.corners[1] - path.corners[0]);
-
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed * Time.deltaTime);
-                }
-
-                rigidBody.velocity = transform.forward * parameter.MoveSpeed * Time.deltaTime;
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed * Time.deltaTime);
 
                 // もしターゲットが攻撃範囲内ならば攻撃ステートへ移行
                 if (distance > parameter.AttackRange) return;
 
                 stateChanger.ChangeState(manager.attackState);
+
             }
 
 
@@ -318,45 +240,47 @@ public class ChaceEnemyController : EnemyControllerBase
     #region 攻撃ステート
     // ステート切り替え時に武器オブジェクトの当たり判定のON・OFF切り替え
     // 攻撃ステートに入り一定時間経過で待機ステートに移行
-    private class Attack : ChaceEnemyStateBase
+    private class Attack : ShootEnemyStateBase
     {
         float countTime = 0;
 
-        BoxCollider weaponCollider = null;
-
-        public Attack(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameter parameter, ChaceEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator)
+        public Attack(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameter parameter, ShootEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator)
         {
-            this.weaponCollider = weaponCollider;
         }
 
 
         public override void OnEnter()
         {
             visionMeshCreator.ChangeMeshAlertMaterial();
-            weaponCollider.enabled = true;
-
-            // 追跡対象のオブジェクトの行動停止用メソッドを呼び出す
-            IStoppable iStoppableObject = null;
-            if (manager.chaceTarget.chacebleTransform.TryGetComponent<IStoppable>(out iStoppableObject))
-            {
-                iStoppableObject?.OnStop();
-            }
-
-            manager.chaceTarget = null;
 
             animator.SetBool("AttackFlag", true);
         }
 
         public override void OnExit()
         {
-            weaponCollider.enabled = false;
             countTime = 0;
+            manager.chaceTarget = null;
             animator.SetBool("AttackFlag", false);
         }
 
         public override void OnUpdate()
         {
             countTime += Time.deltaTime;
+
+            if (chaceableObjects.Count != 0)
+            {
+                Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(manager.chaceTarget.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, manager.chaceTarget.chacebleTransform.position.z - transform.position.z));
+                RaycastHit toTargetHit;
+                Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask);
+                if (!toTargetHit.transform.TryGetComponent(out IChaceable chaceableObject)) return;
+
+
+                Vector3 targetVector = new Vector3(manager.chaceTarget.chacebleTransform.position.x - transform.position.x, 0, manager.chaceTarget.chacebleTransform.position.z - transform.position.z);
+                Quaternion targetRotation = Quaternion.LookRotation(targetVector);
+
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed * Time.deltaTime);
+            }
+
             if (countTime > parameter.AttackCoolTime) stateChanger.ChangeState(manager.idleState);
 
         }
@@ -364,5 +288,41 @@ public class ChaceEnemyController : EnemyControllerBase
     #endregion
 
 
+
+
+    // 攻撃処理
+    private void Shoot()
+    {
+        target = stateManager.chaceTarget;
+        Debug.Log(target);
+    }
+
+
+
+
+
+    // コピーリストに追跡対象を追加
+    private void AddTarget(IChaceable chaceableObject)
+    {
+        if (copyList.Contains(chaceableObject)) return;
+
+        copyList.Add(chaceableObject);
+        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle += HundleTargetDestroy;
+    }
+
+    // コピーリストから追跡対象の要素をnullに変更
+    private void RemoveTarget(IChaceable chaceableObject)
+    {
+        if (!copyList.Contains(chaceableObject)) return;
+
+        copyList[copyList.IndexOf(chaceableObject)] = null;
+
+        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle -= HundleTargetDestroy;
+    }
+
+    private void HundleTargetDestroy(IChaceable chaceableObject)
+    {
+        RemoveTarget(chaceableObject);
+    }
 
 }
