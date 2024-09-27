@@ -58,6 +58,7 @@ public class ChaceEnemyController : EnemyControllerBase
         visionSensor.OnSensorOutHundle += RemoveTarget;
 
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        agent.enabled = true;
         Rigidbody rigidBody = GetComponent<Rigidbody>();
 
         ChaceEnemyStateManager stateHolder = new ChaceEnemyStateManager(animator, this.transform, parameter as ChaceEnemyParameter, this, chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody);
