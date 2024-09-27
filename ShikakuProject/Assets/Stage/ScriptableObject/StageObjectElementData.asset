@@ -22,11 +22,27 @@ MonoBehaviour:
     Texture: {fileID: 2800000, guid: 6569980ec0cde8c41b240d9dd4ee4e26, type: 3}
   GroundData:
     Prefabs:
-    - {fileID: 3905796902598946416, guid: 584fa86b0e359184d9f90265ee0b651c, type: 3}
-    - {fileID: 3905796902598946416, guid: 584fa86b0e359184d9f90265ee0b651c, type: 3}
+    - {fileID: 8142330962270797679, guid: 6f37d83972b45bc47a7ef2435bd6af4e, type: 3}
+    - {fileID: 8797588502406722882, guid: e01cd1d9cfb7593459d6a2d495088320, type: 3}
+    - {fileID: 7812440435716800006, guid: bc8f25ab7d3ed134286e1aa8400151bd, type: 3}
+    - {fileID: 3282573999855541501, guid: bbc9dd1fb4e16704d8dcc629449aa184, type: 3}
+    - {fileID: 5786913828178617027, guid: dd872a38e3d85f84694d32c7ed0fb5d9, type: 3}
+    - {fileID: 1265026548457942842, guid: 6a82c4709074bf440bf2650c979fb6c1, type: 3}
+    - {fileID: 5693390400144532889, guid: 5c7da64acf0f9d04c82c1c711435a69b, type: 3}
+    - {fileID: 4764762501465603604, guid: a7e1cc9812cf2684aa92c20b8caf81a8, type: 3}
+    - {fileID: 1041363401900740970, guid: c4de4cbfbc54e99469eba3495071a5d9, type: 3}
+    - {fileID: 5037509295362627110, guid: c3e5a040b6e098a4098df83471537333, type: 3}
+    - {fileID: 7481181445494069323, guid: 466fb9667c254074cb9ac1a3af6d2854, type: 3}
     Texture: {fileID: 2800000, guid: e9046a58c49a44f46816cc6c34c8c1b4, type: 3}
   ObstacleData:
     Prefabs:
-    - {fileID: 3905796902598946416, guid: 76d29fec6a7a7ea4fb0fabd064d90cc6, type: 3}
-    - {fileID: 3905796902598946416, guid: 76d29fec6a7a7ea4fb0fabd064d90cc6, type: 3}
+    - {fileID: 8142330962270797679, guid: 6f37d83972b45bc47a7ef2435bd6af4e, type: 3}
+    - {fileID: 8797588502406722882, guid: e01cd1d9cfb7593459d6a2d495088320, type: 3}
+    - {fileID: 7812440435716800006, guid: bc8f25ab7d3ed134286e1aa8400151bd, type: 3}
+    - {fileID: 3282573999855541501, guid: bbc9dd1fb4e16704d8dcc629449aa184, type: 3}
+    - {fileID: 5786913828178617027, guid: dd872a38e3d85f84694d32c7ed0fb5d9, type: 3}
+    - {fileID: 1265026548457942842, guid: 6a82c4709074bf440bf2650c979fb6c1, type: 3}
+    - {fileID: 5693390400144532889, guid: 5c7da64acf0f9d04c82c1c711435a69b, type: 3}
+    - {fileID: 4764762501465603604, guid: a7e1cc9812cf2684aa92c20b8caf81a8, type: 3}
+    - {fileID: 1041363401900740970, guid: c4de4cbfbc54e99469eba3495071a5d9, type: 3}
     Texture: {fileID: 2800000, guid: dbfedf940f3f7da48bd380d94112b3e8, type: 3}

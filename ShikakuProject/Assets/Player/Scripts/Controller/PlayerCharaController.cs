@@ -33,7 +33,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         public UnityEvent OnDeath = new();
 
         [HideInInspector]
-        public UnityEvent<BulletControllerBase> OnBulletSpawn = new();
+        public UnityEvent OnBulletSpawn = new();
 
 
         public Rigidbody Rigidbody => _rigidbody;
@@ -49,20 +49,26 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     public PlayerData Datas;
 
     [SerializeField]
-    private PlayerStatusParameter PlayerStatus;
+    private PlayerStatusParameter _playerStatus;
 
 
     private IState _iState = null;
 
     private PlayerButtonDetector _buttonDetector;
 
+
     public event Action<IChaceable> OnDestroyHundle;
+
+    public BulletControllerBase[] GetBulletPrefabs => _playerStatus.GetAllBulletPlefab();
+
+    public int GetSelectBulletType { get { return _playerStatus.SelectBulletType; } }
+
 
     void Start()
     {
         Datas.OnStart(transform);
 
-        PlayerStatus.OnStart();
+        _playerStatus.OnStart();
 
         PlayerInput playerInput = GetComponent<PlayerInput>();
         _buttonDetector = new(playerInput);
@@ -70,8 +76,9 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         SetDelegate();
 
 
-        PlayerStateHolder stateHolder = new(this, _buttonDetector, PlayerStatus, Datas);
+        PlayerStateHolder stateHolder = new(this, _buttonDetector, _playerStatus, Datas);
         _iState = stateHolder.IdleState;
+        _iState.OnEnter();
     }
 
     private void Update()
@@ -159,7 +166,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
         public override void OnEnter()
         {
-            data.Animator.SetTrigger("Idle");
+            data.Animator.SetBool("Walk", false);
 
             buttonDetector.OnButtonFireDown.RemoveListener(OnFire);
             buttonDetector.OnButtonFireDown.AddListener(OnFire);
@@ -186,7 +193,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
         public override void OnEnter()
         {
-            data.Animator.SetTrigger("Walk");
+            data.Animator.SetBool("Walk", true);
 
             buttonDetector.OnButtonFireDown.RemoveListener(OnFire);
             buttonDetector.OnButtonFireDown.AddListener(OnFire);
@@ -208,7 +215,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         // 移動を確認する
         private void CheckCharaMove()
         {
-            Vector3 movePower = buttonDetector.InputStick * playerStatus.MoveSpeed;
+            Vector3 movePower = buttonDetector.InputStick.normalized * playerStatus.MoveSpeed;
 
             data.Rigidbody.velocity = movePower;
 
@@ -227,13 +234,10 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
         public override void OnEnter()
         {
-            data.Animator.SetTrigger("Fire");
             playerStatus.GetSkillSpawnBullet();
 
             // 生成
-            GameObject bullet = Instantiate(playerStatus.GetSkillSelectBulletPlefab, data.SpawnBulletPoint.position, data.SpawnBulletPoint.rotation);
-
-            data.OnBulletSpawn.Invoke(bullet.GetComponent<BulletControllerBase>());
+            data.OnBulletSpawn.Invoke();
         }
 
         public override void OnExit()
@@ -260,11 +264,11 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // スキルのクールダウンを計算
     private void CheckSkillCoolTime()
     {
-        for (int i = 0; i < PlayerStatus.GetSkillLength; ++i)
+        for (int i = 0; i < _playerStatus.GetSkillLength; ++i)
         {
-            if (PlayerStatus.GetSkillIsSelectable(i)) continue;
+            if (_playerStatus.GetSkillIsSelectable(i)) continue;
 
-            PlayerStatus.GetSkillCheckCoolTimeCount(i, Time.deltaTime);
+            _playerStatus.GetSkillCheckCoolTimeCount(i, Time.deltaTime);
         }
     }
 
@@ -272,29 +276,29 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // デリゲートを設定する
     private void SetDelegate()
     {
-        _buttonDetector.OnButtonBulletSelectLeftDown.RemoveListener(OnBulletSelectLeft);
-        _buttonDetector.OnButtonBulletSelectLeftDown.AddListener(OnBulletSelectLeft);
+        //_buttonDetector.OnButtonBulletSelectLeftDown.RemoveListener(OnBulletSelectLeft);
+        //_buttonDetector.OnButtonBulletSelectLeftDown.AddListener(OnBulletSelectLeft);
 
-        _buttonDetector.OnButtonBulletSelectRightDown.RemoveListener(OnBulletSelectRight);
-        _buttonDetector.OnButtonBulletSelectRightDown.AddListener(OnBulletSelectRight);
+        //_buttonDetector.OnButtonBulletSelectRightDown.RemoveListener(OnBulletSelectRight);
+        //_buttonDetector.OnButtonBulletSelectRightDown.AddListener(OnBulletSelectRight);
     }
 
     // 右に選択
     private void OnBulletSelectLeft()
     {
-        --PlayerStatus.SelectBulletType;
+        --_playerStatus.SelectBulletType;
 
-        if (PlayerStatus.SelectBulletType < 0)
-            PlayerStatus.SelectBulletType = PlayerStatus.GetSkillLength - 1;
+        if (_playerStatus.SelectBulletType < 0)
+            _playerStatus.SelectBulletType = _playerStatus.GetSkillLength - 1;
     }
 
     // 左に選択
     private void OnBulletSelectRight()
     {
-        ++PlayerStatus.SelectBulletType;
+        ++_playerStatus.SelectBulletType;
 
-        if (PlayerStatus.SelectBulletType >= PlayerStatus.GetSkillLength)
-            PlayerStatus.SelectBulletType = 0;
+        if (_playerStatus.SelectBulletType >= _playerStatus.GetSkillLength)
+            _playerStatus.SelectBulletType = 0;
     }
 
 

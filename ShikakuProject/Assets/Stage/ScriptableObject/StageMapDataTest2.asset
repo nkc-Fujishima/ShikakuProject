@@ -17,43 +17,58 @@ MonoBehaviour:
   TileDatas:
   - TileData:
     - TileType: 0
+      ElementCount: 2
+    - TileType: 0
+      ElementCount: 2
+    - TileType: 4
+      ElementCount: -1
+    - TileType: 4
+      ElementCount: -1
+    - TileType: 0
+      ElementCount: 2
+    - TileType: 0
+      ElementCount: 2
+    - TileType: 0
+      ElementCount: 2
+  - TileData:
+    - TileType: 3
+      ElementCount: 1
+    - TileType: 0
+      ElementCount: 2
+    - TileType: 4
+      ElementCount: -1
+    - TileType: 4
+      ElementCount: -1
+    - TileType: 0
+      ElementCount: 2
+    - TileType: 0
       ElementCount: 0
+    - TileType: 0
+      ElementCount: 2
+  - TileData:
+    - TileType: 0
+      ElementCount: 2
+    - TileType: 0
+      ElementCount: 2
     - TileType: 4
       ElementCount: -1
     - TileType: 4
       ElementCount: -1
-    - TileType: 4
-      ElementCount: -1
-    - TileType: 4
-      ElementCount: -1
+    - TileType: 0
+      ElementCount: 2
     - TileType: 2
       ElementCount: 0
-    - TileType: 3
-      ElementCount: 0
+    - TileType: 0
+      ElementCount: 2
   - TileData:
     - TileType: 0
       ElementCount: 0
     - TileType: 0
       ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-  - TileData:
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
+    - TileType: 4
+      ElementCount: -1
+    - TileType: 4
+      ElementCount: -1
     - TileType: 0
       ElementCount: 0
     - TileType: 0
@@ -66,24 +81,9 @@ MonoBehaviour:
     - TileType: 0
       ElementCount: 0
     - TileType: 0
-      ElementCount: 0
+      ElementCount: 10
     - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-  - TileData:
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
+      ElementCount: 10
     - TileType: 0
       ElementCount: 0
     - TileType: 0
@@ -95,10 +95,10 @@ MonoBehaviour:
       ElementCount: 0
     - TileType: 0
       ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
+    - TileType: 4
+      ElementCount: -1
+    - TileType: 4
+      ElementCount: -1
     - TileType: 0
       ElementCount: 0
     - TileType: 0
@@ -107,16 +107,16 @@ MonoBehaviour:
       ElementCount: 0
   - TileData:
     - TileType: 0
-      ElementCount: 0
+      ElementCount: 1
     - TileType: 0
-      ElementCount: 0
+      ElementCount: 1
+    - TileType: 4
+      ElementCount: -1
+    - TileType: 4
+      ElementCount: -1
     - TileType: 0
-      ElementCount: 0
+      ElementCount: 2
     - TileType: 0
-      ElementCount: 0
+      ElementCount: 2
     - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
-    - TileType: 0
-      ElementCount: 0
+      ElementCount: 2

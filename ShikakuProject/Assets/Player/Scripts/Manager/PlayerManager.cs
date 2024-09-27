@@ -2,27 +2,22 @@ public class PlayerManager
 {
     private PlayerCharaController _playerCharaController;
 
-    private IBulletSpawn _bulletSpawn;
 
 
     public void SetPlayerCharaController(PlayerCharaController playerCharaController)
     {
         _playerCharaController = playerCharaController;
 
-        _playerCharaController.Datas.OnBulletSpawn.AddListener(OnBulletSpawn);
         _playerCharaController.Datas.OnDeath.AddListener(OnDeath);
-    }
 
-    public void SetIBulletSpawn(IBulletSpawn bulletSpawn)
-    {
-        _bulletSpawn = bulletSpawn;
+        _playerCharaController.Datas.OnBulletSpawn.AddListener(OnBulletSpawn);
     }
 
     //------------------------------------------------------------------------------------------------
-    // バレットが生成された場合に呼び出す関数
-    private void OnBulletSpawn(BulletControllerBase bullet)
+    // プレイヤーがバレットを出した場合に呼び出す関数
+    private void OnBulletSpawn()
     {
-        _bulletSpawn.BulletSpawn(bullet);
+
     }
 
     //------------------------------------------------------------------------------------------------

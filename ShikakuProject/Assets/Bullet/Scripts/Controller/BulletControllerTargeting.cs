@@ -16,17 +16,18 @@ public class BulletControllerTargeting : BulletControllerBase
         _animator.SetInteger("Walk", 1);
     }
 
-    private void Update()
+    private new void Update()
     {
+        base.Update();
         OnMove();
     }
 
 
     //----------------------------------------------------------------------------------
     // EnemyTransformÇê›íËÇ∑ÇÈä÷êî
-    public override void SetEnemyTransform(Transform enemyTransform)
+    public override void OnEnter(Transform enemyTransform)
     {
-        base.SetEnemyTransform(enemyTransform);
+        base.OnEnter(enemyTransform);
 
         OnFaceTarget();
     }
@@ -38,7 +39,7 @@ public class BulletControllerTargeting : BulletControllerBase
         if (IsStop) return;
         if (!EnemyTransform) return;
 
-        BulletRigidbody.velocity = transform.forward * _moveSpeed;
+        BulletRigidbody.velocity = transform.forward * _moveSpeed - transform.up;
     }
 
     //----------------------------------------------------------------------------------

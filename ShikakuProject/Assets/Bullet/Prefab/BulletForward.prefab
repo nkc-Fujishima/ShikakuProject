@@ -75,7 +75,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca74d8fe356d3414ba73d2a23898c667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 1
+  _deliteTime: 1
+  OnBulletDestroy:
+    m_PersistentCalls:
+      m_Calls: []
+  _moveSpeed: 4
   _animator: {fileID: 8456892399694434718}
 --- !u!136 &1325413744144736656
 CapsuleCollider:
@@ -119,8 +123,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2, y: 0.2, z: 0.2}
-  m_Center: {x: 0, y: 0.9, z: 0.8}
+  m_Size: {x: 0.7, y: 1, z: 0.8}
+  m_Center: {x: 0, y: 0.8, z: 0.4}
 --- !u!1001 &8362982558848464638
 PrefabInstance:
   m_ObjectHideFlags: 0

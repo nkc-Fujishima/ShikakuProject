@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BulletManager : IBulletSpawn
 {
+
     private IEnemyListProvider _enemyListProvider;
 
     public void SetIEnemyListProvider(IEnemyListProvider enemyListProvider)
@@ -28,6 +29,6 @@ public class BulletManager : IBulletSpawn
             closeEnemyTransform = enemy.transform;
         }
 
-        bullet.SetEnemyTransform(closeEnemyTransform);
+        bullet.OnEnter(closeEnemyTransform);
     }
 }

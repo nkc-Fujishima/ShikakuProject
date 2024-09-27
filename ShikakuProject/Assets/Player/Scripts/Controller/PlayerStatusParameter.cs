@@ -1,9 +1,9 @@
+using ObjectPool;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerParameter", menuName = "Player/Paramenter")]
 public class PlayerStatusParameter : ScriptableObject
 {
-
     // ƒXƒLƒ‹‚ð•Û‘¶‚·‚é
     [System.Serializable]
     private struct Skill
@@ -18,6 +18,8 @@ public class PlayerStatusParameter : ScriptableObject
 
 
         public GameObject BulletPlefab => _bulletPlefab.gameObject;
+
+        internal BulletControllerBase Bullet => _bulletPlefab;
 
         public float CoolTime => _coolTime;
 
@@ -50,6 +52,9 @@ public class PlayerStatusParameter : ScriptableObject
     [SerializeField]
     private float _moveSpeed;
 
+    private BulletSpawnManager _bulletSpawnManager;
+
+
 
     internal int GetSkillLength => _skillData.Length;
 
@@ -75,5 +80,17 @@ public class PlayerStatusParameter : ScriptableObject
     internal void OnStart()
     {
         SelectBulletType = 0;
+    }
+
+    public BulletControllerBase[] GetAllBulletPlefab()
+    {
+        BulletControllerBase[] bulletPrefabs = new BulletControllerBase[_skillData.Length];
+
+        for (int i = 0; i < bulletPrefabs.Length; ++i)
+        {
+            bulletPrefabs[i] = _skillData[i].Bullet;
+        }
+
+        return bulletPrefabs;
     }
 }

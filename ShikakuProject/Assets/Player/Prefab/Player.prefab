@@ -89,7 +89,7 @@ MonoBehaviour:
     OnBulletSpawn:
       m_PersistentCalls:
         m_Calls: []
-  PlayerStatus: {fileID: 11400000, guid: 2a895e04eec9fe74c94ffb77d26f359e, type: 2}
+  _playerStatus: {fileID: 11400000, guid: 2a895e04eec9fe74c94ffb77d26f359e, type: 2}
 --- !u!114 &6773100393266785118
 MonoBehaviour:
   m_ObjectHideFlags: 0
