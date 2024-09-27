@@ -16,8 +16,9 @@ public class BulletControllerForward : BulletControllerBase
         _animator.SetInteger("Walk", 1);
     }
 
-    private void Update()
+    private new void Update()
     {
+        base.Update();
         OnMove();
     }
 
@@ -27,6 +28,6 @@ public class BulletControllerForward : BulletControllerBase
     {
         if (IsStop) return;
 
-        BulletRigidbody.velocity = transform.forward * _moveSpeed;
+        BulletRigidbody.velocity = transform.forward * _moveSpeed - transform.up;
     }
 }

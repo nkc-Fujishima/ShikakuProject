@@ -9,6 +9,8 @@ public class StageManager:MonoBehaviour
     [SerializeField]
     private NavMeshSurface _navMesh;
 
+    
+
     // ステージ数を決める変数
     // 違う場所から持ってきたいから後で消す
     [SerializeField]
@@ -17,6 +19,8 @@ public class StageManager:MonoBehaviour
     private PlayerManager _playerManager;
     private BulletManager _bulletManager;
     private EnemyManager _enemyManager;
+
+    private BulletSpawnManager _bulletSpawnManager;
 
 
     private void Start()
@@ -40,15 +44,19 @@ public class StageManager:MonoBehaviour
             _enemyManager.AddEnemy(enemyObjects[i].GetComponent<EnemyControllerBase>());
 
         _playerManager.SetPlayerCharaController(playerObject.GetComponent<PlayerCharaController>());
-        _playerManager.SetIBulletSpawn(_bulletManager);
 
 
         // ナビメッシュをベイク
         _navMesh.BuildNavMesh();
 
 
-        // ゲームスタート
+        // バレットのオブジェクトプールを設定
+        _bulletSpawnManager = gameObject.AddComponent<BulletSpawnManager>();
+        _bulletSpawnManager.SetPlayerCharaController(playerObject.GetComponent<PlayerCharaController>());
+        _bulletSpawnManager.SetIBulletSpawn(_bulletManager);
 
+
+        // ゲームスタート
 
     }
 

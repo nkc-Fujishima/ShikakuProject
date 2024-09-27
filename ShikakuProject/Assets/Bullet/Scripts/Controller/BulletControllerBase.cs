@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BoxCollider))]
-public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage, IStoppable, IDestroy
+public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage, IStoppable, IDestroy, IBulletManaged
 {
     protected Transform EnemyTransform { get; private set; }
 
@@ -11,17 +12,46 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
     protected bool IsStop { get; private set; } = false;
 
+    [HideInInspector]
     public event Action<IChaceable> OnDestroyHundle;
+
 
     public void Start()
     {
         BulletRigidbody = GetComponent<Rigidbody>();
     }
 
+    public void Update()
+    {
+        DestroyAfter();
+    }
+
 
     //----------------------------------------------------------------------------------
-    // EnemyTransformを設定する関数
-    public virtual void SetEnemyTransform(Transform enemyTransform)
+    // 時間が経ったら消えるようにする関数
+    [SerializeField]
+    protected float _deliteTime = 1;
+
+    float _deliteProgressTime = 0;
+
+    private void DestroyAfter()
+    {
+        _deliteProgressTime += Time.deltaTime;
+
+        if (_deliteProgressTime > _deliteTime)
+            Damage();
+    }
+
+    //----------------------------------------------------------------------------------
+    // 使用されるときに呼び出される関数
+    public virtual void OnEnter(Transform enemyTransform)
+    {
+        SetEnemyTransform(enemyTransform);
+    }
+
+    //----------------------------------------------------------------------------------
+    // EnemyTransformを設定する
+    private void SetEnemyTransform(Transform enemyTransform)
     {
         if (enemyTransform != null)
             EnemyTransform = enemyTransform;
@@ -33,9 +63,11 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
         }
     }
 
+
     //----------------------------------------------------------------------------------
     // 継承先に持ってほしい関数
     protected abstract void OnMove();
+
 
     //----------------------------------------------------------------------------------
     // IChaceable
@@ -45,9 +77,10 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     // IDamage
     public void Damage()
     {
-        OnDestroyHundle?.Invoke(this);
+        _deliteProgressTime = 0;
 
-        gameObject.SetActive(false);
+        OnDestroyHundle?.Invoke(this);
+        OnBulletDestroy?.Invoke(gameObject);
     }
 
     //----------------------------------------------------------------------------------
@@ -55,6 +88,23 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     public void OnStop()
     {
         IsStop = true;
+    }
+
+    //----------------------------------------------------------------------------------
+    // IBulletManaged
+    [SerializeField]
+    private int typeCount = 0;
+
+    public UnityEvent<GameObject> OnBulletDestroy;
+
+    public void SetTypeCount(int typeCount)
+    {
+        this.typeCount = typeCount;
+    }
+
+    public int GetTypeCount()
+    {
+        return typeCount;
     }
 
 
