@@ -56,6 +56,10 @@ public class StageManager:MonoBehaviour
         _bulletSpawnManager.SetIBulletSpawn(_bulletManager);
 
 
+        // エネミーのスタートを起動
+        _enemyManager.ExexuteEnemyStartMethod();
+
+
         // ゲームスタート
 
     }
