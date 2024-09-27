@@ -19,6 +19,31 @@ public class ChaceEnemyController : EnemyControllerBase
 
     private void Start()
     {
+        //base.Start();
+
+        //VisionSensor visionSensor = transform.Find("Sensor").GetComponent<VisionSensor>();
+        //BoxCollider weaponCollider = weapon.GetComponent<BoxCollider>();
+        //weaponCollider.enabled = false;
+
+        //visionMeshCreator = transform.Find("Sensor").GetComponent<VisionMeshCreator>();
+        //visionMeshCreator.SetUp();
+
+        //// 視界センサーのActionにターゲットリストの追加と削除メソッドを登録
+        //visionSensor.OnSensorInHundle += AddTarget;
+        //visionSensor.OnSensorOutHundle += RemoveTarget;
+
+        //NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        //Rigidbody rigidBody = GetComponent<Rigidbody>();
+
+        //ChaceEnemyStateManager stateHolder = new ChaceEnemyStateManager(animator, this.transform, parameter as ChaceEnemyParameter, this, chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody);
+
+        //iState = stateHolder.idleState;
+        //if (iState != null) iState.OnEnter();
+    }
+
+    public override void OnStart()
+    {
+        base.OnStart();
         base.Start();
 
         VisionSensor visionSensor = transform.Find("Sensor").GetComponent<VisionSensor>();
@@ -39,6 +64,7 @@ public class ChaceEnemyController : EnemyControllerBase
 
         iState = stateHolder.idleState;
         if (iState != null) iState.OnEnter();
+
     }
 
     private void Update()

@@ -12,4 +12,12 @@ public class EnemyManager : IEnemyListProvider
     {
         if (enemy != null) enemyList.Add(enemy);
     }
+
+    public void ExexuteEnemyStartMethod()
+    {
+        foreach(var enemy in enemyList)
+        {
+            enemy.OnStart();
+        }
+    }
 }

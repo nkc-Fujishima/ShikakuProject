@@ -17,6 +17,8 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
         animator = GetComponent<Animator>();
     }
 
+    public virtual void OnStart() { }
+
     public void ChangeState(IState nextState)
     {
         if (iState != null) iState.OnExit();
