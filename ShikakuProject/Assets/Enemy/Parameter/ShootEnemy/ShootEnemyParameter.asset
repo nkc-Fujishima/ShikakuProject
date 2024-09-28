@@ -19,3 +19,4 @@ MonoBehaviour:
   InvincibleAngle: 90
   RotateSpeed: 2
   ListRefreshRate: 10
+  BulletSpeed: 3

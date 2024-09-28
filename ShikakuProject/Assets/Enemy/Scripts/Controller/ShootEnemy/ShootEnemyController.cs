@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShootEnemyController : EnemyControllerBase
 {
+    [Header("オブジェクト設定"), SerializeField] GameObject enemyBullet;
 
     // ゲーム中の経過フレーム
     ulong frameCount = 0;
@@ -271,14 +272,14 @@ public class ShootEnemyController : EnemyControllerBase
             {
                 Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(manager.chaceTarget.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, manager.chaceTarget.chacebleTransform.position.z - transform.position.z));
                 RaycastHit toTargetHit;
-                Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask);
-                if (!toTargetHit.transform.TryGetComponent(out IChaceable chaceableObject)) return;
+                if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) return;
+                if (toTargetHit.transform.TryGetComponent(out IChaceable chaceableObject))
+                {
+                    Vector3 targetVector = new Vector3(manager.chaceTarget.chacebleTransform.position.x - transform.position.x, 0, manager.chaceTarget.chacebleTransform.position.z - transform.position.z);
+                    Quaternion targetRotation = Quaternion.LookRotation(targetVector);
 
-
-                Vector3 targetVector = new Vector3(manager.chaceTarget.chacebleTransform.position.x - transform.position.x, 0, manager.chaceTarget.chacebleTransform.position.z - transform.position.z);
-                Quaternion targetRotation = Quaternion.LookRotation(targetVector);
-
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed * Time.deltaTime);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed * Time.deltaTime);
+                }
             }
 
             if (countTime > parameter.AttackCoolTime) stateChanger.ChangeState(manager.idleState);
@@ -293,8 +294,9 @@ public class ShootEnemyController : EnemyControllerBase
     // 攻撃処理
     private void Shoot()
     {
-        target = stateManager.chaceTarget;
-        Debug.Log(target);
+        GameObject bullet = Instantiate(enemyBullet, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
+        ShootEnemyParameter shootEnemyParameter = parameter as ShootEnemyParameter;
+        bullet.GetComponent<EnemyBullet>().Construct(gameObject.transform.forward, shootEnemyParameter.BulletSpeed, shootEnemyParameter.BulletLifeTime);
     }
 
 
