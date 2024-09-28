@@ -114,7 +114,8 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<IDamage>().Damage(transform.position);
+            if (other.TryGetComponent<IDamage>(out IDamage sr))
+                sr.Damage(transform.position);
         }
     }
 }
