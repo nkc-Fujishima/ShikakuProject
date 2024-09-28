@@ -19,4 +19,4 @@ MonoBehaviour:
     _coolTime: 1
   - _bulletPlefab: {fileID: 2362984168328327310, guid: cbfda06413f3256429846f2b10b8b3f3, type: 3}
     _coolTime: 1
-  _moveSpeed: 2
+  _moveSpeed: 3

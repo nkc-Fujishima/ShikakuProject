@@ -75,7 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca74d8fe356d3414ba73d2a23898c667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deliteTime: 1
+  _deliteTime: 6
+  typeCount: 1
   OnBulletDestroy:
     m_PersistentCalls:
       m_Calls: []
