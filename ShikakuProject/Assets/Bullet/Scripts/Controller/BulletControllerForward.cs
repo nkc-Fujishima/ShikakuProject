@@ -28,6 +28,8 @@ public class BulletControllerForward : BulletControllerBase
     {
         if (IsStop) return;
 
-        BulletRigidbody.velocity = transform.forward * _moveSpeed - transform.up;
+        Vector3 movePower = transform.forward * _moveSpeed - transform.up;
+
+        BulletRigidbody.velocity = new Vector3(movePower.x, BulletRigidbody.velocity.y, movePower.z);
     }
 }

@@ -217,7 +217,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         {
             Vector3 movePower = buttonDetector.InputStick.normalized * playerStatus.MoveSpeed;
 
-            data.Rigidbody.velocity = movePower;
+            data.Rigidbody.velocity = new Vector3(movePower.x, data.Rigidbody.velocity.y, movePower.z);
 
             // ëÃÇêiçsï˚å¸Ç…âÒì]Ç≥ÇπÇÈ
             if (movePower == Vector3.zero) return;
@@ -310,8 +310,6 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // IDamage
     public void Damage()
     {
-        Debug.Log(OnDestroyHundle.GetInvocationList().Length);
-
         Datas.OnDeath.Invoke();
 
         OnDestroyHundle?.Invoke(this);

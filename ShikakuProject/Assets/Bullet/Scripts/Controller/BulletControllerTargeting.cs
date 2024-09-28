@@ -39,7 +39,9 @@ public class BulletControllerTargeting : BulletControllerBase
         if (IsStop) return;
         if (!EnemyTransform) return;
 
-        BulletRigidbody.velocity = transform.forward * _moveSpeed - transform.up;
+        Vector3 movePower = transform.forward * _moveSpeed - transform.up;
+
+        BulletRigidbody.velocity = new Vector3(movePower.x, BulletRigidbody.velocity.y, movePower.z);
     }
 
     //----------------------------------------------------------------------------------
