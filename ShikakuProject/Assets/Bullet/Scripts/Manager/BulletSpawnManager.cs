@@ -63,6 +63,9 @@ public class BulletSpawnManager : MonoBehaviour
             BulletControllerBase bulletPrefab = bulletSegment.GetComponent<BulletControllerBase>();
             OnBulletSpawn.Invoke(bulletPrefab);
             bulletPrefab.OnBulletDestroy.AddListener(ReturnBullet);
+
+            // バレットにプレイヤーを設定する
+            _bulletSpawn.BulletSpawn(bulletPrefab);
         }
     }
 
