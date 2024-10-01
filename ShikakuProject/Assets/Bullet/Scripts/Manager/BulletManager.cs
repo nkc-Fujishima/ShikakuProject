@@ -21,6 +21,8 @@ public class BulletManager : IBulletSpawn
 
         foreach (var enemy in _enemyListProvider.EnemyList)
         {
+            if (!enemy.gameObject.activeSelf) continue;
+
             float distanceEnemyToBullet = (enemy.transform.position - bullet.transform.position).magnitude;
 
             if (distance <= distanceEnemyToBullet) continue;
