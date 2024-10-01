@@ -57,9 +57,8 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
             EnemyTransform = enemyTransform;
         else
         {
-            // nullだった場合はそのオブジェクトの眼の前に設定する
-            EnemyTransform = transform;
-            EnemyTransform.position = transform.forward;
+            // nullだった場合はエネミーのTransform情報もNullにする
+            EnemyTransform = null;
         }
     }
 

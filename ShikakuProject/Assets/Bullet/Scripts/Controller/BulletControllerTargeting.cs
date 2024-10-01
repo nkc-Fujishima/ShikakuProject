@@ -37,7 +37,6 @@ public class BulletControllerTargeting : BulletControllerBase
     protected override void OnMove()
     {
         if (IsStop) return;
-        if (!EnemyTransform) return;
 
         Vector3 movePower = transform.forward * _moveSpeed - transform.up;
 
@@ -48,6 +47,8 @@ public class BulletControllerTargeting : BulletControllerBase
     // “G‚Ì•ûŒü‚ÉŒü‚­
     private void OnFaceTarget()
     {
+        if (!EnemyTransform) return;
+
         Vector3 vectolEnemyToBullet = EnemyTransform.position - transform.position;
 
         float moveRotationY = Mathf.Atan2(-vectolEnemyToBullet.z, vectolEnemyToBullet.x) * Mathf.Rad2Deg + 90;
