@@ -23,7 +23,7 @@ public class StageManager:MonoBehaviour
     private BulletSpawnManager _bulletSpawnManager;
 
 
-    private void Start()
+    private void Awake()
     {
         // 各種マネージャーインスタンスを生成
         _playerManager = new();

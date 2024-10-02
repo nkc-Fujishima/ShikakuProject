@@ -35,10 +35,6 @@ public class BulletSpawnManager : MonoBehaviour
 
     private const int OBSTACLE_PREFB_LENGTH = 3;
     private BulletObjectPool[] _bulletPools;
-    private int[] _activeObjectValues;
-
-    private Vector3 _nextSpawnPoint = Vector3.zero;
-    private Quaternion _nextSpawnRotate = Quaternion.identity;
 
     [HideInInspector]
     public UnityEvent<BulletControllerBase> OnBulletSpawn = new();
@@ -48,7 +44,7 @@ public class BulletSpawnManager : MonoBehaviour
     // ÉoÉåÉbÉgÇê∂ê¨
     public void SpawnBullet()
     {
-        BulletObjectPool pool = _bulletPools[_playerController.GetSelectBulletType];
+        BulletObjectPool pool = _bulletPools[_playerController.SelectBulletType.Value];
         GameObject bulletSegment = pool.ObstaclePool.Get();
 
         if (bulletSegment != null)
@@ -107,7 +103,7 @@ public class BulletSpawnManager : MonoBehaviour
 
         for (int i = 0; i < _bulletPools.Length; ++i)
         {
-            _bulletPools[i] = new BulletObjectPool();
+            _bulletPools[i] = new ();
             _bulletPools[i].SetObstacleObject = bulletPrefabs[i].gameObject;
         }
     }

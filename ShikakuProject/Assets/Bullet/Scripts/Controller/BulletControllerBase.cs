@@ -78,6 +78,8 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     {
         _deliteProgressTime = 0;
 
+        IsStop = false;
+
         OnDestroyHundle?.Invoke(this);
         OnBulletDestroy?.Invoke(gameObject);
     }

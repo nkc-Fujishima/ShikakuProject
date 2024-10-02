@@ -1,3 +1,4 @@
+using R3;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -35,6 +36,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         [HideInInspector]
         public UnityEvent OnBulletSpawn = new();
 
+        public int SelectType = 0;
+
 
         public Rigidbody Rigidbody => _rigidbody;
 
@@ -45,26 +48,29 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         public Animator Animator => _animator;
     }
 
-    [SerializeField]
-    public PlayerData Datas;
 
     [SerializeField]
     private PlayerStatusParameter _playerStatus;
-
 
     private IState _iState = null;
 
     private PlayerButtonDetector _buttonDetector;
 
 
+    public PlayerData Datas;
+
     public event Action<IChaceable> OnDestroyHundle;
 
     public BulletControllerBase[] GetBulletPrefabs => _playerStatus.GetAllBulletPlefab();
 
-    public int GetSelectBulletType { get { return _playerStatus.SelectBulletType; } }
+    public Sprite[] GetBulletTexture => _playerStatus.GetAllBulletTexture();
+
+    public ReactiveProperty<int> SelectBulletType = new (0);
+
+    public ReactiveProperty<float>[] CountTimeRates;
 
 
-    void Start()
+    void Awake()
     {
         Datas.OnStart(transform);
 
@@ -76,9 +82,16 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         SetDelegate();
 
 
-        PlayerStateHolder stateHolder = new(this, _buttonDetector, _playerStatus, Datas);
+        PlayerStateHolder stateHolder = new(this, _buttonDetector, _playerStatus, Datas, SelectBulletType);
         _iState = stateHolder.IdleState;
         _iState.OnEnter();
+
+
+        CountTimeRates = new ReactiveProperty<float>[_playerStatus.GetSkillLength];
+        for (int i = 0; i < CountTimeRates.Length; ++i)
+        {
+            CountTimeRates[i] = new(1);
+        }
     }
 
     private void Update()
@@ -93,11 +106,11 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // ステートを指定された状態に変化させる
     public void ChangeState(IState nextState)
     {
-        if (_iState != null) _iState.OnExit();
+        _iState?.OnExit();
 
         _iState = nextState;
 
-        if (_iState != null) _iState.OnEnter();
+        _iState?.OnEnter();
     }
 
     //----------------------------------------------------------------------------------
@@ -108,24 +121,11 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         public Walk WalkState { get; }
         public Fire FireState { get; }
 
-        readonly PlayerButtonDetector chaceableObjects = null;
-
-        readonly IStateChangeable stateChanger = null;
-
-        readonly PlayerStatusParameter playerStatus = null;
-
-        readonly PlayerData data = null;
-
-        public PlayerStateHolder(IStateChangeable stateChanger, PlayerButtonDetector button, PlayerStatusParameter playerStatus, PlayerData datas)
+        public PlayerStateHolder(IStateChangeable stateChanger, PlayerButtonDetector button, PlayerStatusParameter playerStatus, PlayerData datas, ReactiveProperty<int> selectBulletType)
         {
-            this.stateChanger = stateChanger;
-            this.chaceableObjects = button;
-            this.playerStatus = playerStatus;
-            this.data = datas;
-
-            IdleState = new Idle(stateChanger, this, button, playerStatus, datas);
-            WalkState = new Walk(stateChanger, this, button, playerStatus, datas);
-            FireState = new Fire(stateChanger, this, button, playerStatus, datas);
+            IdleState = new Idle(stateChanger, this, button, playerStatus, datas,selectBulletType);
+            WalkState = new Walk(stateChanger, this, button, playerStatus, datas, selectBulletType);
+            FireState = new Fire(stateChanger, this, button, playerStatus, datas, selectBulletType);
         }
     }
 
@@ -139,20 +139,22 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         protected PlayerButtonDetector buttonDetector = null;
         protected PlayerStatusParameter playerStatus = null;
         protected PlayerData data;
+        protected ReactiveProperty<int> selectBulletType = null;
 
-        public PlayerStateBase(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data)
+        public PlayerStateBase(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data, ReactiveProperty<int> selectBulletType)
         {
             this.stateChanger = stateChanger;
             this.stateHolder = stateHolder;
             this.buttonDetector = buttonDetector;
             this.playerStatus = playerStatus;
             this.data = data;
+            this.selectBulletType = selectBulletType;
         }
 
         // 弾を生成するボタンを押した場合の関数
         public void OnFire()
         {
-            if (!playerStatus.GetSkillIsSelectable(playerStatus.SelectBulletType)) return;
+            if (!playerStatus.GetSkillIsSelectable(selectBulletType.Value)) return;
 
             stateChanger.ChangeState(stateHolder.FireState);
         }
@@ -162,7 +164,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // 止まるステート
     private class Idle : PlayerStateBase
     {
-        public Idle(IStateChangeable stateChanger,PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector ,PlayerStatusParameter playerStatus, PlayerData data) : base(stateChanger, stateHolder,buttonDetector,playerStatus, data) { }
+        public Idle(IStateChangeable stateChanger,PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector ,PlayerStatusParameter playerStatus, PlayerData data, ReactiveProperty<int> selectBulletType) : base(stateChanger, stateHolder,buttonDetector,playerStatus, data, selectBulletType) { }
 
         public override void OnEnter()
         {
@@ -189,7 +191,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // 移動するステート
     private class Walk : PlayerStateBase
     {
-        public Walk(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data) : base(stateChanger, stateHolder, buttonDetector, playerStatus,data) { }
+        public Walk(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data, ReactiveProperty<int> selectBulletType) : base(stateChanger, stateHolder, buttonDetector, playerStatus,data, selectBulletType) { }
 
         public override void OnEnter()
         {
@@ -230,11 +232,11 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // 弾を出現させるステート
     private class Fire : PlayerStateBase
     {
-        public Fire(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data) : base(stateChanger, stateHolder, buttonDetector, playerStatus, data) { }
+        public Fire(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data, ReactiveProperty<int> selectBulletType) : base(stateChanger, stateHolder, buttonDetector, playerStatus, data, selectBulletType) { }
 
         public override void OnEnter()
         {
-            playerStatus.GetSkillSpawnBullet();
+            playerStatus.GetSkillSpawnBullet(selectBulletType.Value);
 
             // 生成
             data.OnBulletSpawn.Invoke();
@@ -268,12 +270,17 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         {
             if (_playerStatus.GetSkillIsSelectable(i)) continue;
 
+
             _playerStatus.GetSkillCheckCoolTimeCount(i, Time.deltaTime);
+
+
+            float cooldownRate = _playerStatus.GetSkillCoolTimeCount(i) / _playerStatus.GetSkillCoolTime(i);
+            CountTimeRates[i].Value = cooldownRate;
         }
     }
 
     //----------------------------------------------------------------------------------
-    // デリゲートを設定する
+    // 選択ボタンの設定する
     private void SetDelegate()
     {
         //_buttonDetector.OnButtonBulletSelectLeftDown.RemoveListener(OnBulletSelectLeft);
@@ -286,19 +293,23 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // 右に選択
     private void OnBulletSelectLeft()
     {
-        --_playerStatus.SelectBulletType;
+        int nextType = SelectBulletType.Value - 1;
 
-        if (_playerStatus.SelectBulletType < 0)
-            _playerStatus.SelectBulletType = _playerStatus.GetSkillLength - 1;
+        if (nextType < 0)
+            nextType = _playerStatus.GetSkillLength - 1;
+
+        SelectBulletType.Value = nextType;
     }
 
     // 左に選択
     private void OnBulletSelectRight()
     {
-        ++_playerStatus.SelectBulletType;
+        int nextType = SelectBulletType.Value + 1;
 
-        if (_playerStatus.SelectBulletType >= _playerStatus.GetSkillLength)
-            _playerStatus.SelectBulletType = 0;
+        if (nextType >= _playerStatus.GetSkillLength)
+            nextType = 0;
+
+        SelectBulletType.Value = nextType;
     }
 
 

@@ -14,18 +14,23 @@ public class PlayerStatusParameter : ScriptableObject
         [SerializeField]
         private float _coolTime;
 
+        [SerializeField]
+        private Sprite _texture;
+
         private float _coolTimeCount;
 
 
-        public GameObject BulletPlefab => _bulletPlefab.gameObject;
+        readonly public GameObject BulletPlefab => _bulletPlefab.gameObject;
 
-        internal BulletControllerBase Bullet => _bulletPlefab;
+        readonly public BulletControllerBase Bullet => _bulletPlefab;
 
-        public float CoolTime => _coolTime;
+        readonly public float CoolTime => _coolTime;
 
-        public float CoolTimeCount => _coolTimeCount;
+        readonly public float CoolTimeCount => _coolTimeCount;
 
-        public bool IsSelectable => (_coolTimeCount >= _coolTime);
+        readonly public bool IsSelectable => (_coolTimeCount >= _coolTime);
+
+        readonly public Sprite Texture => _texture;
 
 
         // クールタイムを計算する
@@ -52,13 +57,8 @@ public class PlayerStatusParameter : ScriptableObject
     [SerializeField]
     private float _moveSpeed;
 
-    private BulletSpawnManager _bulletSpawnManager;
-
-
 
     internal int GetSkillLength => _skillData.Length;
-
-    internal GameObject GetSkillSelectBulletPlefab => _skillData[SelectBulletType].BulletPlefab;
 
     internal float GetSkillCoolTime(int bulletType) => _skillData[bulletType].CoolTime;
 
@@ -68,18 +68,15 @@ public class PlayerStatusParameter : ScriptableObject
 
     internal void GetSkillCheckCoolTimeCount(int bulletType, float deltaTime) => _skillData[bulletType].CheckCoolTimeCount(deltaTime);
 
-    internal void GetSkillSpawnBullet() => _skillData[SelectBulletType].SpawnBullet();
+    internal void GetSkillSpawnBullet(int selectType) => _skillData[selectType].SpawnBullet();
 
 
     internal float MoveSpeed => _moveSpeed;
 
-    [HideInInspector]
-    internal int SelectBulletType { get; set; }
-
 
     internal void OnStart()
     {
-        SelectBulletType = 0;
+
     }
 
     public BulletControllerBase[] GetAllBulletPlefab()
@@ -92,5 +89,17 @@ public class PlayerStatusParameter : ScriptableObject
         }
 
         return bulletPrefabs;
+    }
+
+    public Sprite[] GetAllBulletTexture()
+    {
+        Sprite[] textures = new Sprite[_skillData.Length];
+
+        for (int i = 0; i < textures.Length; ++i)
+        {
+            textures[i] = _skillData[i].Texture;
+        }
+
+        return textures;
     }
 }
