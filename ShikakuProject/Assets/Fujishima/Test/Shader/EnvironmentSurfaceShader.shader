@@ -16,14 +16,6 @@ Shader "Custom/EnvironmentSurfaceShader"
         Tags { "RenderType"="Opaque" }
         LOD 200
 
-        
-        
-            Stencil
-            {
-                Ref 0
-                Comp Equal
-            }
-
             CGPROGRAM
              // Physically based Standard lighting model, and enable shadows on all light types
             #pragma surface surf Standard fullforwardshadows
