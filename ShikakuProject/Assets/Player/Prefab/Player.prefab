@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7eb90d40a65ff64dbf05fff95a42763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerStatus: {fileID: 11400000, guid: 2a895e04eec9fe74c94ffb77d26f359e, type: 2}
   Datas:
     _spawnBulletPoint: {fileID: 6063014141128993604}
     _animator: {fileID: 8241638771113780961}
@@ -89,7 +90,7 @@ MonoBehaviour:
     OnBulletSpawn:
       m_PersistentCalls:
         m_Calls: []
-  _playerStatus: {fileID: 11400000, guid: 2a895e04eec9fe74c94ffb77d26f359e, type: 2}
+    SelectType: 0
 --- !u!114 &6773100393266785118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +243,22 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e441e93093b2deb4ab1770b4f6a0cb41, type: 2}
+    - target: {fileID: 137000010172678106, guid: a7a2413e370a3904a93a10952929cf53, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ae0ce218a41665242aad6d698014dc1e, type: 2}
+    - target: {fileID: 137000010720003888, guid: a7a2413e370a3904a93a10952929cf53, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ae0ce218a41665242aad6d698014dc1e, type: 2}
+    - target: {fileID: 137000011460956432, guid: a7a2413e370a3904a93a10952929cf53, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ae0ce218a41665242aad6d698014dc1e, type: 2}
+    - target: {fileID: 137000014271306024, guid: a7a2413e370a3904a93a10952929cf53, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ae0ce218a41665242aad6d698014dc1e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

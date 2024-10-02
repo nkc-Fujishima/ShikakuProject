@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4266228644432692428}
   - component: {fileID: 7280281843749051914}
   - component: {fileID: 8788643890947594291}
+  - component: {fileID: 5229154914602760220}
   m_Layer: 0
   m_Name: BulletIdle
   m_TagString: Bullet
@@ -98,7 +99,30 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 1}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!136 &5229154914602760220
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6368607091513773916}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &3342479016231912681
 PrefabInstance:
@@ -152,6 +176,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23782160012395896, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 61c1b060be2840d46bd4b02590f6330c, type: 2}
+    - target: {fileID: 23909351481393346, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 61c1b060be2840d46bd4b02590f6330c, type: 2}
+    - target: {fileID: 23969500253089624, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 61c1b060be2840d46bd4b02590f6330c, type: 2}
     m_RemovedComponents:
     - {fileID: 114046883305083430, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
     - {fileID: 65712882847760486, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}

@@ -178,6 +178,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23067643150841808, guid: 7451ef01e53127446b9d7406220542f6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bb411f475c6a8fb4ca197ee00497cd4f, type: 2}
+    - target: {fileID: 23176804090855320, guid: 7451ef01e53127446b9d7406220542f6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bb411f475c6a8fb4ca197ee00497cd4f, type: 2}
+    - target: {fileID: 23301830546899968, guid: 7451ef01e53127446b9d7406220542f6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bb411f475c6a8fb4ca197ee00497cd4f, type: 2}
+    - target: {fileID: 23304033491632198, guid: 7451ef01e53127446b9d7406220542f6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bb411f475c6a8fb4ca197ee00497cd4f, type: 2}
+    - target: {fileID: 23490911278107360, guid: 7451ef01e53127446b9d7406220542f6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bb411f475c6a8fb4ca197ee00497cd4f, type: 2}
+    - target: {fileID: 23893270927162662, guid: 7451ef01e53127446b9d7406220542f6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bb411f475c6a8fb4ca197ee00497cd4f, type: 2}
+    - target: {fileID: 23952273610194852, guid: 7451ef01e53127446b9d7406220542f6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bb411f475c6a8fb4ca197ee00497cd4f, type: 2}
+    - target: {fileID: 23985926508392152, guid: 7451ef01e53127446b9d7406220542f6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bb411f475c6a8fb4ca197ee00497cd4f, type: 2}
     m_RemovedComponents:
     - {fileID: 65449959130551738, guid: 7451ef01e53127446b9d7406220542f6, type: 3}
     - {fileID: 54385426829514116, guid: 7451ef01e53127446b9d7406220542f6, type: 3}

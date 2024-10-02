@@ -83,6 +83,5 @@ public class UISkillListManager : MonoBehaviour
     public void DisplayCooldown(int type, float cooldown)
     {
         _skillImageList[type].SetCooldown(cooldown);
-
     }
 }
