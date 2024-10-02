@@ -17,7 +17,6 @@ public class VisionSensor : MonoBehaviour
 
         if (!other.transform.TryGetComponent<IChaceable>(out chaceableObject))
         {
-            Debug.Log($"<color=red>{other.transform.name}</color> �͒ǐՑΏۊO�ł�");
             return;
         }
 
