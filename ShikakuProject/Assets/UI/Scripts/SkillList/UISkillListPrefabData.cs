@@ -23,13 +23,9 @@ public class UISkillListPrefabData : MonoBehaviour
     private Image _filterImage;
 
 
-    [Header("後ろの画像の色を変更")]
+    [Header("後ろの画像")]
     [SerializeField]
     private Image _backImage;
-    [SerializeField]
-    private Color _selectBackColor;
-    [SerializeField]
-    private Color _notSelectBackColor;
 
     [Header("UIの幅")]
     [SerializeField]
@@ -42,6 +38,8 @@ public class UISkillListPrefabData : MonoBehaviour
 
     public Transform ImageTransform => _imageTransform;
 
+    public Image BackImage => _backImage;
+
     public int CardWidth => _cardWidth;
 
 
@@ -52,22 +50,8 @@ public class UISkillListPrefabData : MonoBehaviour
     }
 
     // クールタイムを表示
-    public void SetCooldown(float Range)
+    public void SetCooldown(float range)
     {
-        _filterImage.fillAmount = Range;
-
-        if (Range == 0)
-            SetBackColor(true);
-        else
-            SetBackColor(false);
-    }
-
-    // 色を設定する
-    private void SetBackColor(bool isSelected)
-    {
-        if(isSelected)
-            _backImage.color = _selectBackColor;
-        else
-            _backImage.color = _notSelectBackColor;
+        _filterImage.fillAmount = range;
     }
 }
