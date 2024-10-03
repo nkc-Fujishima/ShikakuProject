@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: StageGenereteData
   m_EditorClassIdentifier: 
   StageMapData:
-  - {fileID: 11400000, guid: 9a38143896bd85143b23aa2267657e72, type: 2}
+  - {fileID: 11400000, guid: 5c5592bbde170614dadbb8632489932c, type: 2}
   - {fileID: 11400000, guid: 176fdece84556514aaf9bb64edf069ec, type: 2}
   - {fileID: 11400000, guid: ef490114e8643ee49bc10d2540f979ff, type: 2}
-  - {fileID: 11400000, guid: 2868f42ae8735374f9a5e6e91818323d, type: 2}
+  - {fileID: 11400000, guid: 4321edba59f899f4aa5187311fbe765b, type: 2}
   ElementData: {fileID: 11400000, guid: 0322bff9b3139ee42ba1319cbea6254e, type: 2}
   TileWidth: 1.6
   TileHeight: 1.6
