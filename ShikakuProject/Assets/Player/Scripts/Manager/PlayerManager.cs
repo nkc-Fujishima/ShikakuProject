@@ -4,7 +4,7 @@ public class PlayerManager
 {
     private PlayerCharaController _playerCharaController;
 
-    private ReactiveProperty<bool> IsDeath = new ReactiveProperty<bool>(false);
+    public ReactiveProperty<bool> IsDeath { get; private set; } = new ReactiveProperty<bool>(false);
 
 
     public void SetPlayerCharaController(PlayerCharaController playerCharaController)
