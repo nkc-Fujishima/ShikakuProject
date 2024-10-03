@@ -1596,6 +1596,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1984461002887702235, guid: bc9c333e711e22b4eb7326d1706b6241, type: 3}
+      propertyPath: cursor
+      value: 
+      objectReference: {fileID: 1567893085837452608, guid: c8977cbd7a9bb8945aad43a1b0af48a0, type: 3}
     - target: {fileID: 2129586029311065979, guid: bc9c333e711e22b4eb7326d1706b6241, type: 3}
       propertyPath: m_Layer
       value: 2
@@ -1862,6 +1866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameter: {fileID: 11400000, guid: 8b0b99532f878ea48ba748428c4fe3ea, type: 2}
+  cursor: {fileID: 0}
   weapon: {fileID: 940649282228665384}
 --- !u!1 &1985503790911956654
 GameObject:
@@ -1963,7 +1968,7 @@ Transform:
   m_GameObject: {fileID: 2303790650672710379}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 6.3, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2697,6 +2702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7eb90d40a65ff64dbf05fff95a42763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerStatus: {fileID: 11400000, guid: 2a895e04eec9fe74c94ffb77d26f359e, type: 2}
   Datas:
     _spawnBulletPoint: {fileID: 6063014141174915495}
     _animator: {fileID: 8241638771152235522}
@@ -2706,7 +2712,7 @@ MonoBehaviour:
     OnBulletSpawn:
       m_PersistentCalls:
         m_Calls: []
-  _playerStatus: {fileID: 11400000, guid: 2a895e04eec9fe74c94ffb77d26f359e, type: 2}
+    SelectType: 0
 --- !u!4 &7866983877164705122
 Transform:
   m_ObjectHideFlags: 0

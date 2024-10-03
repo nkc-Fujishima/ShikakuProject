@@ -38,12 +38,25 @@ public class StageManager:MonoBehaviour
 
         // 各種マネージャーセットアップ
         // ステージジェネレータの生成情報をマネージャーに格納
+        #region バレットマネージャーセットアップ
         _bulletManager.SetIEnemyListProvider(_enemyManager);
+        #endregion
 
+
+
+        #region エネミーマネージャーセットアップ
         for (int i = 0; i < enemyObjects.Length; ++i)
             _enemyManager.AddEnemy(enemyObjects[i].GetComponent<EnemyControllerBase>());
 
+        _enemyManager.OnClearHundle += StageClear;
+        #endregion
+
+
+
+        #region プレイヤーマネージャーセットアップ
         _playerManager.SetPlayerCharaController(playerObject.GetComponent<PlayerCharaController>());
+        #endregion
+
 
 
         // ナビメッシュをベイク
@@ -62,6 +75,12 @@ public class StageManager:MonoBehaviour
 
         // ゲームスタート
 
+    }
+
+    private void StageClear()
+    {
+        Debug.Log("ステージのクリア条件を達成したよ!");
+        _enemyManager.OnClearHundle -= StageClear;
     }
 
 }
