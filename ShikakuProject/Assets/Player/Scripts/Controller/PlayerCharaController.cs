@@ -70,6 +70,9 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     public ReactiveProperty<float>[] CountTimeRates;
 
 
+    // フジシマ追加2024/10/03------------------------------------------
+    [Tooltip("カーソルオブジェクト"),SerializeField]CursorController cursor;
+
     void Awake()
     {
         Datas.OnStart(transform);
@@ -92,6 +95,9 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         {
             CountTimeRates[i] = new(1);
         }
+
+        CursorController cursorController = Instantiate(cursor);
+        cursorController?.Construct(transform);
     }
 
     private void Update()

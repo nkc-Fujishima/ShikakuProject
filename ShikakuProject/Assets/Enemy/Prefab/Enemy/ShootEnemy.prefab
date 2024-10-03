@@ -594,6 +594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameter: {fileID: 11400000, guid: 8ceb3218cc5f0dd4daafd6b1e9a38d98, type: 2}
+  cursor: {fileID: 1567893085837452608, guid: c8977cbd7a9bb8945aad43a1b0af48a0, type: 3}
   enemyBullet: {fileID: 950983704214439798, guid: abc978a92e25ff3499cd0c0ffa8be2fd, type: 3}
 --- !u!95 &1484264262651739010
 Animator:

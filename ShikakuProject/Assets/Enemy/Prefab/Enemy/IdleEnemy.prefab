@@ -998,6 +998,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameter: {fileID: 11400000, guid: 9ce5713f0bff69a46a56b449e6eab9a6, type: 2}
+  cursor: {fileID: 1567893085837452608, guid: c8977cbd7a9bb8945aad43a1b0af48a0, type: 3}
   weapon: {fileID: 149947324194459967}
 --- !u!95 &5953460462844041860
 Animator:

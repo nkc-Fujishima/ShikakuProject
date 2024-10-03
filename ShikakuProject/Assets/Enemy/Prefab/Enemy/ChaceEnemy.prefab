@@ -703,6 +703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameter: {fileID: 11400000, guid: 8b0b99532f878ea48ba748428c4fe3ea, type: 2}
+  cursor: {fileID: 1567893085837452608, guid: c8977cbd7a9bb8945aad43a1b0af48a0, type: 3}
   weapon: {fileID: 673282810120995528}
 --- !u!54 &8235943477109738615
 Rigidbody:

@@ -5,16 +5,19 @@ using UnityEngine;
 
 public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDamage
 {
-    [Header("オブジェクト設定"), SerializeField] protected EnemyParameterBase parameter;
+    [Header("オブジェクト設定"), Tooltip("エネミーのパラメータ"), SerializeField] protected EnemyParameterBase parameter;
+    [Tooltip("エネミー用カーソル"), SerializeField] protected CursorController cursor;
 
     protected IState iState = null;
 
     protected Animator animator = null;
 
-    public event Action OnDestroyHundle = null;
+    public event Action<EnemyControllerBase> OnDestroyHundle = null;
     protected void Start()
     {
         animator = GetComponent<Animator>();
+        CursorController cursorController = Instantiate(cursor);
+        cursorController?.Construct(transform);
     }
 
     public virtual void OnStart() { }
@@ -44,6 +47,6 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
 
         this.gameObject.SetActive(false);
 
-        OnDestroyHundle?.Invoke();
+        OnDestroyHundle?.Invoke(this);
     }
 }
