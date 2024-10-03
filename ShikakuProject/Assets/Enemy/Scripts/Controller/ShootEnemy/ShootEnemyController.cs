@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShootEnemyController : EnemyControllerBase
@@ -268,8 +269,33 @@ public class ShootEnemyController : EnemyControllerBase
         {
             countTime += Time.deltaTime;
 
+            float distance = 0;
+
+            foreach (var enemy in chaceableObjects)
+            {
+                Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
+                RaycastHit toTargetHit;
+                if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) continue;
+
+
+                Debug.DrawRay(toTargetRay.origin, toTargetRay.direction * toTargetHit.distance, Color.red);
+
+                IChaceable chaceableObject = null;
+                if (!toTargetHit.transform.TryGetComponent<IChaceable>(out chaceableObject)) continue;
+
+                if (manager.chaceTarget == null) manager.chaceTarget = chaceableObject;
+
+                distance = new Vector3(chaceableObject.chacebleTransform.position.x - transform.position.x, 0, chaceableObject.chacebleTransform.position.z - transform.position.z).magnitude;
+
+                if (distance < new Vector3(manager.chaceTarget.chacebleTransform.position.x - transform.position.x, 0, manager.chaceTarget.chacebleTransform.position.z - transform.position.z).magnitude)
+                {
+                    manager.chaceTarget = chaceableObject;
+                }
+            }
+
             if (chaceableObjects.Count != 0)
             {
+
                 Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(manager.chaceTarget.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, manager.chaceTarget.chacebleTransform.position.z - transform.position.z));
                 RaycastHit toTargetHit;
                 if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) return;
