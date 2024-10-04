@@ -4,7 +4,7 @@ using UnityEngine;
 public class DrawMapEditorSaveData : ScriptableObject
 {
     // タイル画像の情報
-    public Texture[][] ElementTypeTextures;
+    public Texture2D[][] ElementTypeTextures;
 
     //パレットのデータ
     public StageObjectElementData StageObjectElementData = null;
@@ -15,6 +15,10 @@ public class DrawMapEditorSaveData : ScriptableObject
 
     // 複数の要素をテクスチャで見分けるようにする文字のテクスチャ
     public Texture2D[] NumberTextures;
+
+    // 回転の情報を指し示すための矢印のテクスチャ
+    public Texture2D UpArrowTexture;
+    public Texture2D DiagonalArrowTexture;
 
 
     public void SurchDrawMapData()
@@ -45,11 +49,33 @@ public class DrawMapEditorSaveData : ScriptableObject
         DrawMapData.ResetArray();
     }
 
+
     public void SetTileDataToElement(int selectX, int selectY, StageTileType tileType, int elementCount)
     {
         DrawMapData.TileDatas[selectX].TileData[selectY].TileType = tileType;
         DrawMapData.TileDatas[selectX].TileData[selectY].ElementCount = elementCount;
+
+        SetTileDataToElement(selectX, selectY, 0);
     }
+
+    public void TileRotate(int selectX, int selectY)
+    {
+        if (GetTileTypeOnTileData(selectX, selectY) != StageTileType.Enemy &&
+            GetTileTypeOnTileData(selectX, selectY) != StageTileType.Player) return;
+
+        int rotate = GetRotationOnTileData(selectX, selectY) + 45;
+
+        if (rotate >= 360)
+            rotate = 0;
+
+        SetTileDataToElement(selectX, selectY, rotate);
+    }
+
+    public void SetTileDataToElement(int selectX, int selectY, int rotate)
+    {
+        DrawMapData.TileDatas[selectX].TileData[selectY].Rotation = rotate;
+    }
+
 
     public StageTileType GetTileTypeOnTileData(int selectX, int selectY)
     {
@@ -59,6 +85,11 @@ public class DrawMapEditorSaveData : ScriptableObject
     public int GetElementCountOnTileData(int selectX, int selectY)
     {
         return DrawMapData.TileDatas[selectX].TileData[selectY].ElementCount;
+    }
+
+    public int GetRotationOnTileData(int selectX, int selectY)
+    {
+        return DrawMapData.TileDatas[selectX].TileData[selectY].Rotation;
     }
 
 
@@ -73,7 +104,7 @@ public class DrawMapEditorSaveData : ScriptableObject
             for (int checkX = 0; checkX < DrawMapData.X; ++checkX)
             {
                 // プレイヤーでなければスキップ
-                if (DrawMapData.DotsMapTile[checkX].TileData[checkY].TileType != StageTileType.Player) continue;
+                if (DrawMapData.TileDatas[checkX].TileData[checkY].TileType != StageTileType.Player) continue;
 
                 // 既にtureの場合はプレイヤーが複数存在しているのでfalseで返す
                 if (isCountOne == true) return false;
@@ -94,7 +125,7 @@ public class DrawMapEditorSaveData : ScriptableObject
             for (int checkX = 0; checkX < DrawMapData.X; ++checkX)
             {
                 // 敵でなければスキップ
-                if (DrawMapData.DotsMapTile[checkX].TileData[checkY].TileType != StageTileType.Enemy) continue;
+                if (DrawMapData.TileDatas[checkX].TileData[checkY].TileType != StageTileType.Enemy) continue;
 
                 return true;
             }

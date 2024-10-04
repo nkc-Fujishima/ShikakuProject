@@ -1,7 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
 using UnityEditor;
-using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
 public class DrawMapEditor : EditorWindow
@@ -41,8 +40,9 @@ public class DrawMapEditor : EditorWindow
         }
 
         window._selectTile = new();
-        window._madeMap = new();
-        window._textureProcessing = new(window._saveData.NumberTextures);
+        window._textureProcessing = new(window._saveData.NumberTextures,
+                                        window._saveData.UpArrowTexture, window._saveData.DiagonalArrowTexture);
+        window._madeMap = new(window._textureProcessing);
 
         window.Oninitialization();
         window._saveData.SurchDrawMapData();
@@ -153,7 +153,7 @@ public class DrawMapEditor : EditorWindow
     // エディタを開いた時、スクリプタブルオブジェクトが変更されたときに初期化する　StageTileTypeを使用
     private void Oninitialization()
     {
-        _saveData.ElementTypeTextures = new Texture[4][];
+        _saveData.ElementTypeTextures = new Texture2D[4][];
 
         _selectTile.Initialization();
 
@@ -191,9 +191,9 @@ public class DrawMapEditor : EditorWindow
 
     //-------------------------------------------------------------------------------------
     // 画像に複数数字を入れる
-    private Texture[] InitializeTextures(Texture2D baseTexture, int prefabLength)
+    private Texture2D[] InitializeTextures(Texture2D baseTexture, int prefabLength)
     {
-        Texture[] textureList = _textureProcessing.TextureCreate(prefabLength, baseTexture);
+        Texture2D[] textureList = _textureProcessing.TextureCreate(prefabLength, baseTexture);
 
         return textureList;
     }
@@ -218,15 +218,10 @@ public class DrawMapEditor : EditorWindow
             //変更ここから
             AssetDatabase.StartAssetEditing();
 
-            StageMapData saveAsset = new ();
-            AssetDatabase.CreateAsset((ScriptableObject)saveAsset, assetPath);
-            saveAsset.X = _saveData.DrawMapData.X;
-            saveAsset.Y = _saveData.DrawMapData.Y;
+            StageMapData saveAsset = CreateInstance<StageMapData>();
+            AssetDatabase.CreateAsset(saveAsset, assetPath);
 
-            saveAsset.ResetArray();
-
-            saveAsset.TileDatas = _saveData.DrawMapData.TileDatas;
-
+            saveAsset.CopyTileData(_saveData.DrawMapData);
 
             //変更ここまで
             AssetDatabase.StopAssetEditing();
@@ -248,9 +243,7 @@ public class DrawMapEditor : EditorWindow
         window._saveData.DrawMapData.X = loadAsset.X;
         window._saveData.DrawMapData.Y = loadAsset.Y;
 
-        window._saveData.DrawMapData.ResetArray();
-
-        window._saveData.DrawMapData.TileDatas = loadAsset.TileDatas;
+        window._saveData.DrawMapData.CopyTileData(loadAsset);
 
         window.Oninitialization();
         window._saveData.SurchDrawMapData();

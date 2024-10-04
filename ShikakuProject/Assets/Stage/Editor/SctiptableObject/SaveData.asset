@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: SaveData
   m_EditorClassIdentifier: 
   StageObjectElementData: {fileID: 11400000, guid: 0322bff9b3139ee42ba1319cbea6254e, type: 2}
-  DrawMapData: {fileID: 0}
+  DrawMapData: {fileID: 11400000, guid: aa990393250890c40931e4d0541f341c, type: 2}
   NumberTextures:
-  - {fileID: 2800000, guid: eedcc35ad95bf8d45a8ab8cd6b21cfe6, type: 3}
-  - {fileID: 2800000, guid: f842ed13ef93d5e4490443db98266e82, type: 3}
-  - {fileID: 2800000, guid: 69a727d13fc9b5b468d6a12c4902c9fd, type: 3}
-  - {fileID: 2800000, guid: 86703b1464955eb4bb95e591a57d9256, type: 3}
-  - {fileID: 2800000, guid: 93da5db886eb3a145bb26ecb785531cd, type: 3}
-  - {fileID: 2800000, guid: 984f0c293f7d8194fbe2a9af24f3f4e1, type: 3}
-  - {fileID: 2800000, guid: f63253cda33d4344cbe3697c6810f875, type: 3}
-  - {fileID: 2800000, guid: 95c27a1340706ca4a8d83c4ae016e95a, type: 3}
-  - {fileID: 2800000, guid: f5a62ce08efb3fd498df6e7bbc793639, type: 3}
-  - {fileID: 2800000, guid: 244cbbe878dee0d49bb89c6015004ed7, type: 3}
+  - {fileID: 2800000, guid: c3330a9ed81dd624cb254978bb22346c, type: 3}
+  - {fileID: 2800000, guid: f2b4166d0a841aa44acd202b0fd24dd9, type: 3}
+  - {fileID: 2800000, guid: 52fee56e788a5a74daf7e07a91eeb17a, type: 3}
+  - {fileID: 2800000, guid: 97f5a484be50d7e4a987d9a4bb849fa0, type: 3}
+  - {fileID: 2800000, guid: 13332b259894e2947a7d12e6071b5ab0, type: 3}
+  - {fileID: 2800000, guid: 9f263a74eb1c3ec41a0ee4db00dc18e4, type: 3}
+  - {fileID: 2800000, guid: e236b8b2987f45643b96412104003039, type: 3}
+  - {fileID: 2800000, guid: 4617da335ed0e1c48b47173fdc085e4f, type: 3}
+  - {fileID: 2800000, guid: 957c04ebb9aae7f4cb0e675a1cc843db, type: 3}
+  - {fileID: 2800000, guid: 775d83c4e125bc148b0a24e6d399457c, type: 3}
+  UpArrowTexture: {fileID: 2800000, guid: bedbc35b8e98fa948aff43385eacf40d, type: 3}
+  DiagonalArrowTexture: {fileID: 2800000, guid: 3a9b4344a0610a74b9334f1827ce0d6f, type: 3}

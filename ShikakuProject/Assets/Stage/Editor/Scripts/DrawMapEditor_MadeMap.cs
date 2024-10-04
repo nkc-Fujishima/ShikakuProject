@@ -1,13 +1,20 @@
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // ステージを制作するウィンドウ
 public class DrawMapEditor_MadeMap
 {
-    Texture[] _mapTextures = null;
+    private Texture2D[] _mapTextures = null;
 
-    Vector2 _scrollPositionDraw = Vector2.zero;
+    private Vector2 _scrollPositionDraw = Vector2.zero;
+
+    private readonly DrawMapEditor_TextureProcessing _textureProcessing;
+
+    public DrawMapEditor_MadeMap(DrawMapEditor_TextureProcessing textureProcessing)
+    {
+        _textureProcessing = textureProcessing;
+    }
 
     public void SelectDrawPaint(DrawMapEditorSaveData saveData, StageTile selectStageTile)
     {
@@ -26,9 +33,24 @@ public class DrawMapEditor_MadeMap
         // 選択されなかったら終了
         if (selectedGridIndex == -1) return;
 
+
+        // もし同じ種類のタイルでボタンを押した場合
+        Vector2Int selectGrid = new (selectedGridIndex % saveData.DrawMapData.X, selectedGridIndex / saveData.DrawMapData.X);
+
+        if (selectStageTile.TileType == saveData.GetTileTypeOnTileData(selectGrid.x, selectGrid.y) &&
+            selectStageTile.ElementCount == saveData.GetElementCountOnTileData(selectGrid.x, selectGrid.y))
+        {
+            RotateElement(selectedGridIndex, saveData, selectStageTile);
+
+            return;
+        }
+
+
+        // 引数で選択した要素のボタンを設定する
         DrawPaint(selectedGridIndex, saveData, selectStageTile);
     }
 
+    //-------------------------------------------------------------------------------------------------------------------
     // 引数で選択した要素のボタンを設定する
     private void DrawPaint(int selectedIndex, DrawMapEditorSaveData saveData, StageTile selectStageTile)
     {
@@ -42,12 +64,27 @@ public class DrawMapEditor_MadeMap
         saveData.SetTileDataToElement(selectedIndex % saveData.DrawMapData.X, selectedIndex / saveData.DrawMapData.X, selectStageTile.TileType, selectStageTile.ElementCount);
     }
 
+    //-------------------------------------------------------------------------------------------------------------------
+    // 選択した要素のボタンを回転する
+    private void RotateElement(int selectedIndex, DrawMapEditorSaveData saveData, StageTile selectStageTile)
+    {
+        if (selectStageTile.TileType == StageTileType.None) return;
 
+        Texture2D originalTexture = saveData.ElementTypeTextures[(int)selectStageTile.TileType][selectStageTile.ElementCount];
+
+        Vector2Int selectGrid = new(selectedIndex % saveData.DrawMapData.X, selectedIndex / saveData.DrawMapData.X);
+
+        saveData.TileRotate(selectGrid.x, selectGrid.y);
+
+        _mapTextures[selectedIndex] = _textureProcessing.DrawArrowTexture(saveData.GetRotationOnTileData(selectGrid.x, selectGrid.y), originalTexture);
+    }
+
+    //-------------------------------------------------------------------------------------------------------------------
     // マップを白紙に戻す
     public void Initialization(DrawMapEditorSaveData saveData)
     {
         // 選択したボタンの画像を初期化
-        _mapTextures = new Texture[saveData.DrawMapData.X * saveData.DrawMapData.Y];
+        _mapTextures = new Texture2D[saveData.DrawMapData.X * saveData.DrawMapData.Y];
 
         // 選択内容を初期化
         saveData.ResetMap(saveData.DrawMapData.X, saveData.DrawMapData.Y);
@@ -56,18 +93,20 @@ public class DrawMapEditor_MadeMap
         StageTile stageTile;
         stageTile.TileType = StageTileType.None;
         stageTile.ElementCount = -1;
+        stageTile.Rotation = 0;
 
         for (int i = 0; i < _mapTextures.Length; ++i)
             DrawPaint(i, saveData, stageTile);
     }
 
+    //-------------------------------------------------------------------------------------------------------------------
     // 設定されてるマップデータと同じになるように画像を設定
     public void SetAllMapTextures(DrawMapEditorSaveData saveData)
     {
         int elementLength = saveData.DrawMapData.X * saveData.DrawMapData.Y;
 
         // 選択したボタンの画像を初期化
-        _mapTextures = new Texture[elementLength];
+        _mapTextures = new Texture2D[elementLength];
 
         int count = 0;
 
@@ -77,8 +116,13 @@ public class DrawMapEditor_MadeMap
             for (int checkX = 0; checkX < saveData.DrawMapData.X; ++checkX)
             {
                 if (saveData.GetTileTypeOnTileData(checkX, checkY) != StageTileType.None)
+                {
                     _mapTextures[count] = saveData.ElementTypeTextures[(int)saveData.GetTileTypeOnTileData(checkX, checkY)]
                                                                       [saveData.GetElementCountOnTileData(checkX, checkY)];
+
+                    int rotate = saveData.GetRotationOnTileData(checkX, checkY);
+                    _mapTextures[count] = _textureProcessing.DrawArrowTexture(rotate, _mapTextures[count]);
+                }
                 else
                     _mapTextures[count] = null;
 
@@ -88,13 +132,14 @@ public class DrawMapEditor_MadeMap
     }
 
 
+    //-------------------------------------------------------------------------------------------------------------------
     // 選択してる要素で塗りつぶす
     public void AllFillButton(DrawMapEditorSaveData saveData, StageTile selectStageTile)
     {
         bool isFillCheck = EditorUtility.DisplayDialog("Warning", "塗りつぶしをするよ\n" +
-                                       "今の状態は消えるけど良いかな？", "キャンセル", "OK");
+                                       "今の状態は消えるけど良いかな？", "OK", "キャンセル");
 
-        if (isFillCheck) return;
+        if (!isFillCheck) return;
 
         for (int i = 0; i < _mapTextures.Length; ++i)
             DrawPaint(i, saveData, selectStageTile);
