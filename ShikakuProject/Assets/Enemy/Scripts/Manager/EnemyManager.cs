@@ -9,6 +9,7 @@ public class EnemyManager : IEnemyListProvider
 
     public List<EnemyControllerBase> EnemyList => enemyList;
 
+    public event Action OnEnemyDestroyHundle = null;
     public event Action OnClearHundle = null;
 
     public void AddEnemy(EnemyControllerBase enemy)
@@ -21,7 +22,9 @@ public class EnemyManager : IEnemyListProvider
         enemyList.Remove(enemy);
         enemy.OnDestroyHundle -= RemoveEnemy;
 
-        if (enemyList.Count == 0) OnClearHundle.Invoke();
+        OnEnemyDestroyHundle?.Invoke();
+
+        if (enemyList.Count == 0) OnClearHundle?.Invoke();
     }
 
     public void ExexuteEnemyStartMethod()
