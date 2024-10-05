@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour, IStateChangeable
 {
@@ -13,6 +14,7 @@ public class TitleManager : MonoBehaviour, IStateChangeable
 
     [Tooltip("ステージ画像オブジェクト"), SerializeField] List<Sprite> stageImages;
     [Tooltip("stageImageにセットする画像"), SerializeField] List<Image> imageObjects;
+    [Tooltip("セレクト中イメージ画像"), SerializeField] Image selectImage;
 
     [Tooltip("ステージセレクト数管理スクリプタブルオブジェクト"), SerializeField]
     StageSelectData stageSelectData;
@@ -28,7 +30,7 @@ public class TitleManager : MonoBehaviour, IStateChangeable
     {
         playerInput = GetComponent<PlayerInput>();
 
-        manager = new StateManager(titleUI, stageSelectUI, stageImages, playerInput, this, stageSelectData);
+        manager = new StateManager(titleUI, stageSelectUI, imageObjects, playerInput, this, stageSelectData, selectImage);
 
         for (int i = 0; i < imageObjects.Count; i++)
         {
@@ -59,10 +61,10 @@ public class TitleManager : MonoBehaviour, IStateChangeable
         public StageSelect stageSelectState = null;
 
 
-        public StateManager(GameObject titleUI, GameObject stageSelectUI, List<Sprite> images, PlayerInput playerInput, IStateChangeable stateChanger, StageSelectData stageSelectData)
+        public StateManager(GameObject titleUI, GameObject stageSelectUI, List<Image> images, PlayerInput playerInput, IStateChangeable stateChanger, StageSelectData stageSelectData, Image selectImage)
         {
             this.titleState = new Title(titleUI, stateChanger, playerInput, this);
-            this.stageSelectState = new StageSelect(stageSelectUI, images, stateChanger, playerInput, this, stageSelectData);
+            this.stageSelectState = new StageSelect(stageSelectUI, images, stateChanger, playerInput, this, stageSelectData, selectImage);
         }
     }
 
@@ -106,7 +108,7 @@ public class TitleManager : MonoBehaviour, IStateChangeable
     {
         GameObject stageSelectUI = null;
 
-        List<Sprite> images = null;
+        List<Image> images = null;
 
         IStateChangeable stateChanger = null;
 
@@ -116,7 +118,9 @@ public class TitleManager : MonoBehaviour, IStateChangeable
 
         StageSelectData stageSelectData = null;
 
-        public StageSelect(GameObject stageSelectUI, List<Sprite> images, IStateChangeable stateChanger, PlayerInput playerInput, StateManager manager, StageSelectData stageSelectData)
+        Image selectImage = null;
+
+        public StageSelect(GameObject stageSelectUI, List<Image> images, IStateChangeable stateChanger, PlayerInput playerInput, StateManager manager, StageSelectData stageSelectData, Image selectImage)
         {
             this.stageSelectUI = stageSelectUI;
             this.images = images;
@@ -124,11 +128,13 @@ public class TitleManager : MonoBehaviour, IStateChangeable
             this.playerInput = playerInput;
             this.manager = manager;
             this.stageSelectData = stageSelectData;
+            this.selectImage = selectImage;
         }
 
         public void OnEnter()
         {
             stageSelectUI.SetActive(true);
+            SetSelectImage();
         }
 
         public void OnExit()
@@ -140,7 +146,7 @@ public class TitleManager : MonoBehaviour, IStateChangeable
         {
             Vector2 inputValue = playerInput.actions["Select"].ReadValue<Vector2>();
 
-            if (playerInput.actions["Select"].WasPressedThisFrame() && inputValue.y > 0.8)
+            if (playerInput.actions["Select"].WasPressedThisFrame() && inputValue.x > 0.8)
             {
                 stageSelectData.StageSelectNumber += 1;
 
@@ -148,21 +154,31 @@ public class TitleManager : MonoBehaviour, IStateChangeable
                 if (stageSelectData.StageSelectNumber > images.Count - 1)
                     stageSelectData.StageSelectNumber = 0;
 
-                Debug.Log(stageSelectData.StageSelectNumber);
+                SetSelectImage();
             }
-            if (playerInput.actions["Select"].WasPressedThisFrame() && inputValue.y < -0.8)
+            if (playerInput.actions["Select"].WasPressedThisFrame() && inputValue.x < -0.8)
             {
                 stageSelectData.StageSelectNumber -= 1;
 
-                // ステージ画像より多い場合、セレクトカウントを0に戻す
+                // ステージ画像より多い場合、セレクトカウントをステージ画像リスト最大値にする
                 if (stageSelectData.StageSelectNumber < 0)
                     stageSelectData.StageSelectNumber = images.Count - 1;
 
-                Debug.Log(stageSelectData.StageSelectNumber);
+                SetSelectImage();
+            }
+
+            if (playerInput.actions["Dicision"].WasPressedThisFrame())
+            {
+                SceneManager.LoadScene("GameScene");
             }
 
             if (playerInput.actions["Cancel"].WasPerformedThisFrame())
                 stateChanger.ChangeState(manager.titleState);
+        }
+
+        private void SetSelectImage()
+        {
+            selectImage.rectTransform.position = images[stageSelectData.StageSelectNumber].rectTransform.position;
         }
     }
 }
