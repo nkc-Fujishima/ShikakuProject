@@ -12,7 +12,15 @@ public class UISkillListPresenter : MonoBehaviour
 
     private void Start()
     {
-        _player = GameObject.FindWithTag("Player").GetComponent<PlayerCharaController>();
+        GameObject playerObject = GameObject.FindWithTag("Player");
+
+        if (!playerObject)
+        {
+            Debug.LogWarning("ƒvƒŒƒCƒ„[‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
+            gameObject.SetActive(false);
+        }
+
+        _player = playerObject.GetComponent<PlayerCharaController>();
 
         SetPresenter();
     }
