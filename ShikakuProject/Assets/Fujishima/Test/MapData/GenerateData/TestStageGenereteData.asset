@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6736654c0c043354da7da71d3108a249, type: 3}
+  m_Name: TestStageGenereteData
+  m_EditorClassIdentifier: 
+  StageMapData:
+  - {fileID: 11400000, guid: 4de4b566c30e8284a93b6672407bfc17, type: 2}
+  - {fileID: 11400000, guid: 286d3a1cb3896a44ca722d2883ed6533, type: 2}
+  - {fileID: 11400000, guid: 32276d2ab96e5de48b305776ba34a3e3, type: 2}
+  ElementData: {fileID: 11400000, guid: 0322bff9b3139ee42ba1319cbea6254e, type: 2}
+  TileWidth: 1.6
+  TileHeight: 1.6
