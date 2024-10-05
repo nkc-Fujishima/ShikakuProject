@@ -450,8 +450,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -783,10 +783,6 @@ PrefabInstance:
       propertyPath: _stageManager
       value: 
       objectReference: {fileID: 439584070}
-    - target: {fileID: 2403757313293261674, guid: 172d6985702a5d244b36283f851be2ec, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 6661216342492710347, guid: 172d6985702a5d244b36283f851be2ec, type: 3}
       propertyPath: m_Name
       value: TimeCountAndTargetCount
@@ -830,14 +826,6 @@ PrefabInstance:
     - target: {fileID: 7681440654555233710, guid: 172d6985702a5d244b36283f851be2ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8120358758511107794, guid: 172d6985702a5d244b36283f851be2ec, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8316548075010043672, guid: 172d6985702a5d244b36283f851be2ec, type: 3}
-      propertyPath: m_Text
-      value: 8/10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

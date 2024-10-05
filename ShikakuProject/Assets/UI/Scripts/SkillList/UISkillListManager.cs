@@ -47,9 +47,11 @@ public class UISkillListManager : MonoBehaviour
 
             spawnObj.transform.SetParent(_skillParentTransform);
 
+            spawnObj.transform.localScale = Vector3.one;
+
 
             // É|ÉWÉVÉáÉìê›íË
-            Vector3 spawnPosition = _skillParentTransform.position;
+            Vector2 spawnPosition = _skillParentTransform.position;
 
             spawnPosition.x = generatedWidth * i - generatedStandardWidth;
 
