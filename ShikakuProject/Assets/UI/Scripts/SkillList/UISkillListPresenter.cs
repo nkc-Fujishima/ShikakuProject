@@ -4,6 +4,9 @@ using UnityEngine;
 // スキルUIに値を渡す
 public class UISkillListPresenter : MonoBehaviour
 {
+    [SerializeField]
+    private StageManager stageManager;
+
     private PlayerCharaController _player;
 
     [SerializeField]
@@ -12,36 +15,44 @@ public class UISkillListPresenter : MonoBehaviour
 
     private void Start()
     {
-        GameObject playerObject = GameObject.FindWithTag("Player");
+        GetPlayer();
 
-        if (!playerObject)
-        {
-            Debug.LogWarning("プレイヤーが見つかりません");
-            gameObject.SetActive(false);
-        }
-
-        _player = playerObject.GetComponent<PlayerCharaController>();
+        ExecuteOnStart();
 
         SetPresenter();
     }
 
-    private void SetPresenter()
+    private void GetPlayer()
+    {
+        _player = stageManager.PlayerManager.PlayerCharaController;
+
+        if (!_player)
+        {
+            Debug.LogWarning("プレイヤーが見つからなかったので\nスキルUIがOffになりました");
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void ExecuteOnStart()
     {
         _listManager.OnStart(_player.GetBulletTexture);
+    }
 
-        _player.SelectBulletType.Subscribe(vector=>
+    private void SetPresenter()
+    {
+        _player.SelectBulletType.Subscribe(value=>
         {
-            _listManager.SelectSkill(vector);
+            _listManager.SelectSkill(value);
         }).AddTo(this);
 
 
         for (int i = 0; i < _player.CountTimeRates.Length; ++i)
         {
             int index = i;
-            _player.CountTimeRates[index].Subscribe(vector =>
+            _player.CountTimeRates[index].Subscribe(value =>
             {
-                vector = 1 - vector;
-                _listManager.DisplayCooldown(index, vector);
+                value = 1 - value;
+                _listManager.DisplayCooldown(index, value);
             }).AddTo(this);
         }
     }

@@ -2,17 +2,17 @@ using R3;
 
 public class PlayerManager
 {
-    private PlayerCharaController _playerCharaController;
+    public PlayerCharaController PlayerCharaController { get; private set; }
 
     public Subject<Unit> OnDieHundle = new Subject<Unit>();
 
     public void SetPlayerCharaController(PlayerCharaController playerCharaController)
     {
-        _playerCharaController = playerCharaController;
+        PlayerCharaController = playerCharaController;
 
-        _playerCharaController.Datas.OnDeath.AddListener(OnDeath);
+        PlayerCharaController.Datas.OnDeath.AddListener(OnDeath);
 
-        _playerCharaController.Datas.OnBulletSpawn.AddListener(OnBulletSpawn);
+        PlayerCharaController.Datas.OnBulletSpawn.AddListener(OnBulletSpawn);
     }
 
     //------------------------------------------------------------------------------------------------
