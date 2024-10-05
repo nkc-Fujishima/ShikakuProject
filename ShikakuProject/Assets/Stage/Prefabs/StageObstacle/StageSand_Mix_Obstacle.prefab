@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5537587908084573556}
   - component: {fileID: 9102420145561218500}
   m_Layer: 0
-  m_Name: StageSand_Mix
+  m_Name: StageSand_Mix_Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6961014617262115562}
   - component: {fileID: 1360965412972380334}
   m_Layer: 0
-  m_Name: StageGrass_Frower_A
+  m_Name: StageGrass_Frower_A_Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

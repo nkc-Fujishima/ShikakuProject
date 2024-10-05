@@ -33,17 +33,16 @@ MonoBehaviour:
     - {fileID: 4764762501465603604, guid: a7e1cc9812cf2684aa92c20b8caf81a8, type: 3}
     - {fileID: 1041363401900740970, guid: c4de4cbfbc54e99469eba3495071a5d9, type: 3}
     - {fileID: 5037509295362627110, guid: c3e5a040b6e098a4098df83471537333, type: 3}
-    - {fileID: 7481181445494069323, guid: 466fb9667c254074cb9ac1a3af6d2854, type: 3}
     Texture: {fileID: 2800000, guid: 17e62eac8a0c0404795839ee31020769, type: 3}
   ObstacleData:
     Prefabs:
-    - {fileID: 8142330962270797679, guid: 6f37d83972b45bc47a7ef2435bd6af4e, type: 3}
-    - {fileID: 8797588502406722882, guid: e01cd1d9cfb7593459d6a2d495088320, type: 3}
-    - {fileID: 7812440435716800006, guid: bc8f25ab7d3ed134286e1aa8400151bd, type: 3}
-    - {fileID: 3282573999855541501, guid: bbc9dd1fb4e16704d8dcc629449aa184, type: 3}
-    - {fileID: 5786913828178617027, guid: dd872a38e3d85f84694d32c7ed0fb5d9, type: 3}
-    - {fileID: 1265026548457942842, guid: 6a82c4709074bf440bf2650c979fb6c1, type: 3}
-    - {fileID: 5693390400144532889, guid: 5c7da64acf0f9d04c82c1c711435a69b, type: 3}
-    - {fileID: 4764762501465603604, guid: a7e1cc9812cf2684aa92c20b8caf81a8, type: 3}
-    - {fileID: 1041363401900740970, guid: c4de4cbfbc54e99469eba3495071a5d9, type: 3}
+    - {fileID: 8142330962270797679, guid: 5b4a3a374eec5434cb50664339b4e159, type: 3}
+    - {fileID: 8797588502406722882, guid: b1374963d01f86e4c852e50871a075dc, type: 3}
+    - {fileID: 7812440435716800006, guid: a517d188750b1684790f38ab134a9d42, type: 3}
+    - {fileID: 3282573999855541501, guid: ecfa2d59a19e45743b60d8a52c289102, type: 3}
+    - {fileID: 5786913828178617027, guid: 7eedca56a6a30db41a173ba1766f4017, type: 3}
+    - {fileID: 1265026548457942842, guid: 1a2d2cdefbffd2c4e8343149e4e8b419, type: 3}
+    - {fileID: 5693390400144532889, guid: 7382d4cda940e084198e9fd1821ae97b, type: 3}
+    - {fileID: 4764762501465603604, guid: ae66789072747e841b4aabedd43eb460, type: 3}
+    - {fileID: 1041363401900740970, guid: b713c8b2f6470f141b4ff86266c41a9d, type: 3}
     Texture: {fileID: 2800000, guid: 5dcadbc7b53e29040bec2d3d6d1ea18b, type: 3}
