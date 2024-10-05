@@ -60,10 +60,19 @@ public class DrawMapEditorSaveData : ScriptableObject
 
     public void TileRotate(int selectX, int selectY)
     {
-        if (GetTileTypeOnTileData(selectX, selectY) != StageTileType.Enemy &&
-            GetTileTypeOnTileData(selectX, selectY) != StageTileType.Player) return;
-
-        int rotate = GetRotationOnTileData(selectX, selectY) + 45;
+        // TileType‚É‚æ‚Á‚Ä‚PƒNƒŠƒbƒN‚Å‰ñ‚·Šp“x‚ð•Ï‚¦‚é
+        int rotate = 0;
+        switch (GetTileTypeOnTileData(selectX, selectY))
+        {
+            case StageTileType.Enemy:
+            case StageTileType.Player:
+                rotate = GetRotationOnTileData(selectX, selectY) + 45;
+                break;
+            case StageTileType.Ground:
+            case StageTileType.Obstacle:
+                rotate = GetRotationOnTileData(selectX, selectY) + 90;
+                break;
+        }
 
         if (rotate >= 360)
             rotate = 0;
@@ -73,7 +82,7 @@ public class DrawMapEditorSaveData : ScriptableObject
 
     public void SetTileDataToElement(int selectX, int selectY, int rotate)
     {
-        DrawMapData.TileDatas[selectX].TileData[selectY].Rotation = rotate;
+        DrawMapData.TileDatas[selectX].TileData[selectY].RotationY = rotate;
     }
 
 
@@ -89,7 +98,7 @@ public class DrawMapEditorSaveData : ScriptableObject
 
     public int GetRotationOnTileData(int selectX, int selectY)
     {
-        return DrawMapData.TileDatas[selectX].TileData[selectY].Rotation;
+        return DrawMapData.TileDatas[selectX].TileData[selectY].RotationY;
     }
 
 
