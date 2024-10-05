@@ -56,6 +56,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
     private PlayerButtonDetector _buttonDetector;
 
+    private bool _isMove = false;
+
 
     public PlayerData Datas;
 
@@ -87,7 +89,6 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
         PlayerStateHolder stateHolder = new(this, _buttonDetector, _playerStatus, Datas, SelectBulletType);
         _iState = stateHolder.IdleState;
-        _iState.OnEnter();
 
 
         CountTimeRates = new ReactiveProperty<float>[_playerStatus.GetSkillLength];
@@ -102,6 +103,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
     private void Update()
     {
+        if (!_isMove) return;
+
         _iState.OnUpdate();
 
         CheckSkillCoolTime();
@@ -163,6 +166,10 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
             if (!playerStatus.GetSkillIsSelectable(selectBulletType.Value)) return;
 
             stateChanger.ChangeState(stateHolder.FireState);
+
+            // 生成
+            playerStatus.GetSkillSpawnBullet(selectBulletType.Value);
+            data.OnBulletSpawn.Invoke();
         }
     }
 
@@ -242,10 +249,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
         public override void OnEnter()
         {
-            playerStatus.GetSkillSpawnBullet(selectBulletType.Value);
 
-            // 生成
-            data.OnBulletSpawn.Invoke();
         }
 
         public override void OnExit()
@@ -299,6 +303,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // 右に選択
     private void OnBulletSelectLeft()
     {
+        if (!_isMove) return;
+
         int nextType = SelectBulletType.Value - 1;
 
         if (nextType < 0)
@@ -310,12 +316,33 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // 左に選択
     private void OnBulletSelectRight()
     {
+        if (!_isMove) return;
+
         int nextType = SelectBulletType.Value + 1;
 
         if (nextType >= _playerStatus.GetSkillLength)
             nextType = 0;
 
         SelectBulletType.Value = nextType;
+    }
+
+
+    //----------------------------------------------------------------------------------
+    // スタート関数
+    public void ActivateMovement()
+    {
+        _isMove = true;
+
+        _iState.OnEnter();
+    }
+
+    //----------------------------------------------------------------------------------
+    // 停止関数
+    public void DisableMovement()
+    {
+        _isMove = false;
+
+        _iState.OnExit();
     }
 
 
