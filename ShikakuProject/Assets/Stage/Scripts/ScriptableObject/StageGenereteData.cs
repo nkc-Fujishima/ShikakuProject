@@ -78,9 +78,11 @@ public class StageGenereteData : ScriptableObject
     {
         Vector3 instancePosition = new(countX * TileWidth, 0, -countY * TileWidth);
 
+        Quaternion instanceRotation = Quaternion.Euler(0, tileData.RotationY, 0);
+
         GameObject objectPlefab = ElementData.GetGameObject(tileData);
 
-        GameObject instanceObject = Instantiate(objectPlefab, instancePosition, Quaternion.identity);
+        GameObject instanceObject = Instantiate(objectPlefab, instancePosition, instanceRotation);
 
         if (tileData.TileType == StageTileType.Obstacle)
             instanceObject.transform.parent = stageManagerTransform;

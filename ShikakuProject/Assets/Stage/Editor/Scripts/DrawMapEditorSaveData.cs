@@ -73,7 +73,7 @@ public class DrawMapEditorSaveData : ScriptableObject
 
     public void SetTileDataToElement(int selectX, int selectY, int rotate)
     {
-        DrawMapData.TileDatas[selectX].TileData[selectY].Rotation = rotate;
+        DrawMapData.TileDatas[selectX].TileData[selectY].RotationY = rotate;
     }
 
 
@@ -89,7 +89,7 @@ public class DrawMapEditorSaveData : ScriptableObject
 
     public int GetRotationOnTileData(int selectX, int selectY)
     {
-        return DrawMapData.TileDatas[selectX].TileData[selectY].Rotation;
+        return DrawMapData.TileDatas[selectX].TileData[selectY].RotationY;
     }
 
 

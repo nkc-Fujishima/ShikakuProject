@@ -93,7 +93,7 @@ public class DrawMapEditor_MadeMap
         StageTile stageTile;
         stageTile.TileType = StageTileType.None;
         stageTile.ElementCount = -1;
-        stageTile.Rotation = 0;
+        stageTile.RotationY = 0;
 
         for (int i = 0; i < _mapTextures.Length; ++i)
             DrawPaint(i, saveData, stageTile);
