@@ -15,6 +15,16 @@ public class PlayerManager
         PlayerCharaController.Datas.OnBulletSpawn.AddListener(OnBulletSpawn);
     }
 
+    public void ExecutePlayerStart()
+    {
+        PlayerCharaController.ActivateMovement();
+    }
+
+    public void ExecutePlayerStop()
+    {
+        PlayerCharaController.DisableMovement();
+    }
+
     //------------------------------------------------------------------------------------------------
     // プレイヤーがバレットを出した場合に呼び出す関数
     private void OnBulletSpawn()
