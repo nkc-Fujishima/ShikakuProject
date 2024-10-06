@@ -4,16 +4,22 @@ using UnityEngine;
 public class UITimeCountAndTargetCountPresenter : MonoBehaviour
 {
     [SerializeField]
-    StageManager _stageManager;
+    private StageManager _stageManager;
 
     [SerializeField]
-    UITimeCountManager _timeCountManager;
+    private UITimeCountManager _timeCountManager;
 
     [SerializeField]
-    UITargetCountManager _targetCountManager;
+    private UITargetCountManager _targetCountManager;
+
+
+    private EnemyManager _enemyManager;
+
 
     private void Start()
     {
+        _enemyManager = _stageManager.EnemyManager;
+
         SetOnStart();
      
         SetPresenter();
@@ -23,7 +29,7 @@ public class UITimeCountAndTargetCountPresenter : MonoBehaviour
     {
         _timeCountManager.OnStart(_stageManager.TimeCounter.TimeMax);
 
-        _targetCountManager.OnStart(_stageManager.EnemyManager.EnemyList.Count);
+        _targetCountManager.OnStart(_enemyManager.EnemyList.Count);
     }
 
     private void SetPresenter()
@@ -34,7 +40,12 @@ public class UITimeCountAndTargetCountPresenter : MonoBehaviour
             _timeCountManager.TimeCount(value);
         }).AddTo(this);
 
-        // ターゲット数を設定
-        // enemyManagerで敵が減るタイミングを取得したいっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっっｄ
+        // ターゲットの消えた瞬間を取得
+        _enemyManager.OnEnemyDestroyHundle += OnEnemyDestroy;
+    }
+
+    private void OnEnemyDestroy()
+    {
+        _targetCountManager.TargetCount(_enemyManager.EnemyList.Count);
     }
 }
