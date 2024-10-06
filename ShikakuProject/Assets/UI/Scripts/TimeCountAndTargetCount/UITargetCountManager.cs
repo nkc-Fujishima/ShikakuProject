@@ -13,7 +13,7 @@ public class UITargetCountManager : MonoBehaviour
         _targetMax = targetMax;
     }
 
-    public void TimeCount(int targetRemaining)
+    public void TargetCount(int targetRemaining)
     {
         _targetText.text = targetRemaining + "/" + _targetMax;
     }
