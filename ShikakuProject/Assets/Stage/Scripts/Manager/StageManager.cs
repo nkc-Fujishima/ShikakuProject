@@ -1,6 +1,10 @@
 using R3;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+using UnityEngine.SceneManagement;
 
 public class StageManager : MonoBehaviour
 {
@@ -34,6 +38,12 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     private NavMeshSurface _navMesh;
 
+    [SerializeField]
+    private UIClearTarget _uiClearTarget;
+
+    [SerializeField]
+    private UIResult _uiResult;
+
 
 
     // ステージ数を決める変数
@@ -51,13 +61,15 @@ public class StageManager : MonoBehaviour
     public PlayerManager PlayerManager => _playerManager;
     public BulletManager BulletManager => _bulletManager;
     public EnemyManager EnemyManager => _enemyManager;
-    
+
     // 残り時間をカウントする変数
     [HideInInspector]
     public TimeRemainingCounter TimeCounter;
 
+    private PlayerInput uiInput = null;
 
-    private void Awake()
+    private CancellationTokenSource cts = null;
+    private async void Awake()
     {
         switch (_sceneType)
         {
@@ -82,6 +94,10 @@ public class StageManager : MonoBehaviour
                 break;
 
             case SceneType.Game:
+                cts = new CancellationTokenSource();
+
+                // このスクリプトのセットアップ
+                SetUp();
 
                 // 各種マネージャーの初期化
                 InitializeManagers();
@@ -95,14 +111,22 @@ public class StageManager : MonoBehaviour
                 // バレットスポーンマネージャーのセットアップ
                 SetupBulletSpawnManager();
 
+
+                await _uiClearTarget.OpenGameStartUI((int)gameType);
+                await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);
+                await _uiClearTarget.CloseGameStartUI();
+
                 // エネミーのスタート
                 StartEnemies();
 
+                // プレイヤーのスタート
+                StartPlayer();
 
                 // タイマーを設定
-                InitializeTimeCounter();
+                //InitializeTimeCounter();
 
                 // ゲームスタート
+                Debug.Log("ゲームスタート");
 
                 // タイマーを動かす
                 //TimeCounter.OnResume();
@@ -115,9 +139,15 @@ public class StageManager : MonoBehaviour
     private void Update()
     {
         // タイマーを動かす
-        TimeCounter.OnUpdate();
+        TimeCounter?.OnUpdate();
     }
 
+    //------------------------------------------------------------------------------------------------------
+    // このスクリプトのセットアップ
+    private void SetUp()
+    {
+        uiInput = GetComponent<PlayerInput>();
+    }
 
     //------------------------------------------------------------------------------------------------------
     // 各種マネージャーの初期化
@@ -202,6 +232,14 @@ public class StageManager : MonoBehaviour
         _enemyManager.ExexuteEnemyStartMethod();
     }
 
+
+    //------------------------------------------------------------------------------------------------------
+    // プレイヤーのスタート
+    private void StartPlayer()
+    {
+        _playerManager.ExecutePlayerStart();
+    }
+
     //------------------------------------------------------------------------------------------------------
     // 時間をカウントするクラスを宣言する
     private void InitializeTimeCounter()
@@ -218,15 +256,31 @@ public class StageManager : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------------------
-    private void StageClear()
+    private async void StageClear()
     {
         Debug.Log("ステージのクリア条件を達成したよ!");
         _enemyManager.OnClearHundle -= StageClear;
+
+        await _uiResult.OpenGameClearUI();
+        await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);
+        await _uiResult.CloseResultUI();
+
+        SceneManager.LoadScene("TitleScene");
     }
 
-    private void GameOver()
+    private async void GameOver()
     {
         Debug.Log("ゲームオーバーだよ");
+
+        await _uiResult.OpenGameFailedUI();
+        await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);
+        await _uiResult.CloseResultUI();
+
+        SceneManager.LoadScene("TitleScene");
     }
 
+    private void OnDestroy()
+    {
+        cts?.Cancel();
+    }
 }

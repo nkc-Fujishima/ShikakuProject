@@ -2830,7 +2830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 8a0ade77c512c6e46883b61baa5d3814, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 2f63c9be3aa95fa4e86beee091fa63ef, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -3016,6 +3016,10 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: f6be38c5d04faa24aadf24b648af4196, type: 2}
     - target: {fileID: 5539267155561503868, guid: 104574dfce736f34d8b5837ff50b01b5, type: 3}
       propertyPath: sceneType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539267155561503868, guid: 104574dfce736f34d8b5837ff50b01b5, type: 3}
+      propertyPath: _sceneType
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5539267155561503868, guid: 104574dfce736f34d8b5837ff50b01b5, type: 3}
