@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "StageGenereteData", menuName = "Stage/Generator/GenerateData")]
 public class StageGenereteData : ScriptableObject
@@ -13,6 +12,11 @@ public class StageGenereteData : ScriptableObject
     private float TileWidth = 1;
     [SerializeField]
     private float TileHeight = 1;
+
+
+    [SerializeField]
+    private StageWallGenerateData _stageWallGenerateData;
+
 
     private Transform stageManagerTransform;
 
@@ -71,6 +75,10 @@ public class StageGenereteData : ScriptableObject
 
         enemyObjs = enemyList.ToArray();
         playerObj = playerObject;
+
+        // 壁を作る
+        if (_stageWallGenerateData)
+            _stageWallGenerateData.GenerateSpiralWall(mapData.X, mapData.Y, TileWidth);
     }
 
     // オブジェクトを生成

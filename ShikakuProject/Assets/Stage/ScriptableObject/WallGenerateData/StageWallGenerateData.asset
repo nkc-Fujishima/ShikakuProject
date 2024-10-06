@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a15f55a4778101a44a27389d9b84bf6b, type: 3}
+  m_Name: StageWallGenerateData
+  m_EditorClassIdentifier: 
+  _wallPrefab:
+  - {fileID: 2699840551281837122, guid: bd108a57396f36649b2f5cff15343f76, type: 3}
+  - {fileID: 3674728973701005894, guid: d23771e2d53107240b39be5779100889, type: 3}
+  - {fileID: -2405984562220444179, guid: 9fbee680c9e254e42b967ea2fdf37287, type: 3}
+  _spaceValue: 3
