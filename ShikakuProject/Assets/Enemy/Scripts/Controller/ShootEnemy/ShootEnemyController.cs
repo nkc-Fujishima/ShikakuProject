@@ -23,6 +23,26 @@ public class ShootEnemyController : EnemyControllerBase
 
     private void Start()
     {
+        //base.Start();
+
+        //VisionSensor visionSensor = transform.Find("Sensor").GetComponent<VisionSensor>();
+
+        //visionMeshCreator = transform.Find("Sensor").GetComponent<VisionMeshCreator>();
+        //visionMeshCreator.SetUp();
+
+        //// 視界センサーのActionにターゲットリストの追加と削除メソッドを登録
+        //visionSensor.OnSensorInHundle += AddTarget;
+        //visionSensor.OnSensorOutHundle += RemoveTarget;
+
+        //stateManager = new ShootEnemyStateManager(animator, this.transform, parameter as ShootEnemyParameter, this, chaceableObjects, visionMeshCreator);
+
+        //iState = stateManager.idleState;
+        //if (iState != null) iState.OnEnter();
+    }
+
+    public override void OnStart()
+    {
+
         base.Start();
 
         VisionSensor visionSensor = transform.Find("Sensor").GetComponent<VisionSensor>();
@@ -38,6 +58,7 @@ public class ShootEnemyController : EnemyControllerBase
 
         iState = stateManager.idleState;
         if (iState != null) iState.OnEnter();
+
     }
 
     private void Update()
@@ -47,7 +68,7 @@ public class ShootEnemyController : EnemyControllerBase
 
     public void OnUpdate()
     {
-        iState.OnUpdate();
+        iState?.OnUpdate();
 
         // 一定フレーム経過時にリスト内のnullを削除
         frameCount += 1;

@@ -28,6 +28,7 @@ public class StageManager : MonoBehaviour
     private SceneType _sceneType = SceneType.Game;
     [Tooltip("ゲームタイプ設定(SceneType : Title の場合無効)"), SerializeField]
     private GameType gameType = GameType.AllKill;
+    [Tooltip("ゲーム内での制限時間"), SerializeField] float timeLimit;
 
     // -------------------------------------------------------------------
 
@@ -123,13 +124,13 @@ public class StageManager : MonoBehaviour
                 StartPlayer();
 
                 // タイマーを設定
-                //InitializeTimeCounter();
+                InitializeTimeCounter();
 
                 // ゲームスタート
                 Debug.Log("ゲームスタート");
 
                 // タイマーを動かす
-                //TimeCounter.OnResume();
+                TimeCounter.OnResume();
 
                 break;
         }
@@ -250,7 +251,7 @@ public class StageManager : MonoBehaviour
         TimeCounter = new();
         TimeCounter.SetTimer(settingTime);
 
-
+        TimeCounter.OnTimeUpEvent += GameOver;
     }
 
 
@@ -271,6 +272,7 @@ public class StageManager : MonoBehaviour
     private async void GameOver()
     {
         Debug.Log("ゲームオーバーだよ");
+        TimeCounter.OnTimeUpEvent -= GameOver;
 
         await _uiResult.OpenGameFailedUI();
         await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);

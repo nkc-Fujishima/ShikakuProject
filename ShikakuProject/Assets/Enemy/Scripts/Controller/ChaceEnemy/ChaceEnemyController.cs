@@ -17,6 +17,8 @@ public class ChaceEnemyController : EnemyControllerBase
 
     VisionMeshCreator visionMeshCreator = null;
 
+
+    // 後日EnemyManagerのExecuteOnStartMethodで起動させたい
     private void Start()
     {
         //base.Start();
@@ -33,6 +35,7 @@ public class ChaceEnemyController : EnemyControllerBase
         //visionSensor.OnSensorOutHundle += RemoveTarget;
 
         //NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        //agent.enabled = true;
         //Rigidbody rigidBody = GetComponent<Rigidbody>();
 
         //ChaceEnemyStateManager stateHolder = new ChaceEnemyStateManager(animator, this.transform, parameter as ChaceEnemyParameter, this, chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody);
@@ -75,7 +78,7 @@ public class ChaceEnemyController : EnemyControllerBase
 
     public void OnUpdate()
     {
-        iState.OnUpdate();
+        iState?.OnUpdate();
 
         // 一定フレーム経過時にリスト内のnullを削除
         frameCount += 1;
@@ -84,7 +87,6 @@ public class ChaceEnemyController : EnemyControllerBase
             chaceableObjects.Clear();
             chaceableObjects.AddRange(RemoveNullElements(copyList));
         }
-        Debug.Log(iState);
     }
 
     protected List<IChaceable> RemoveNullElements(List<IChaceable> list)
