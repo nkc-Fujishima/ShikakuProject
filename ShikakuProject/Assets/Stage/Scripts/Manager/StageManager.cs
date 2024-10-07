@@ -34,7 +34,7 @@ public class StageManager : MonoBehaviour
 
     [Header("オブジェクト設定")]
     [SerializeField]
-    private StageGenereteData _data;
+    private StageGenerateData _data;
 
     [SerializeField]
     private NavMeshSurface _navMesh;
@@ -112,6 +112,8 @@ public class StageManager : MonoBehaviour
                 // バレットスポーンマネージャーのセットアップ
                 SetupBulletSpawnManager();
 
+                // タイマーを設定
+                InitializeTimeCounter();
 
                 await _uiClearTarget.OpenGameStartUI((int)gameType);
                 await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);
@@ -123,8 +125,6 @@ public class StageManager : MonoBehaviour
                 // プレイヤーのスタート
                 StartPlayer();
 
-                // タイマーを設定
-                InitializeTimeCounter();
 
                 // ゲームスタート
                 Debug.Log("ゲームスタート");
@@ -245,11 +245,8 @@ public class StageManager : MonoBehaviour
     // 時間をカウントするクラスを宣言する
     private void InitializeTimeCounter()
     {
-
-        //具体的な時間が決まってないというかまだ処理を作ってないので、５秒でひとまず仮置きしますうううううううううううううう
-        int settingTime = 5;
         TimeCounter = new();
-        TimeCounter.SetTimer(settingTime);
+        TimeCounter.SetTimer(timeLimit);
 
         TimeCounter.OnTimeUpEvent += GameOver;
     }

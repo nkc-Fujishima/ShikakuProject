@@ -11,6 +11,8 @@ public class UITargetCountManager : MonoBehaviour
     public void OnStart(int targetMax)
     {
         _targetMax = targetMax;
+
+        TargetCount(targetMax);
     }
 
     public void TargetCount(int targetRemaining)

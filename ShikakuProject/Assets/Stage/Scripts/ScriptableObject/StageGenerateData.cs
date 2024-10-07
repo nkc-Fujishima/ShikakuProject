@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StageGenereteData", menuName = "Stage/Generator/GenerateData")]
-public class StageGenereteData : ScriptableObject
+[CreateAssetMenu(fileName = "StageGenerateData", menuName = "Stage/Generator/GenerateData")]
+public class StageGenerateData : ScriptableObject
 {
     public StageMapData[] StageMapData;
 

@@ -10,10 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6736654c0c043354da7da71d3108a249, type: 3}
-  m_Name: StageGenereteData
+  m_Name: GameStageData
   m_EditorClassIdentifier: 
   StageMapData:
-  - {fileID: 11400000, guid: 2868f42ae8735374f9a5e6e91818323d, type: 2}
+  - {fileID: 11400000, guid: a47736ab13b374d49941debc979886d9, type: 2}
+  - {fileID: 11400000, guid: 5d1abb371dfa59e48954ff48e96f076e, type: 2}
+  - {fileID: 11400000, guid: 3720dff80fc6ea04f9687d12792f7475, type: 2}
+  - {fileID: 11400000, guid: c7c2878340fea0445b28bbe144c81c01, type: 2}
+  - {fileID: 11400000, guid: 48510123aebc153468574b27bd70a2d9, type: 2}
+  - {fileID: 11400000, guid: 287ea52fd21d86444bc732a388de47bd, type: 2}
   ElementData: {fileID: 11400000, guid: 0322bff9b3139ee42ba1319cbea6254e, type: 2}
   TileWidth: 1.6
   TileHeight: 1.6
