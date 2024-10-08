@@ -11,7 +11,7 @@ public class StageWallData : MonoBehaviour
     {
         Vector2Int upLeftPoint = point;
 
-        Vector2Int misalignmentPoint = new Vector2Int(Scale.x - 1, Scale.y - 1);
+        Vector2Int misalignmentPoint = new (Scale.x - 1, Scale.y - 1);
 
         switch (rotate)
         {
