@@ -254,9 +254,14 @@ public class StageManager : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------------------
+    // リザルトに遷移する処理
+    bool _isResult = false;
+
     private async void StageClear()
     {
-        Debug.Log("ステージのクリア条件を達成したよ!");
+        if(_isResult) return;
+        _isResult = true;
+
         _enemyManager.OnClearHundle -= StageClear;
 
         // ゲームが終了したときに呼ぶ関数を呼ぶ
@@ -271,7 +276,9 @@ public class StageManager : MonoBehaviour
 
     private async void GameOver()
     {
-        Debug.Log("ゲームオーバーだよ");
+        if (_isResult) return;
+        _isResult = true;
+
         TimeCounter.OnTimeUpEvent -= GameOver;
 
         // ゲームが終了したときに呼ぶ関数を呼ぶ
@@ -290,7 +297,7 @@ public class StageManager : MonoBehaviour
         // プレイヤーを止める
         _playerManager.StopPlayer();
 
-        // 時間を止める
+        // タイマーを止める
         TimeCounter.OnPause();
     }
 
