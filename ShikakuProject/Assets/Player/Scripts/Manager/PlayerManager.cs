@@ -25,6 +25,11 @@ public class PlayerManager
         PlayerCharaController.DisableMovement();
     }
 
+    public void StopPlayer()
+    {
+        PlayerCharaController.DisableMovement();
+    }
+
     //------------------------------------------------------------------------------------------------
     // プレイヤーがバレットを出した場合に呼び出す関数
     private void OnBulletSpawn()

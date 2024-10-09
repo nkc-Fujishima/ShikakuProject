@@ -259,6 +259,9 @@ public class StageManager : MonoBehaviour
         Debug.Log("ステージのクリア条件を達成したよ!");
         _enemyManager.OnClearHundle -= StageClear;
 
+        // ゲームが終了したときに呼ぶ関数を呼ぶ
+        OnResult();
+
         await _uiResult.OpenGameClearUI();
         await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);
         await _uiResult.CloseResultUI();
@@ -271,11 +274,24 @@ public class StageManager : MonoBehaviour
         Debug.Log("ゲームオーバーだよ");
         TimeCounter.OnTimeUpEvent -= GameOver;
 
+        // ゲームが終了したときに呼ぶ関数を呼ぶ
+        OnResult();
+
         await _uiResult.OpenGameFailedUI();
         await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);
         await _uiResult.CloseResultUI();
 
         SceneManager.LoadScene("TitleScene");
+    }
+
+    // ゲームが終了したときに呼ばれる
+    private void OnResult()
+    {
+        // プレイヤーを止める
+        _playerManager.StopPlayer();
+
+        // 時間を止める
+        TimeCounter.OnPause();
     }
 
     private void OnDestroy()
