@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using UnityEditor.Timeline;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "StageGenerateData", menuName = "Stage/Generator/GenerateData")]
 public class StageGenerateData : ScriptableObject
@@ -18,7 +20,8 @@ public class StageGenerateData : ScriptableObject
     private StageWallGenerateData _stageWallGenerateData;
 
 
-    private Transform stageManagerTransform;
+    private Transform stageManagerTransform = null;
+
 
     public void OnStart(Transform transform)
     {
@@ -28,10 +31,26 @@ public class StageGenerateData : ScriptableObject
     // ステージを生成する
     public void StageGenerete(int stageCount, out GameObject[] enemyObjs, out GameObject playerObj)
     {
+        Vector3 centralPoint = Vector3.zero;
+        StageMapData mapData = StageMapData[stageCount];
+        centralPoint.x += TileWidth * mapData.X / 2 - TileWidth / 2;
+        centralPoint.z -= TileWidth * mapData.Y / 2 - TileWidth / 2;
+
+        StageGenerete(stageCount, centralPoint, out enemyObjs, out playerObj);
+    }
+
+    // ステージを生成する
+    public void StageGenerete(int stageCount, Vector3 centralPoint, out GameObject[] enemyObjs, out GameObject playerObj)
+    {
         StageMapData mapData = StageMapData[stageCount];
 
         List<GameObject> enemyList = new();
         GameObject playerObject = null;
+
+        // マップを生成する座標を設定
+        Vector3 instancePosition = centralPoint;
+        instancePosition.x -= TileWidth * mapData.X / 2 - TileWidth / 2;
+        instancePosition.z += TileWidth * mapData.Y / 2 - TileWidth / 2;
 
         for (int countY = 0; countY < mapData.Y; ++countY)
         {
@@ -48,22 +67,22 @@ public class StageGenerateData : ScriptableObject
                 switch (tileData.TileType)
                 {
                     case StageTileType.Enemy:
-                        enemyList.Add(InstanceObject(tileData, countX, countY));
-                        InstanceGroundObject(new StageTile(StageTileType.Ground), countX, countY);
+                        enemyList.Add(InstanceObject(tileData, countX, countY, instancePosition));
+                        InstanceGroundObject(new StageTile(StageTileType.Ground), countX, countY, instancePosition);
                         break;
 
                     case StageTileType.Player:
-                        playerObject = InstanceObject(tileData, countX, countY);
-                        InstanceGroundObject(new StageTile(StageTileType.Ground), countX, countY);
+                        playerObject = InstanceObject(tileData, countX, countY, instancePosition);
+                        InstanceGroundObject(new StageTile(StageTileType.Ground), countX, countY, instancePosition);
                         break;
 
                     case StageTileType.Obstacle:
-                        InstanceObject(tileData, countX, countY);
-                        InstanceGroundObject(new StageTile(StageTileType.Ground), countX, countY);
+                        InstanceObject(tileData, countX, countY, instancePosition);
+                        InstanceGroundObject(new StageTile(StageTileType.Ground), countX, countY, instancePosition);
                         break;
 
                     case StageTileType.Ground:
-                        InstanceGroundObject(tileData, countX, countY);
+                        InstanceGroundObject(tileData, countX, countY, instancePosition);
                         break;
 
                     case StageTileType.None:
@@ -82,9 +101,10 @@ public class StageGenerateData : ScriptableObject
     }
 
     // オブジェクトを生成
-    private GameObject InstanceObject(StageTile tileData, int countX, int countY)
+    private GameObject InstanceObject(StageTile tileData, int countX, int countY, Vector3 centralPoint)
     {
         Vector3 instancePosition = new(countX * TileWidth, 0, -countY * TileWidth);
+        instancePosition += centralPoint;
 
         Quaternion instanceRotation = Quaternion.Euler(0, tileData.RotationY, 0);
 
@@ -92,22 +112,25 @@ public class StageGenerateData : ScriptableObject
 
         GameObject instanceObject = Instantiate(objectPlefab, instancePosition, instanceRotation);
 
-        if (tileData.TileType == StageTileType.Obstacle)
-            instanceObject.transform.parent = stageManagerTransform;
+        if (stageManagerTransform)
+            if (tileData.TileType == StageTileType.Obstacle)
+                instanceObject.transform.parent = stageManagerTransform;
 
         return instanceObject;
     }
 
     // グラウンドオブジェクトを生成
-    private GameObject InstanceGroundObject(StageTile tileData, int countX, int countY)
+    private GameObject InstanceGroundObject(StageTile tileData, int countX, int countY, Vector3 centralPoint)
     {
         Vector3 instancePosition = new(countX * TileWidth, -TileHeight, -countY * TileWidth);
+        instancePosition += centralPoint;
 
         GameObject objectPlefab = ElementData.GetGameObject(tileData);
 
         GameObject instanceObject = Instantiate(objectPlefab, instancePosition, Quaternion.identity);
 
-        instanceObject.transform.parent = stageManagerTransform;
+        if (stageManagerTransform)
+            instanceObject.transform.parent = stageManagerTransform;
 
         return instanceObject;
     }
