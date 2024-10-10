@@ -1,6 +1,4 @@
-using System.Drawing;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "StageWallGenerateData", menuName = "Stage/Generator/WallGenerateData")]
 public class StageWallGenerateData : ScriptableObject
