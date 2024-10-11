@@ -4,7 +4,7 @@ public class PlayerManager
 {
     public PlayerCharaController PlayerCharaController { get; private set; }
 
-    public Subject<Unit> OnDieHundle = new Subject<Unit>();
+    public Subject<Unit> OnDieHundle = new ();
 
     public void SetPlayerCharaController(PlayerCharaController playerCharaController)
     {

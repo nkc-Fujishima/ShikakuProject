@@ -75,7 +75,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // フジシマ追加2024/10/03------------------------------------------
     [Tooltip("カーソルオブジェクト"),SerializeField]CursorController cursor;
 
-    void Awake()
+    private void Awake()
     {
         Datas.OnStart(transform);
 
@@ -98,7 +98,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         }
 
         CursorController cursorController = Instantiate(cursor);
-        cursorController?.Construct(transform);
+        cursorController.Construct(transform);
     }
 
     private void Update()
@@ -129,12 +129,14 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         public Idle IdleState { get; }
         public Walk WalkState { get; }
         public Fire FireState { get; }
+        public Dead DeadState { get; }
 
         public PlayerStateHolder(IStateChangeable stateChanger, PlayerButtonDetector button, PlayerStatusParameter playerStatus, PlayerData datas, ReactiveProperty<int> selectBulletType)
         {
             IdleState = new Idle(stateChanger, this, button, playerStatus, datas,selectBulletType);
             WalkState = new Walk(stateChanger, this, button, playerStatus, datas, selectBulletType);
             FireState = new Fire(stateChanger, this, button, playerStatus, datas, selectBulletType);
+            DeadState = new Dead(stateChanger, this, button, playerStatus, datas, selectBulletType);
         }
     }
 
@@ -158,6 +160,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
             this.playerStatus = playerStatus;
             this.data = data;
             this.selectBulletType = selectBulletType;
+
+            data.OnDeath.AddListener(this.OnDeath);
         }
 
         // 弾を生成するボタンを押した場合の関数
@@ -170,6 +174,12 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
             // 生成
             playerStatus.GetSkillSpawnBullet(selectBulletType.Value);
             data.OnBulletSpawn.Invoke();
+        }
+
+        // 死んだときの関数
+        private void OnDeath()
+        {
+            stateChanger.ChangeState(stateHolder.DeadState);
         }
     }
 
@@ -271,6 +281,26 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         }
     }
 
+    //----------------------------------------------------------------------------------
+    // 死亡ステート
+    private class Dead : PlayerStateBase
+    {
+        public Dead(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data, ReactiveProperty<int> selectBulletType) : base(stateChanger, stateHolder, buttonDetector, playerStatus, data, selectBulletType) { }
+
+        public override void OnEnter()
+        {
+            data.Animator.SetTrigger("DeathTrigger");
+        }
+
+        public override void OnExit()
+        {
+        }
+
+        public override void OnUpdate()
+        {
+        }
+    }
+
 
     //----------------------------------------------------------------------------------
     // スキルのクールダウンを計算
@@ -354,10 +384,14 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // IDamage
     public void Damage()
     {
-        Datas.OnDeath.Invoke();
+        _buttonDetector.OnButtonBulletSelectLeftDown.RemoveListener(OnBulletSelectLeft);
+        _buttonDetector.OnButtonBulletSelectRightDown.RemoveListener(OnBulletSelectRight);
+
+        _isMove = false;
+
+
+        Datas.OnDeath?.Invoke();
 
         OnDestroyHundle?.Invoke(this);
-
-        gameObject.SetActive(false);
     }
 }
