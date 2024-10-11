@@ -57,6 +57,8 @@ public class StageWallGenerateData : ScriptableObject
 
     public void GenerateSpiralWall(int mapX, int mapY, float tileScale)
     {
+        GameObject wallObject = new("WallObject");
+
         InstanceMapData instanceMap = new(mapX, mapY, _spaceValue);
 
 
@@ -103,7 +105,9 @@ public class StageWallGenerateData : ScriptableObject
                 if (canPlace)
                 {
                     // ブロックを生成
-                    Instantiate(_wallPrefab[selectValue], new Vector3(x * tileScale, 0, y * tileScale), Quaternion.Euler(0, angle, 0));
+                    StageWallData instanceObject = Instantiate(_wallPrefab[selectValue], new Vector3(x * tileScale, 0, y * tileScale), Quaternion.Euler(0, angle, 0));
+
+                    instanceObject.transform.parent = wallObject.transform;
 
                     // 疑似マップ配列を塗る
                     for (int checkY = upLeftPoint.y; checkY > downRightPoint.y; --checkY)
@@ -155,6 +159,7 @@ public class StageWallGenerateData : ScriptableObject
 
         // コライダーを生成
         GameObject wallColliderObject = new ("WallColliderObject");
+        wallColliderObject.transform.parent = wallObject.transform;
 
         for (int i = 0; i < 4; i++)
         {
