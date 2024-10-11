@@ -34,8 +34,8 @@ public class StageWallGenerateData : ScriptableObject
             int checkY = -(selectY - SpaceValue);
 
             // ”z—ñ‚ÌŠO‚¾‚Á‚½‚çI—¹
-            if (checkX < 0 || checkX >= AllMapX) { Debug.Log("X"); return true; }
-            if (checkY < 0 || checkY >= AllMapY) { Debug.Log("Y"); return true; }
+            if (checkX < 0 || checkX >= AllMapX) return true;
+            if (checkY < 0 || checkY >= AllMapY) return true;
 
             return InstanceMap[checkX, checkY];
         }

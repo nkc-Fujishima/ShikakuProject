@@ -127,7 +127,6 @@ public class StageManager : MonoBehaviour
 
 
                 // ゲームスタート
-                Debug.Log("ゲームスタート");
 
                 // タイマーを動かす
                 TimeCounter.OnResume();
