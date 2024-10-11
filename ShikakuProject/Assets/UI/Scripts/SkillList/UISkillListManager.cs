@@ -11,12 +11,17 @@ public class UISkillListManager : MonoBehaviour
     private Transform _skillParentTransform;
 
     [SerializeField]
-    private int _spaceBetweenDisplays = 0;
+    private Transform _selectPoint;
 
     [SerializeField]
-    private Color _selectBackColor;
+    private Transform _activePoint;
+
     [SerializeField]
-    private Color _notSelectBackColor;
+    private Transform _notActivePoint;
+
+    [SerializeField]
+    private int _spaceBetweenDisplays = 0;
+
 
 
     private UISkillListPrefabData[] _skillImageList;
@@ -51,9 +56,11 @@ public class UISkillListManager : MonoBehaviour
 
 
             // ポジション設定
-            Vector2 spawnPosition = _skillParentTransform.position;
+            Vector2 spawnPosition = Vector2.zero;
 
             spawnPosition.x = generatedWidth * i - generatedStandardWidth;
+
+            spawnPosition.y = _notActivePoint.position.y;
 
             spawnObj.transform.localPosition = spawnPosition;
 
@@ -78,19 +85,24 @@ public class UISkillListManager : MonoBehaviour
         // 選択されてた項目
         if (0 <= _selectSkill && _selectSkill < _skillImageList.Length)
         {
-            _skillImageList[_selectSkill].ImageTransform.DOMove(_skillImageList[_selectSkill].GetNomalPoint, 0.3f);
+            _skillImageList[_selectSkill].ImageTransform.DOMoveY(_activePoint.position.y, 0.3f);
         }
 
-
         // 選択された項目
-        _skillImageList[selectType].ImageTransform.DOMove(_skillImageList[selectType].GetSelectPoint, 0.3f);
-
+        _skillImageList[selectType].ImageTransform.DOPause();
+        _skillImageList[selectType].ImageTransform.DOMoveY(_selectPoint.position.y, 0.3f);
 
         _selectSkill = selectType;
     }
 
     //---------------------------------------------------------------------------------------------
     // クールタイムを表示する
+    [SerializeField]
+    private Color _selectBackColor;
+
+    [SerializeField]
+    private Color _notSelectBackColor;
+
     private bool[] _coolTime;
 
     private void OnStartSelected()
@@ -124,6 +136,19 @@ public class UISkillListManager : MonoBehaviour
             _coolTime[type] = true;
 
             _skillImageList[type].BackImage.DOColor(_notSelectBackColor, 0.5f).SetEase(Ease.OutElastic);
+        }
+    }
+
+    //---------------------------------------------------------------------------------------------
+    // 表示、非表示を管理する
+
+    public void SetActiveUI(bool isActive)
+    {
+        Transform standardPoint = isActive ? _activePoint : _notActivePoint;
+
+        for (int i = 0; i < _skillImageList.Length; ++i)
+        {
+            _skillImageList[i].ImageTransform.DOMoveY(standardPoint.position.y, 0.5f);
         }
     }
 }

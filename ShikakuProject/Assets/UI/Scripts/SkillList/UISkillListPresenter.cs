@@ -5,7 +5,7 @@ using UnityEngine;
 public class UISkillListPresenter : MonoBehaviour
 {
     [SerializeField]
-    private StageManager stageManager;
+    private StageManager _stageManager;
 
     private PlayerCharaController _player;
 
@@ -24,7 +24,7 @@ public class UISkillListPresenter : MonoBehaviour
 
     private void GetPlayer()
     {
-        _player = stageManager.PlayerManager.PlayerCharaController;
+        _player = _stageManager.PlayerManager.PlayerCharaController;
 
         if (!_player)
         {
@@ -55,5 +55,13 @@ public class UISkillListPresenter : MonoBehaviour
                 _listManager.DisplayCooldown(index, value);
             }).AddTo(this);
         }
+
+        _stageManager.IsPlaying.Subscribe(value =>
+        {
+            _listManager.SetActiveUI(value);
+
+            if (value)
+                _listManager.SelectSkill(_player.SelectBulletType.Value);
+        }).AddTo(this);
     }
 }

@@ -4,12 +4,6 @@ using UnityEngine.UI;
 // スキルUIのカード風のプレハブの情報
 public class UISkillListPrefabData : MonoBehaviour
 {
-    [Header("UIを動かすときの末端")]
-    [SerializeField]
-    private Transform _selectPoint;
-    [SerializeField]
-    private Transform _nomalPoint;
-
     [Header("動かす対象")]
     [SerializeField]
     private Transform _imageTransform;
@@ -31,10 +25,6 @@ public class UISkillListPrefabData : MonoBehaviour
     [SerializeField]
     private int _cardWidth;
 
-
-    public Vector3 GetSelectPoint => _selectPoint.position;
-
-    public Vector3 GetNomalPoint => _nomalPoint.position;
 
     public Transform ImageTransform => _imageTransform;
 

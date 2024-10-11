@@ -67,6 +67,9 @@ public class StageManager : MonoBehaviour
     [HideInInspector]
     public TimeRemainingCounter TimeCounter;
 
+    // ゲームが動いているかの変数
+    public ReactiveProperty<bool> IsPlaying = new(false);
+
     private PlayerInput uiInput = null;
 
     private CancellationTokenSource cts = null;
@@ -119,14 +122,15 @@ public class StageManager : MonoBehaviour
                 await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);
                 await _uiClearTarget.CloseGameStartUI();
 
+                // ゲームスタート
+                IsPlaying.Value = true;
+
                 // エネミーのスタート
                 StartEnemies();
 
                 // プレイヤーのスタート
                 StartPlayer();
 
-
-                // ゲームスタート
 
                 // タイマーを動かす
                 TimeCounter.OnResume();
@@ -298,6 +302,9 @@ public class StageManager : MonoBehaviour
 
         // タイマーを止める
         TimeCounter.OnPause();
+
+        // プレイが終了
+        IsPlaying.Value = false;
     }
 
     private void OnDestroy()
