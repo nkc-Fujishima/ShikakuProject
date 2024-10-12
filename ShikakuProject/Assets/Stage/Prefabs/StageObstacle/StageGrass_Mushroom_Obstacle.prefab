@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5175025175646341679}
   - component: {fileID: 5698188803925065965}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StageGrass_Mushroom_Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

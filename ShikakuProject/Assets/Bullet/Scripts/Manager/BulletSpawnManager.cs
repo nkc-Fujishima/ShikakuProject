@@ -49,8 +49,13 @@ public class BulletSpawnManager : MonoBehaviour
 
         if (bulletSegment != null)
         {
-            Transform bulletPoint = _playerController.Datas.SpawnBulletPoint;
-            bulletSegment.transform.SetPositionAndRotation(bulletPoint.position, bulletPoint.rotation);
+            Transform instancePoint = _playerController.Datas.SpawnBulletPoint;
+
+            Vector3 spawnPoint = CheckSpawnPoint(instancePoint.position);
+
+            Quaternion spawnQuaternion = instancePoint.rotation;
+
+            bulletSegment.transform.SetPositionAndRotation(spawnPoint, spawnQuaternion);
             bulletSegment.SetActive(true);
 
             // _activeObjectValuesにー１する
@@ -63,6 +68,23 @@ public class BulletSpawnManager : MonoBehaviour
             // バレットにプレイヤーを設定する
             _bulletSpawn.BulletSpawn(bulletPrefab);
         }
+    }
+
+    // 壁に動物が埋まらない場所に座標を設定
+    private Vector3 CheckSpawnPoint(Vector3 instancePoint)
+    {
+        Vector3 startPoint = _playerController.transform.position;
+
+        Vector3 direction = instancePoint - startPoint;
+
+        int layerMask = LayerMask.GetMask("StageWall");
+
+        if (Physics.Raycast(startPoint, direction.normalized, out RaycastHit hit, direction.magnitude, layerMask))
+        {
+            return hit.point;
+        }
+
+        return instancePoint;
     }
 
     //-------------------------------------------------------------------------------------------

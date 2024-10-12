@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6733933896399144687}
   - component: {fileID: 4812228579982241029}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StageSand_1_Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
