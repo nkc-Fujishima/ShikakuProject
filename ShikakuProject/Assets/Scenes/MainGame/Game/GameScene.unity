@@ -1498,6 +1498,10 @@ PrefabInstance:
       propertyPath: stageManager
       value: 
       objectReference: {fileID: 676812360}
+    - target: {fileID: 5394486449596208403, guid: 07db5784eb9604449a52027e2bedc9b6, type: 3}
+      propertyPath: _stageManager
+      value: 
+      objectReference: {fileID: 676812360}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
