@@ -16,6 +16,7 @@ public class PlayerButtonDetector
     internal UnityEvent OnButtonFireDown = new();
     internal UnityEvent OnButtonBulletSelectLeftDown = new();
     internal UnityEvent OnButtonBulletSelectRightDown = new();
+    internal UnityEvent OnButtonAvoidDown = new();
 
 
     internal PlayerButtonDetector(PlayerInput playerInput)
@@ -31,6 +32,7 @@ public class PlayerButtonDetector
         _playerInput.actions["Fire"].performed += OnInputFire;
         _playerInput.actions["BulletSelectLeft"].performed += OnInputBulletSelectLeft;
         _playerInput.actions["BulletSelectRight"].performed += OnInputBulletSelectRight;
+        _playerInput.actions["Avoid"].performed += OnInputAvoid;
     }
 
 
@@ -52,5 +54,10 @@ public class PlayerButtonDetector
     private void OnInputBulletSelectRight(InputAction.CallbackContext context)
     {
         OnButtonBulletSelectRightDown.Invoke();
+    }
+
+    private void OnInputAvoid(InputAction.CallbackContext context)
+    {
+        OnButtonAvoidDown.Invoke();
     }
 }

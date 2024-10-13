@@ -1,5 +1,7 @@
+using Cysharp.Threading.Tasks;
 using R3;
 using System;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -129,13 +131,15 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         public Idle IdleState { get; }
         public Walk WalkState { get; }
         public Fire FireState { get; }
+        public Avoid AvoidState { get; }
         public Dead DeadState { get; }
 
         public PlayerStateHolder(IStateChangeable stateChanger, PlayerButtonDetector button, PlayerStatusParameter playerStatus, PlayerData datas, ReactiveProperty<int> selectBulletType)
         {
-            IdleState = new Idle(stateChanger, this, button, playerStatus, datas,selectBulletType);
+            IdleState = new Idle(stateChanger, this, button, playerStatus, datas, selectBulletType);
             WalkState = new Walk(stateChanger, this, button, playerStatus, datas, selectBulletType);
             FireState = new Fire(stateChanger, this, button, playerStatus, datas, selectBulletType);
+            AvoidState = new Avoid(stateChanger, this, button, playerStatus, datas, selectBulletType);
             DeadState = new Dead(stateChanger, this, button, playerStatus, datas, selectBulletType);
         }
     }
@@ -176,6 +180,17 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
             data.OnBulletSpawn.Invoke();
         }
 
+        // 回避ボタンを押した場合の関数
+        public void OnAvoid()
+        {
+            data.Animator.SetBool("Avoid", true);
+
+            stateChanger.ChangeState(stateHolder.AvoidState);
+
+            // 向いてる方向に回避
+            data.Rigidbody.AddForce(data.PlayerTransform.forward * 2800);
+        }
+
         // 死んだときの関数
         private void OnDeath()
         {
@@ -193,13 +208,14 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         {
             data.Animator.SetBool("Walk", false);
 
-            buttonDetector.OnButtonFireDown.RemoveListener(OnFire);
             buttonDetector.OnButtonFireDown.AddListener(OnFire);
+            buttonDetector.OnButtonAvoidDown.AddListener(OnAvoid);
         }
 
         public override void OnExit()
         {
             buttonDetector.OnButtonFireDown.RemoveListener(OnFire);
+            buttonDetector.OnButtonAvoidDown.RemoveListener(OnAvoid);
         }
 
         public override void OnUpdate()
@@ -220,13 +236,14 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         {
             data.Animator.SetBool("Walk", true);
 
-            buttonDetector.OnButtonFireDown.RemoveListener(OnFire);
             buttonDetector.OnButtonFireDown.AddListener(OnFire);
+            buttonDetector.OnButtonAvoidDown.AddListener(OnAvoid);
         }
 
         public override void OnExit()
         {
             buttonDetector.OnButtonFireDown.RemoveListener(OnFire);
+            buttonDetector.OnButtonAvoidDown.RemoveListener(OnAvoid);
         }
 
         public override void OnUpdate()
@@ -278,6 +295,65 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
                 stateChanger.ChangeState(stateHolder.IdleState);
             else
                 stateChanger.ChangeState(stateHolder.WalkState);
+        }
+    }
+
+    //----------------------------------------------------------------------------------
+    // 回避するステート
+    private class Avoid : PlayerStateBase
+    {
+        public Avoid(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data, ReactiveProperty<int> selectBulletType) : base(stateChanger, stateHolder, buttonDetector, playerStatus, data, selectBulletType) { }
+
+        private const float STOP_TIME = 1.4f;
+
+        private float countTime = STOP_TIME;
+
+        private CancellationTokenSource cts = null;
+
+        private bool isMoved = false;
+
+        public override void OnEnter()
+        {
+            SwitchStateAfterDelay();
+        }
+
+        public override void OnExit()
+        {
+            cts.Cancel();
+        }
+
+        public override void OnUpdate()
+        {
+        }
+
+        private async void SwitchStateAfterDelay()
+        {
+            if (!isMoved) isMoved = true;
+
+            cts = new CancellationTokenSource();
+            var startTime = Time.time;
+
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(countTime), cancellationToken: cts.Token);
+
+                // 指定された秒数待った
+                countTime = STOP_TIME;
+                isMoved = false;
+                data.Animator.SetBool("Avoid", false);
+                stateChanger.ChangeState(stateHolder.IdleState);
+            }
+            catch (OperationCanceledException)
+            {
+                // キャンセルされた場合の処理
+                if (isMoved)
+                {
+                    // 残り時間を計算
+                    countTime -= Time.time - startTime;
+
+                    return;
+                }
+            }
         }
     }
 
