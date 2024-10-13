@@ -1,4 +1,3 @@
-using ObjectPool;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerParameter", menuName = "Player/Paramenter")]
@@ -48,6 +47,12 @@ public class PlayerStatusParameter : ScriptableObject
             // クールダウンを設定
             _coolTimeCount = 0;
         }
+
+        // オブジェクトが最初クールタイムがマックスになっている状態でスタートする
+        public void SetCoolTimeMax()
+        {
+            _coolTimeCount = _coolTime;
+        }
     }
 
 
@@ -76,7 +81,8 @@ public class PlayerStatusParameter : ScriptableObject
 
     internal void OnStart()
     {
-
+        for (int i = 0; i < _skillData.Length; ++i)
+            _skillData[i].SetCoolTimeMax();
     }
 
     public BulletControllerBase[] GetAllBulletPlefab()
