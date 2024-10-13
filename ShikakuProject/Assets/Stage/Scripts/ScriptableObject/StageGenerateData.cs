@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor.Timeline;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "StageGenerateData", menuName = "Stage/Generator/GenerateData")]
 public class StageGenerateData : ScriptableObject
