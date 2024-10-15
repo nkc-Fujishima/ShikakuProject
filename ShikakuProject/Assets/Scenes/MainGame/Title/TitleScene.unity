@@ -3019,6 +3019,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5539267155561503868, guid: 104574dfce736f34d8b5837ff50b01b5, type: 3}
+      propertyPath: timeLimit
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539267155561503868, guid: 104574dfce736f34d8b5837ff50b01b5, type: 3}
       propertyPath: _sceneType
       value: 0
       objectReference: {fileID: 0}
