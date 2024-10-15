@@ -95,6 +95,9 @@ public class StageManager : MonoBehaviour
                 // エネミーのスタート
                 StartEnemies();
 
+                // プレイヤーのスタート
+                StartPlayer();
+
                 break;
 
             case SceneType.Game:
