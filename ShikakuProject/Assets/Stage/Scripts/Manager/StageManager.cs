@@ -45,12 +45,9 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     private UIResult _uiResult;
 
-
-
-    // ステージ数を決める変数
-    // スクリプタブルオブジェクト内部のint変数を参照
     [SerializeField]
     private StageSelectData _stageSelectData;
+
 
     private PlayerManager _playerManager;
     private BulletManager _bulletManager;
@@ -73,6 +70,7 @@ public class StageManager : MonoBehaviour
     private PlayerInput uiInput = null;
 
     private CancellationTokenSource cts = null;
+
     private async void Awake()
     {
         switch (_sceneType)
@@ -135,7 +133,7 @@ public class StageManager : MonoBehaviour
                 StartPlayer();
 
 
-                // タイマーを動かす
+                // タイマー関連を設定
                 TimeCounter.OnResume();
 
                 break;

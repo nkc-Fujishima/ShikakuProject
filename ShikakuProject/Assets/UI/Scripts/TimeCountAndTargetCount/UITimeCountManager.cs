@@ -9,6 +9,11 @@ public class UITimeCountManager : MonoBehaviour
     [SerializeField]
     private Image _timeImage;
 
+    // Œø‰Ê‰¹ŠÖŒW
+    [SerializeField]
+    private TimeCountSoundManager _timeCountSoundManager;
+
+
     private float _timeMax = 0;
 
     public void OnStart(float timeMax)
@@ -27,5 +32,8 @@ public class UITimeCountManager : MonoBehaviour
         _timeText.text = time.ToString("F1");
 
         _timeImage.fillAmount = time / _timeMax;
+
+        // Œø‰Ê‰¹ŠÖŒW
+        _timeCountSoundManager.SetCount(time);
     }
 }
