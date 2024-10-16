@@ -338,7 +338,14 @@ public class IdleEnemyController : EnemyControllerBase
     #endregion
 
 
+    // 攻撃処理
+    private void Slash()
+    {
+        Debug.Log("近接攻撃イベント");
 
+        audioSource.clip = (effect as IdleEnemyEffectData).slashSE;
+        audioSource.Play();
+    }
 
 
     // コピーリストに追跡対象を追加
