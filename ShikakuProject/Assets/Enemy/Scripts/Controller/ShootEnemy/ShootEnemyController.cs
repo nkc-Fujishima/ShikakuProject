@@ -360,6 +360,9 @@ public class ShootEnemyController : EnemyControllerBase
         GameObject bullet = Instantiate(enemyBullet, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
         ShootEnemyParameterData shootEnemyParameter = parameter as ShootEnemyParameterData;
         bullet.GetComponent<EnemyBullet>().Construct(gameObject.transform.forward, shootEnemyParameter.BulletSpeed, shootEnemyParameter.BulletLifeTime);
+
+        audioSource.clip = (effect as ShootEnemyEffectData).shootSE;
+        audioSource.Play();
     }
 
 

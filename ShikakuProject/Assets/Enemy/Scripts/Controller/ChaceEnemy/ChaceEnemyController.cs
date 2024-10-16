@@ -403,6 +403,13 @@ public class ChaceEnemyController : EnemyControllerBase
     }
     #endregion
 
+    // UŒ‚ˆ—
+    private void Slash()
+    {
+        Debug.Log("‹ßÚUŒ‚ƒCƒxƒ“ƒg");
 
+        audioSource.clip = (effect as ChaceEnemyEffectData).slashSE;
+        audioSource.Play();
+    }
 
 }

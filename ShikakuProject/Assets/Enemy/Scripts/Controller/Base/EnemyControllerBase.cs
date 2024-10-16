@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDamage
 {
     [Header("オブジェクト設定"), Tooltip("エネミーのパラメータスクリプタブルオブジェクト"), SerializeField] protected EnemyParameterDataBase parameter;
-    [Tooltip("エネミーで使用するエフェクト群スクリプタブルオブジェクト"),SerializeField]protected EnemyEffectDataBase effect;
+    [Tooltip("エネミーで使用するエフェクト群スクリプタブルオブジェクト"), SerializeField] protected EnemyEffectDataBase effect;
     [Tooltip("エネミー用カーソル"), SerializeField] protected CursorController cursor;
 
     protected IState iState = null;

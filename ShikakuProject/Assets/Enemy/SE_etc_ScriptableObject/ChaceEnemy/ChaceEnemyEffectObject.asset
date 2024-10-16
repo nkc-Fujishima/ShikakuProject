@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionEffect: {fileID: 3699415692770541159, guid: f3098412ee1091d44b642c0493626037, type: 3}
   detectionSE: {fileID: 8300000, guid: 0aa409fde6bff5a43946345811192098, type: 3}
+  slashSE: {fileID: 8300000, guid: 7c4e435380ad8424892621e517456f35, type: 3}
