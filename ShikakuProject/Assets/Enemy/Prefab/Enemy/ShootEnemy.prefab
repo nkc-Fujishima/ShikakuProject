@@ -595,6 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameter: {fileID: 11400000, guid: 8ceb3218cc5f0dd4daafd6b1e9a38d98, type: 2}
+  effect: {fileID: 11400000, guid: f7251968e26873d4eb728dd8b78cf78f, type: 2}
   cursor: {fileID: 1567893085837452608, guid: c8977cbd7a9bb8945aad43a1b0af48a0, type: 3}
   enemyBullet: {fileID: 950983704214439798, guid: abc978a92e25ff3499cd0c0ffa8be2fd, type: 3}
 --- !u!95 &1484264262651739010
@@ -702,8 +703,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f55c6a08c638d184cb22e6a378955015, type: 3}
-  m_Resource: {fileID: 8300000, guid: f55c6a08c638d184cb22e6a378955015, type: 3}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1.5

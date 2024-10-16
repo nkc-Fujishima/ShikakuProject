@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Enemy/Effect/ShootEnemy", fileName = "ShootEnemyEffectObject")]
-public class ShootEnemyEffectObject : EnemyEffectObjectBase
+public class ShootEnemyEffectData : EnemyEffectDataBase
 {
 }

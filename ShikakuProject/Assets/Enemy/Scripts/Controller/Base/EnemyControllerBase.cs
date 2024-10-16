@@ -5,17 +5,21 @@ using UnityEngine;
 
 public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDamage
 {
-    [Header("オブジェクト設定"), Tooltip("エネミーのパラメータ"), SerializeField] protected EnemyParameterBase parameter;
+    [Header("オブジェクト設定"), Tooltip("エネミーのパラメータスクリプタブルオブジェクト"), SerializeField] protected EnemyParameterDataBase parameter;
+    [Tooltip("エネミーで使用するエフェクト群スクリプタブルオブジェクト"),SerializeField]protected EnemyEffectDataBase effect;
     [Tooltip("エネミー用カーソル"), SerializeField] protected CursorController cursor;
 
     protected IState iState = null;
 
     protected Animator animator = null;
 
+    protected AudioSource audioSource = null;
+
     public event Action<EnemyControllerBase> OnDestroyHundle = null;
     protected void Start()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
         CursorController cursorController = Instantiate(cursor);
         cursorController?.Construct(transform);
     }
