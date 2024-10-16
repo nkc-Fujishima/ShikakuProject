@@ -31,6 +31,9 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         [SerializeField]
         private Animator _animator;
 
+        [SerializeField]
+        private PlayerSoundManager _soundManager;
+
 
         [HideInInspector]
         public UnityEvent OnDeath = new();
@@ -48,11 +51,20 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         public Transform SpawnBulletPoint => _spawnBulletPoint;
 
         public Animator Animator => _animator;
+
+
+        public void SoundOnWalk() { _soundManager.OnWalk(); }
+        public void SoundOnDeath() { _soundManager.OnHit(); }
+        public void SoundOnSkillSelect() { _soundManager.OnSkillSelect(); }
+        public void SoundOnSkillCoolTimeMax() { _soundManager.OnSkillCoolTimeMax(); }
     }
 
 
     [SerializeField]
     private PlayerStatusParameter _playerStatus;
+
+    [SerializeField]
+    private ParticleSystem _particleStep;
 
     private IState _iState = null;
 
@@ -183,7 +195,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         // 回避ボタンを押した場合の関数
         public void OnAvoid()
         {
-            data.Animator.SetBool("Avoid", true);
+            data.Animator.SetTrigger("AvoidTrigger");
 
             stateChanger.ChangeState(stateHolder.AvoidState);
 
@@ -244,6 +256,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         {
             buttonDetector.OnButtonFireDown.RemoveListener(OnFire);
             buttonDetector.OnButtonAvoidDown.RemoveListener(OnAvoid);
+
+            data.Animator.SetBool("Walk", false);
         }
 
         public override void OnUpdate()
@@ -340,7 +354,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
                 // 指定された秒数待った
                 countTime = STOP_TIME;
                 isMoved = false;
-                data.Animator.SetBool("Avoid", false);
+
                 stateChanger.ChangeState(stateHolder.IdleState);
             }
             catch (OperationCanceledException)
@@ -366,6 +380,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         public override void OnEnter()
         {
             data.Animator.SetTrigger("DeathTrigger");
+
+            data.SoundOnDeath();
         }
 
         public override void OnExit()
@@ -392,6 +408,10 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
             float cooldownRate = _playerStatus.GetSkillCoolTimeCount(i) / _playerStatus.GetSkillCoolTime(i);
             CountTimeRates[i].Value = cooldownRate;
+
+            // クールダウンMAXになったら効果音を出す
+            if (_playerStatus.GetSkillIsSelectable(i))
+                Datas.SoundOnSkillCoolTimeMax();
         }
     }
 
@@ -417,6 +437,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
             nextType = _playerStatus.GetSkillLength - 1;
 
         SelectBulletType.Value = nextType;
+
+        Datas.SoundOnSkillSelect();
     }
 
     // 左に選択
@@ -430,6 +452,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
             nextType = 0;
 
         SelectBulletType.Value = nextType;
+
+        Datas.SoundOnSkillSelect();
     }
 
 
@@ -451,6 +475,14 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         _iState.OnExit();
     }
 
+    //----------------------------------------------------------------------------------
+    // 歩いているときに呼び出す関数
+    public void OnOneStep()
+    {
+        Datas.SoundOnWalk();
+        _particleStep.Play();
+    }
+
 
     //----------------------------------------------------------------------------------
     // IChaceable
@@ -460,11 +492,12 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     // IDamage
     public void Damage()
     {
+        if (!_isMove) return;
+
         _buttonDetector.OnButtonBulletSelectLeftDown.RemoveListener(OnBulletSelectLeft);
         _buttonDetector.OnButtonBulletSelectRightDown.RemoveListener(OnBulletSelectRight);
 
         _isMove = false;
-
 
         Datas.OnDeath?.Invoke();
 
