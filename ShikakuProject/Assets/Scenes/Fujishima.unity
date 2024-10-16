@@ -127,6 +127,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -459766138621916541, guid: 76d2b21784d569e4d89faa36afed9ab6, type: 3}
+      propertyPath: Loop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -459766138621916541, guid: 76d2b21784d569e4d89faa36afed9ab6, type: 3}
+      propertyPath: m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1643209509981466413, guid: 76d2b21784d569e4d89faa36afed9ab6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.73
@@ -954,6 +962,10 @@ PrefabInstance:
       propertyPath: _data
       value: 
       objectReference: {fileID: 11400000, guid: 17eaf1a6adc92d84b938282ead073577, type: 2}
+    - target: {fileID: 5539267155561503868, guid: 104574dfce736f34d8b5837ff50b01b5, type: 3}
+      propertyPath: _sceneType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5539267155561503868, guid: 104574dfce736f34d8b5837ff50b01b5, type: 3}
       propertyPath: _stageCount
       value: 0
@@ -1866,6 +1878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameter: {fileID: 11400000, guid: 8b0b99532f878ea48ba748428c4fe3ea, type: 2}
+  effect: {fileID: 0}
   cursor: {fileID: 0}
   weapon: {fileID: 940649282228665384}
 --- !u!1 &1985503790911956654
@@ -2713,6 +2726,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     SelectType: 0
+  cursor: {fileID: 0}
 --- !u!4 &7866983877164705122
 Transform:
   m_ObjectHideFlags: 0

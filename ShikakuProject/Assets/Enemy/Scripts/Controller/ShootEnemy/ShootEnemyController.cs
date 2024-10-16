@@ -54,7 +54,7 @@ public class ShootEnemyController : EnemyControllerBase
         visionSensor.OnSensorInHundle += AddTarget;
         visionSensor.OnSensorOutHundle += RemoveTarget;
 
-        stateManager = new ShootEnemyStateManager(animator, this.transform, parameter as ShootEnemyParameter, this, chaceableObjects, visionMeshCreator);
+        stateManager = new ShootEnemyStateManager(animator, this.transform, parameter as ShootEnemyParameterData, this, chaceableObjects, visionMeshCreator, effect as ShootEnemyEffectData, audioSource);
 
         iState = stateManager.idleState;
         if (iState != null) iState.OnEnter();
@@ -108,11 +108,11 @@ public class ShootEnemyController : EnemyControllerBase
 
         public IChaceable chaceTarget = null;
 
-        public ShootEnemyStateManager(Animator animator, Transform transform, ShootEnemyParameter parameter, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator)
+        public ShootEnemyStateManager(Animator animator, Transform transform, ShootEnemyParameterData parameter, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, ShootEnemyEffectData effect, AudioSource audioSource)
         {
-            idleState = new Idle(this, animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator);
-            alertState = new Alert(this, animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator);
-            attackState = new Attack(this, animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator);
+            idleState = new Idle(this, animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource);
+            alertState = new Alert(this, animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource);
+            attackState = new Attack(this, animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource);
         }
 
     }
@@ -126,16 +126,19 @@ public class ShootEnemyController : EnemyControllerBase
         protected const int layerMask = ~(1 << 2);
 
         protected ShootEnemyStateManager manager = null;
-        protected ShootEnemyParameter parameter = null;
+        protected ShootEnemyParameterData parameter = null;
         protected Transform transform = null;
         protected Animator animator = null;
         protected IStateChangeable stateChanger = null;
         protected VisionMeshCreator visionMeshCreator = null;
+        protected ShootEnemyEffectData effect = null;
+        protected AudioSource audioSource = null;
+
 
         // 追跡可能な対象リスト
         protected List<IChaceable> chaceableObjects = new List<IChaceable>(6);
 
-        public ShootEnemyStateBase(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameter parameter, ShootEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator)
+        public ShootEnemyStateBase(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameterData parameter, ShootEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, ShootEnemyEffectData effect, AudioSource audioSource)
         {
             this.manager = manager;
             this.parameter = parameter;
@@ -144,6 +147,8 @@ public class ShootEnemyController : EnemyControllerBase
             this.stateChanger = stateChanger;
             this.chaceableObjects = chaceableObjects;
             this.visionMeshCreator = visionMeshCreator;
+            this.effect = effect;
+            this.audioSource = audioSource;
         }
     }
     #endregion
@@ -153,7 +158,7 @@ public class ShootEnemyController : EnemyControllerBase
     #region 待機ステート
     private class Idle : ShootEnemyStateBase
     {
-        public Idle(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameter parameter, ShootEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator) { }
+        public Idle(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameterData parameter, ShootEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, ShootEnemyEffectData effect, AudioSource audioSource) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource) { }
 
         public override void OnEnter()
         {
@@ -197,7 +202,7 @@ public class ShootEnemyController : EnemyControllerBase
 
         float distance = 0;
 
-        public Alert(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameter parameter, ShootEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator)
+        public Alert(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameterData parameter, ShootEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, ShootEnemyEffectData effect, AudioSource audioSource) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource)
         {
         }
 
@@ -265,9 +270,11 @@ public class ShootEnemyController : EnemyControllerBase
     // 攻撃ステートに入り一定時間経過で待機ステートに移行
     private class Attack : ShootEnemyStateBase
     {
+        const float effectPosY = 3;
+
         float countTime = 0;
 
-        public Attack(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameter parameter, ShootEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator)
+        public Attack(ShootEnemyStateManager manager, Animator animator, Transform transform, ShootEnemyParameterData parameter, ShootEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, ShootEnemyEffectData effect, AudioSource audioSource) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource)
         {
         }
 
@@ -275,6 +282,15 @@ public class ShootEnemyController : EnemyControllerBase
         public override void OnEnter()
         {
             visionMeshCreator.ChangeMeshAlertMaterial();
+
+
+            Debug.Log(effect.detectionEffect != null);
+
+            DetectionEffectController effectController = Instantiate(effect.detectionEffect, new Vector3(transform.position.x, transform.position.y + effectPosY, transform.position.z), Quaternion.identity);
+            effectController.Construct(this.transform);
+
+            audioSource.clip = effect.detectionSE;
+            audioSource.Play();
 
             animator.SetBool("AttackFlag", true);
         }
@@ -342,7 +358,7 @@ public class ShootEnemyController : EnemyControllerBase
     private void Shoot()
     {
         GameObject bullet = Instantiate(enemyBullet, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
-        ShootEnemyParameter shootEnemyParameter = parameter as ShootEnemyParameter;
+        ShootEnemyParameterData shootEnemyParameter = parameter as ShootEnemyParameterData;
         bullet.GetComponent<EnemyBullet>().Construct(gameObject.transform.forward, shootEnemyParameter.BulletSpeed, shootEnemyParameter.BulletLifeTime);
     }
 

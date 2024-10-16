@@ -9,6 +9,8 @@ public class EnemyBullet : MonoBehaviour
     float timeCount = 0;
 
     float lifeLimitTime = 0;
+
+    // 生成されてからの時間を計測、一定時間生存の場合、破棄
     private void Update()
     {
         timeCount += Time.deltaTime;
@@ -16,6 +18,7 @@ public class EnemyBullet : MonoBehaviour
         if (timeCount > lifeLimitTime) Destroy(this.gameObject);
     }
 
+    // 攻撃方向、最大生存時間を決定
     public void Construct(Vector3 direction, float bulletSpeed,float lifeLimitTime)
     {
         rigidBody = GetComponent<Rigidbody>();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Enemy/Parameter/ShootEnemy", fileName = "ShootEnemyParameter")]
-public class ShootEnemyParameter : EnemyParameterBase
+public class ShootEnemyParameterData : EnemyParameterDataBase
 {
     [Tooltip("’e‚ÌˆÚ“®‘¬“x")] public float BulletSpeed;
     [Tooltip("’e‚Ì¶‘¶ŠÔ")] public float BulletLifeTime;

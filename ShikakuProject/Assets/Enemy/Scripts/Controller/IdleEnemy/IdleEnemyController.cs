@@ -54,7 +54,7 @@ public class IdleEnemyController : EnemyControllerBase
         visionSensor.OnSensorInHundle += AddTarget;
         visionSensor.OnSensorOutHundle += RemoveTarget;
 
-        IdleEnemyStateManager stateHolder = new IdleEnemyStateManager(animator, this.transform, parameter as IdleEnemyParameter, this, chaceableObjects, visionMeshCreator, weaponCollider);
+        IdleEnemyStateManager stateHolder = new IdleEnemyStateManager(animator, this.transform, parameter as IdleEnemyParameterData, this, chaceableObjects, visionMeshCreator, weaponCollider, effect as IdleEnemyEffectData, audioSource);
 
         iState = stateHolder.idleState;
         if (iState != null) iState.OnEnter();
@@ -105,7 +105,7 @@ public class IdleEnemyController : EnemyControllerBase
         public Alert alertState { get; }
         public Attack attackState { get; }
 
-        IdleEnemyParameter parameter = null;
+        IdleEnemyParameterData parameter = null;
 
         Transform transform = null;
 
@@ -121,7 +121,7 @@ public class IdleEnemyController : EnemyControllerBase
 
         public IChaceable chaceTarget = null;
 
-        public IdleEnemyStateManager(Animator animator, Transform transform, IdleEnemyParameter parameter, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider)
+        public IdleEnemyStateManager(Animator animator, Transform transform, IdleEnemyParameterData parameter, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider, IdleEnemyEffectData effect, AudioSource audioSource)
         {
             this.animator = animator;
             this.transform = transform;
@@ -130,9 +130,9 @@ public class IdleEnemyController : EnemyControllerBase
             this.chaceableObjects = chaceableObjects;
             this.visionMeshCreator = visionMeshCreator;
             this.weaponCollider = weaponCollider;
-            idleState = new Idle(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator);
-            alertState = new Alert(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator);
-            attackState = new Attack(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, weaponCollider);
+            idleState = new Idle(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource);
+            alertState = new Alert(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource);
+            attackState = new Attack(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, weaponCollider, effect, audioSource);
         }
 
     }
@@ -146,16 +146,18 @@ public class IdleEnemyController : EnemyControllerBase
         protected const int layerMask = ~(1 << 2);
 
         protected IdleEnemyStateManager manager = null;
-        protected IdleEnemyParameter parameter = null;
+        protected IdleEnemyParameterData parameter = null;
         protected Transform transform = null;
         protected Animator animator = null;
         protected IStateChangeable stateChanger = null;
         protected VisionMeshCreator visionMeshCreator = null;
+        protected IdleEnemyEffectData effect = null;
+        protected AudioSource audioSource = null;
 
         // 追跡可能な対象リスト
         protected List<IChaceable> chaceableObjects = new List<IChaceable>(6);
 
-        public IdleEnemyStateBase(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameter parameter, IdleEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator)
+        public IdleEnemyStateBase(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameterData parameter, IdleEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, IdleEnemyEffectData effect, AudioSource audioSource)
         {
             this.manager = manager;
             this.parameter = parameter;
@@ -164,6 +166,8 @@ public class IdleEnemyController : EnemyControllerBase
             this.stateChanger = stateChanger;
             this.chaceableObjects = chaceableObjects;
             this.visionMeshCreator = visionMeshCreator;
+            this.effect = effect;
+            this.audioSource = audioSource;
         }
     }
     #endregion
@@ -173,7 +177,7 @@ public class IdleEnemyController : EnemyControllerBase
     #region 待機ステート
     private class Idle : IdleEnemyStateBase
     {
-        public Idle(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameter parameter, IdleEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator) { }
+        public Idle(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameterData parameter, IdleEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, IdleEnemyEffectData effect, AudioSource audioSource) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource) { }
 
         public override void OnEnter()
         {
@@ -213,17 +217,25 @@ public class IdleEnemyController : EnemyControllerBase
     #region 警戒ステート
     private class Alert : IdleEnemyStateBase
     {
+        const float effectPosY = 3;
+
         const int layerMask = ~(1 << 2);
 
         float distance = 0;
 
-        public Alert(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameter parameter, IdleEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator)
+        public Alert(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameterData parameter, IdleEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, IdleEnemyEffectData effect, AudioSource audioSource) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource)
         {
         }
 
         public override void OnEnter()
         {
             visionMeshCreator.ChangeMeshAlertMaterial();
+
+            DetectionEffectController effectController = Instantiate(effect.detectionEffect, new Vector3(transform.position.x, transform.position.y + effectPosY, transform.position.z), Quaternion.identity);
+            effectController.Construct(this.transform);
+
+            audioSource.clip = effect.detectionSE;
+            audioSource.Play();
         }
 
         public override void OnExit()
@@ -289,7 +301,7 @@ public class IdleEnemyController : EnemyControllerBase
 
         BoxCollider weaponCollider = null;
 
-        public Attack(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameter parameter, IdleEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator)
+        public Attack(IdleEnemyStateManager manager, Animator animator, Transform transform, IdleEnemyParameterData parameter, IdleEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider, IdleEnemyEffectData effect, AudioSource audioSource) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource)
         {
             this.weaponCollider = weaponCollider;
         }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyParameterBase : ScriptableObject
+public class EnemyParameterDataBase : ScriptableObject
 {
     [Tooltip("ˆÚ“®‘¬“x")] public float MoveSpeed;
     [Tooltip("UŒ‚ŠJn‹——£")] public float AttackRange;
