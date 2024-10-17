@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec4c7684c1e58cb4b87daf5cf6e347fa, type: 3}
   m_Name: ShootEnemyEffectObject
   m_EditorClassIdentifier: 
-  detectionEffect: {fileID: 3699415692770541159, guid: f3098412ee1091d44b642c0493626037, type: 3}
-  detectionSE: {fileID: 8300000, guid: 0aa409fde6bff5a43946345811192098, type: 3}
+  DetectionEffect: {fileID: 3699415692770541159, guid: f3098412ee1091d44b642c0493626037, type: 3}
+  DetectionSE: {fileID: 8300000, guid: 0aa409fde6bff5a43946345811192098, type: 3}
+  DownSE: {fileID: 8300000, guid: f7263b74770df6846a623a17788dba59, type: 3}
   shootSE: {fileID: 8300000, guid: 3602a728290be69438028f5d45e31ad7, type: 3}

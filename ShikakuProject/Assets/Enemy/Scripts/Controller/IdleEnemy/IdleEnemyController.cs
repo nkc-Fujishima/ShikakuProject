@@ -231,10 +231,10 @@ public class IdleEnemyController : EnemyControllerBase
         {
             visionMeshCreator.ChangeMeshAlertMaterial();
 
-            DetectionEffectController effectController = Instantiate(effect.detectionEffect, new Vector3(transform.position.x, transform.position.y + effectPosY, transform.position.z), Quaternion.identity);
+            DetectionEffectController effectController = Instantiate(effect.DetectionEffect, new Vector3(transform.position.x, transform.position.y + effectPosY, transform.position.z), Quaternion.identity);
             effectController.Construct(this.transform);
 
-            audioSource.clip = effect.detectionSE;
+            audioSource.clip = effect.DetectionSE;
             audioSource.Play();
         }
 
@@ -338,11 +338,9 @@ public class IdleEnemyController : EnemyControllerBase
     #endregion
 
 
-    // 攻撃処理
+    // 攻撃処理、アニメーションイベントにて使用
     private void Slash()
     {
-        Debug.Log("近接攻撃イベント");
-
         audioSource.clip = (effect as IdleEnemyEffectData).slashSE;
         audioSource.Play();
     }

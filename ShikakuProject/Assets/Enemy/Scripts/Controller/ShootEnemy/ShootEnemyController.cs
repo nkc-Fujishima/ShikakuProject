@@ -284,12 +284,12 @@ public class ShootEnemyController : EnemyControllerBase
             visionMeshCreator.ChangeMeshAlertMaterial();
 
 
-            Debug.Log(effect.detectionEffect != null);
+            Debug.Log(effect.DetectionEffect != null);
 
-            DetectionEffectController effectController = Instantiate(effect.detectionEffect, new Vector3(transform.position.x, transform.position.y + effectPosY, transform.position.z), Quaternion.identity);
+            DetectionEffectController effectController = Instantiate(effect.DetectionEffect, new Vector3(transform.position.x, transform.position.y + effectPosY, transform.position.z), Quaternion.identity);
             effectController.Construct(this.transform);
 
-            audioSource.clip = effect.detectionSE;
+            audioSource.clip = effect.DetectionSE;
             audioSource.Play();
 
             animator.SetBool("AttackFlag", true);
@@ -354,7 +354,7 @@ public class ShootEnemyController : EnemyControllerBase
 
 
 
-    // 攻撃処理
+    // 攻撃処理、アニメーションイベントにて使用
     private void Shoot()
     {
         GameObject bullet = Instantiate(enemyBullet, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);

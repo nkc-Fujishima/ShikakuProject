@@ -11,15 +11,28 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
 
     protected IState iState = null;
 
+    // 全エネミー共通処理のステート
+    private DieState dieState = null;
+
+    protected Rigidbody rigidBody = null;
+
     protected Animator animator = null;
 
     protected AudioSource audioSource = null;
 
+    private CapsuleCollider[] colliders = null;
+
     public event Action<EnemyControllerBase> OnDestroyHundle = null;
     protected void Start()
     {
+        rigidBody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        colliders = GetComponents<CapsuleCollider>();
+
+        dieState = new DieState(this.gameObject, animator, rigidBody, colliders, audioSource, parameter, effect);
+
+        // 敵の頭上に出すカーソル生成
         CursorController cursorController = Instantiate(cursor);
         cursorController?.Construct(transform);
     }
@@ -47,10 +60,64 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
         // パラメータ内のダメージを受けない角度以上のみダメージを受けてイベントを発火
         if (angle < parameter.InvincibleAngle) return;
 
-        Debug.Log("エネミーがダメージを受けたよ");
+        ChangeState(dieState);
 
-        this.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
 
         OnDestroyHundle?.Invoke(this);
+    }
+
+    // 全エネミー共通やられた場合の処理
+    protected class DieState : IState
+    {
+        GameObject gameObject = null;
+        Animator animator = null;
+        Rigidbody rigidbody = null;
+        CapsuleCollider[] colliders = null;
+        AudioSource audioSource = null;
+
+        EnemyParameterDataBase parameter = null;
+        EnemyEffectDataBase effect = null;
+
+        float countTime = 0;
+        public DieState(GameObject gameObject, Animator animator, Rigidbody rigidbody, CapsuleCollider[] colliders, AudioSource audioSource, EnemyParameterDataBase parameter, EnemyEffectDataBase effect)
+        {
+            this.gameObject = gameObject;
+            this.animator = animator;
+            this.rigidbody = rigidbody;
+            this.colliders = colliders;
+            this.audioSource = audioSource;
+            this.parameter = parameter;
+            this.effect = effect;
+        }
+
+        public void OnEnter()
+        {
+            Debug.Log("やられたよ");
+
+            foreach (var collider in colliders)
+            {
+                collider.enabled = false;
+            }
+            animator?.Play("Die", 0, 0.0f);
+
+            rigidbody?.AddForce(gameObject.transform.forward * parameter.DownForcePower, ForceMode.Impulse);
+            audioSource.clip = effect.DownSE;
+            audioSource?.Play();
+        }
+
+        public void OnExit()
+        {
+        }
+
+        public void OnUpdate()
+        {
+            countTime += Time.deltaTime;
+
+            if (countTime > parameter.ToDestroyTime)
+            {
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

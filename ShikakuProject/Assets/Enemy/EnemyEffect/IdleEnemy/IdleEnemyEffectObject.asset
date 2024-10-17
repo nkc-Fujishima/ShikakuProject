@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69fbea225e919974f964098057edfc32, type: 3}
-  m_Name: ChaceEnemyEffectObject
+  m_Script: {fileID: 11500000, guid: e682748792ec604488f031123d2a8eea, type: 3}
+  m_Name: IdleEnemyEffectObject
   m_EditorClassIdentifier: 
-  detectionEffect: {fileID: 3699415692770541159, guid: f3098412ee1091d44b642c0493626037, type: 3}
-  detectionSE: {fileID: 8300000, guid: 0aa409fde6bff5a43946345811192098, type: 3}
+  DetectionEffect: {fileID: 3699415692770541159, guid: f3098412ee1091d44b642c0493626037, type: 3}
+  DetectionSE: {fileID: 8300000, guid: 0aa409fde6bff5a43946345811192098, type: 3}
+  DownSE: {fileID: 8300000, guid: f7263b74770df6846a623a17788dba59, type: 3}
   slashSE: {fileID: 8300000, guid: 7c4e435380ad8424892621e517456f35, type: 3}

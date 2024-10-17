@@ -62,7 +62,6 @@ public class ChaceEnemyController : EnemyControllerBase
 
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         agent.enabled = true;
-        Rigidbody rigidBody = GetComponent<Rigidbody>();
 
         ChaceEnemyStateManager stateHolder = new ChaceEnemyStateManager(animator, this.transform, parameter as ChaceEnemyParameterData, this, chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody, effect as ChaceEnemyEffectData,audioSource);
 
@@ -281,9 +280,9 @@ public class ChaceEnemyController : EnemyControllerBase
         {
             visionMeshCreator.ChangeMeshAlertMaterial();
 
-            DetectionEffectController effectController = Instantiate(effect.detectionEffect, new Vector3(transform.position.x, transform.position.y + effectPosY, transform.position.z), Quaternion.identity);
+            DetectionEffectController effectController = Instantiate(effect.DetectionEffect, new Vector3(transform.position.x, transform.position.y + effectPosY, transform.position.z), Quaternion.identity);
             effectController.Construct(this.transform);
-            audioSource.clip = effect.detectionSE;
+            audioSource.clip = effect.DetectionSE;
             audioSource.Play();
 
             animator.SetBool("WalkFlag", true);
@@ -403,13 +402,18 @@ public class ChaceEnemyController : EnemyControllerBase
     }
     #endregion
 
-    // 攻撃処理
+    
+
+    //-----------------------------------------------------------
+    //　攻撃処理、アニメーションイベントにて使用
     private void Slash()
     {
-        Debug.Log("近接攻撃イベント");
-
         audioSource.clip = (effect as ChaceEnemyEffectData).slashSE;
         audioSource.Play();
     }
 
+
+    private void ChangeToDieState()
+    {
+    }
 }

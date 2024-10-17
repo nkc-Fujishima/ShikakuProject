@@ -19,3 +19,5 @@ MonoBehaviour:
   InvincibleAngle: 90
   RotateSpeed: 2
   ListRefreshRate: 10
+  DownForcePower: 3
+  ToDestroyTime: 2
