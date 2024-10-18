@@ -10,11 +10,6 @@ public class BulletControllerForward : BulletControllerBase, IDamage, IStoppable
     Animator _animator;
 
 
-    private new void Start()
-    {
-        base.Start();
-    }
-
     private new void Update()
     {
         base.Update();

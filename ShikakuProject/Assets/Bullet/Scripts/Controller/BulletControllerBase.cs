@@ -34,11 +34,6 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     private Collider[] _colliders;
 
 
-    public void Start()
-    {
-        BulletRigidbody = GetComponent<Rigidbody>();
-    }
-
     public void Update()
     {
         switch (MoveState)
@@ -84,6 +79,9 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
         foreach (Collider collider in _colliders)
             collider.enabled = true;
+
+        BulletRigidbody = GetComponent<Rigidbody>();
+        BulletRigidbody.isKinematic = false;
     }
 
     // EnemyTransformÇê›íËÇ∑ÇÈ
@@ -126,7 +124,7 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
         IsStop = false;
 
         if (_effectExplosionPrefab)
-            Instantiate(_effectExplosionPrefab, transform.position, transform.rotation);
+            Instantiate(_effectExplosionPrefab, transform.position, _effectExplosionPrefab.transform.rotation);
 
         OnDestroyHundle?.Invoke(this);
         OnBulletDestroy?.Invoke(gameObject);
@@ -154,6 +152,8 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
         foreach (Collider collider in _colliders)
             collider.enabled = false;
+
+        BulletRigidbody.isKinematic = true;
     }
 
     //----------------------------------------------------------------------------------
