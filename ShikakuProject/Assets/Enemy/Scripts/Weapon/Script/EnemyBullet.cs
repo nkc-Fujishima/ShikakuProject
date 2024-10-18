@@ -6,6 +6,10 @@ public class EnemyBullet : MonoBehaviour
 {
     Rigidbody rigidBody = null;
 
+    AudioSource audioSource = null;
+
+    ParticleSystem hitEffect = null;
+
     float timeCount = 0;
 
     float lifeLimitTime = 0;
@@ -19,11 +23,14 @@ public class EnemyBullet : MonoBehaviour
     }
 
     // çUåÇï˚å¸ÅAç≈ëÂê∂ë∂éûä‘ÇåàíË
-    public void Construct(Vector3 direction, float bulletSpeed,float lifeLimitTime)
+    public void Construct(Vector3 direction, float bulletSpeed, float lifeLimitTime, ParticleSystem hitEffect, AudioClip hitSE)
     {
         rigidBody = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
         rigidBody.velocity = direction * bulletSpeed;
         this.lifeLimitTime = lifeLimitTime;
+        this.hitEffect = hitEffect;
+        audioSource.clip = hitSE;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,12 +38,13 @@ public class EnemyBullet : MonoBehaviour
         if (other.CompareTag("Enemy")) return;
 
         IDamage iDamage = null;
-        if(other.TryGetComponent<IDamage>(out iDamage))
+        if (other.TryGetComponent<IDamage>(out iDamage))
         {
             iDamage.Damage();
         }
 
-        Debug.Log(other.name);
+        audioSource.Play();
+        Instantiate(hitEffect, transform.position, Quaternion.identity);
         Destroy(this.gameObject);
     }
 }

@@ -372,7 +372,6 @@ public class ChaceEnemyController : EnemyControllerBase
         public override void OnEnter()
         {
             visionMeshCreator.ChangeMeshAlertMaterial();
-            weaponCollider.enabled = true;
 
             // 追跡対象のオブジェクトの行動停止用メソッドを呼び出す
             IStoppable iStoppableObject = null;
@@ -408,6 +407,7 @@ public class ChaceEnemyController : EnemyControllerBase
     //　攻撃処理、アニメーションイベントにて使用
     private void Slash()
     {
+        weapon.GetComponent<BoxCollider>().enabled = true;
         audioSource.clip = (effect as ChaceEnemyEffectData).slashSE;
         audioSource.Play();
     }

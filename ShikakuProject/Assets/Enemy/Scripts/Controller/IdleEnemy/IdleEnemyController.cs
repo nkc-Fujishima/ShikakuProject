@@ -310,7 +310,6 @@ public class IdleEnemyController : EnemyControllerBase
         public override void OnEnter()
         {
             visionMeshCreator.ChangeMeshAlertMaterial();
-            weaponCollider.enabled = true;
 
             // 追跡対象のオブジェクトの行動停止用メソッドを呼び出す
             IStoppable iStoppableObject = manager.chaceTarget.chacebleTransform.GetComponent<IStoppable>();
@@ -341,6 +340,7 @@ public class IdleEnemyController : EnemyControllerBase
     // 攻撃処理、アニメーションイベントにて使用
     private void Slash()
     {
+        weapon.GetComponent<BoxCollider>().enabled = true;
         audioSource.clip = (effect as IdleEnemyEffectData).slashSE;
         audioSource.Play();
     }

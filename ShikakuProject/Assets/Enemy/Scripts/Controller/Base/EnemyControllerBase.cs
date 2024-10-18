@@ -79,6 +79,8 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
         EnemyParameterDataBase parameter = null;
         EnemyEffectDataBase effect = null;
 
+        const float effectPosY = 1.5f;
+
         float countTime = 0;
         public DieState(GameObject gameObject, Animator animator, Rigidbody rigidbody, CapsuleCollider[] colliders, AudioSource audioSource, EnemyParameterDataBase parameter, EnemyEffectDataBase effect)
         {
@@ -93,17 +95,19 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
 
         public void OnEnter()
         {
-            Debug.Log("‚â‚ç‚ê‚½‚æ");
-
             foreach (var collider in colliders)
             {
                 collider.enabled = false;
             }
+
+            rigidbody.isKinematic = true;
             animator?.Play("Die", 0, 0.0f);
 
             rigidbody?.AddForce(gameObject.transform.forward * parameter.DownForcePower, ForceMode.Impulse);
             audioSource.clip = effect.DownSE;
             audioSource?.Play();
+
+            Instantiate(effect.DownEffect, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + effectPosY, gameObject.transform.position.z), Quaternion.identity);
         }
 
         public void OnExit()

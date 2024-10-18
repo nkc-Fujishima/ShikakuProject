@@ -2716,9 +2716,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerStatus: {fileID: 11400000, guid: 2a895e04eec9fe74c94ffb77d26f359e, type: 2}
+  _particleStep: {fileID: 0}
   Datas:
     _spawnBulletPoint: {fileID: 6063014141174915495}
     _animator: {fileID: 8241638771152235522}
+    _soundManager:
+      _audioSource: {fileID: 0}
+      _soundWalk: {fileID: 0}
+      _soundHit: {fileID: 0}
+      _soundSkillSelect: {fileID: 0}
+      _soundSkillCoolTimeMax: {fileID: 0}
     OnDeath:
       m_PersistentCalls:
         m_Calls: []

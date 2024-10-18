@@ -2869,12 +2869,12 @@ MonoBehaviour:
   titleUI: {fileID: 209489841}
   stageSelectUI: {fileID: 149411975}
   stageImages:
-  - {fileID: 21300000, guid: b91d0c8fd425c7a4480d61431f881ec0, type: 3}
-  - {fileID: 21300000, guid: 82336bfe71afd6f4cab1ff23b1732c66, type: 3}
-  - {fileID: 21300000, guid: 60fa6e5fdea59dd4cbd5e1df2723f98b, type: 3}
-  - {fileID: 21300000, guid: 934c21c52fc01744884053aa0fd29f3a, type: 3}
-  - {fileID: 21300000, guid: 6d724f4c6fbbd234db4ade70868aad22, type: 3}
-  - {fileID: 21300000, guid: b91d0c8fd425c7a4480d61431f881ec0, type: 3}
+  - {fileID: 21300000, guid: 363f72f50bba5324483069e98fd34e2a, type: 3}
+  - {fileID: 21300000, guid: 618c946de6a63f0409af10785e7d3a0e, type: 3}
+  - {fileID: 21300000, guid: 82d8be28b01be224ead8345c58c8fa8f, type: 3}
+  - {fileID: 21300000, guid: e2827c6d39ef16740b487a520860590b, type: 3}
+  - {fileID: 21300000, guid: 25c632015edbb9e47a7a7f54a21bedb1, type: 3}
+  - {fileID: 21300000, guid: 77aa6e5b32bec5d459a3ce82d7484d31, type: 3}
   imageObjects:
   - {fileID: 126708532}
   - {fileID: 1876187475}
