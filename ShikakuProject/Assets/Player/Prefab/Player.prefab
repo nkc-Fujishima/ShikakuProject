@@ -5124,6 +5124,7 @@ MonoBehaviour:
       _soundHit: {fileID: 8300000, guid: aa5b2a94e7ac45a4f9fe703db9f2eecf, type: 3}
       _soundSkillSelect: {fileID: 8300000, guid: 771974a83cc9db842832d3ab351e766b, type: 3}
       _soundSkillCoolTimeMax: {fileID: 8300000, guid: 7796448d736136446ae0191cbde124bb, type: 3}
+      _soundEvasion: {fileID: 8300000, guid: 14432c2d6214afb428fa613e9b39124d, type: 3}
     OnDeath:
       m_PersistentCalls:
         m_Calls: []

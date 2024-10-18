@@ -57,6 +57,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         public void SoundOnDeath() { _soundManager.OnHit(); }
         public void SoundOnSkillSelect() { _soundManager.OnSkillSelect(); }
         public void SoundOnSkillCoolTimeMax() { _soundManager.OnSkillCoolTimeMax(); }
+        public void SoundOnEvasion() {  _soundManager.OnEvasion(); }
     }
 
 
@@ -195,6 +196,10 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         // ‰ñ”ğƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½ê‡‚ÌŠÖ”
         public void OnAvoid()
         {
+            Debug.Log("‚æ‚Î‚ê‚Æ‚”");
+
+            data.SoundOnEvasion();
+
             data.Animator.SetTrigger("AvoidTrigger");
 
             stateChanger.ChangeState(stateHolder.AvoidState);
