@@ -16,4 +16,6 @@ MonoBehaviour:
   DetectionSE: {fileID: 8300000, guid: 0aa409fde6bff5a43946345811192098, type: 3}
   DownEffect: {fileID: 1323656519675362538, guid: 5666d41634c45ba4fb8bbc8e251a867c, type: 3}
   DownSE: {fileID: 8300000, guid: f7263b74770df6846a623a17788dba59, type: 3}
+  DestroyEffect: {fileID: 4376742797344565153, guid: b099136de60a0424b8c57616ca54bd91, type: 3}
+  DestroySE: {fileID: 8300000, guid: 2a5e7703e469b204b852ccf33b2fea79, type: 3}
   slashSE: {fileID: 8300000, guid: 7c4e435380ad8424892621e517456f35, type: 3}

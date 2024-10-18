@@ -1,5 +1,5 @@
 {
-    "name": "Titleinput",
+    "name": "UIInput",
     "maps": [
         {
             "name": "Title",
@@ -37,7 +37,7 @@
                 {
                     "name": "",
                     "id": "c5f9bfdb-b587-4cd4-8f3a-4372a0488b49",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -59,7 +59,7 @@
                 {
                     "name": "",
                     "id": "42d1a4d4-86fb-450c-81d3-674afdf42195",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
