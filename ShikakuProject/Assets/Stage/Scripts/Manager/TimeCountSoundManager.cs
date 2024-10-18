@@ -10,10 +10,13 @@ public class TimeCountSoundManager
     [SerializeField]
     private AudioSource _audioSource;
 
+    private float _countDownSecond = 0;
 
-    private const int COUNT_START_SECOND = 5;
 
-    private int _countDownSecond = COUNT_START_SECOND + 1;
+    public void OnStart(float countMax)
+    {
+        _countDownSecond = countMax;
+    }
 
 
     public void SetCount(float value)

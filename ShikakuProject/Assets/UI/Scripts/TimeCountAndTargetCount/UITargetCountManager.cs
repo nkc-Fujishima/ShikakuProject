@@ -4,19 +4,20 @@ using UnityEngine.UI;
 public class UITargetCountManager : MonoBehaviour
 {
     [SerializeField]
-    private Text _targetText;
+    private Text _textTarget;
 
-    private int _targetMax = 0;
+    [SerializeField]
+    private Text _textTargetMax;
 
     public void OnStart(int targetMax)
     {
-        _targetMax = targetMax;
+        _textTargetMax.text = targetMax.ToString();
 
         TargetCount(targetMax);
     }
 
     public void TargetCount(int targetRemaining)
     {
-        _targetText.text = targetRemaining + "/" + _targetMax;
+        _textTarget.text = targetRemaining.ToString();
     }
 }

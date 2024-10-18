@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,11 @@ public class UITimeCountManager : MonoBehaviour
     private TimeCountSoundManager _timeCountSoundManager;
 
 
+    private const int WARNING_COUNT_START_SECOND = 5 + 1;
+
+    private bool _isWarning = false;
+
+
     private float _timeMax = 0;
 
     public void OnStart(float timeMax)
@@ -23,6 +29,9 @@ public class UITimeCountManager : MonoBehaviour
         _timeImage.fillAmount = 0;
 
         _timeMax = timeMax;
+
+
+        _timeCountSoundManager.OnStart(WARNING_COUNT_START_SECOND);
     }
 
     public void TimeCount(float time)
@@ -35,5 +44,9 @@ public class UITimeCountManager : MonoBehaviour
 
         // 効果音関係
         _timeCountSoundManager.SetCount(time);
+
+        // タイムアップに近づいてきたら色を変える
+        if (time < WARNING_COUNT_START_SECOND)
+            _timeText.DOColor(Color.red, 0.2f);
     }
 }
