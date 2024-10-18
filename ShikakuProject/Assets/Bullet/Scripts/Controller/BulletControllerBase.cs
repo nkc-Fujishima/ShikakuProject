@@ -6,6 +6,15 @@ using UnityEngine.Events;
 [RequireComponent(typeof(BoxCollider))]
 public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage, IStoppable, IDestroy, IBulletManaged
 {
+    protected enum MoveStates
+    {
+        Nomal,
+        Death,
+        None
+    }
+
+    protected MoveStates MoveState = MoveStates.None;
+
     protected Transform EnemyTransform { get; private set; }
 
     protected Rigidbody BulletRigidbody { get; private set; }
@@ -15,6 +24,15 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     [HideInInspector]
     public event Action<IChaceable> OnDestroyHundle;
 
+    [SerializeField]
+    internal BulletSoundManager _soundManager;
+
+    [SerializeField]
+    private GameObject _effectExplosionPrefab;
+
+    [SerializeField]
+    private Collider[] _colliders;
+
 
     public void Start()
     {
@@ -23,7 +41,15 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
     public void Update()
     {
-        DestroyAfter();
+        switch (MoveState)
+        {
+            case MoveStates.Nomal:
+                DestroyAfter();
+                break;
+            case MoveStates.Death:
+                OnDestroyMove();
+                break;
+        }
     }
 
 
@@ -39,17 +65,27 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
         _deliteProgressTime += Time.deltaTime;
 
         if (_deliteProgressTime > _deliteTime)
-            Damage();
+        {
+            _deliteProgressTime = 0;
+            OnEnabled();
+        }
     }
+
 
     //----------------------------------------------------------------------------------
     // 使用されるときに呼び出される関数
     public virtual void OnEnter(Transform enemyTransform)
     {
+        MoveState = MoveStates.Nomal;
+
         SetEnemyTransform(enemyTransform);
+
+        _soundManager.OnSpawn();
+
+        foreach (Collider collider in _colliders)
+            collider.enabled = true;
     }
 
-    //----------------------------------------------------------------------------------
     // EnemyTransformを設定する
     private void SetEnemyTransform(Transform enemyTransform)
     {
@@ -60,6 +96,40 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
             // nullだった場合はエネミーのTransform情報もNullにする
             EnemyTransform = null;
         }
+    }
+
+
+    //----------------------------------------------------------------------------------
+    // 敵の攻撃に当たって消えるときの関数
+    private float _timeDestroyCount = 0;
+
+    private const float TIME_DSTROY = 0.9f;
+
+    protected virtual void OnDestroyMove()
+    {
+        _timeDestroyCount += Time.deltaTime;
+
+        if (_timeDestroyCount > TIME_DSTROY)
+        {
+            _timeDestroyCount = 0;
+            OnEnabled();
+        }
+    }
+
+
+    //----------------------------------------------------------------------------------
+    // アクティブ状態を終了する関数
+    protected virtual void OnEnabled()
+    {
+        MoveState = MoveStates.None;
+
+        IsStop = false;
+
+        if (_effectExplosionPrefab)
+            Instantiate(_effectExplosionPrefab, transform.position, transform.rotation);
+
+        OnDestroyHundle?.Invoke(this);
+        OnBulletDestroy?.Invoke(gameObject);
     }
 
 
@@ -76,12 +146,14 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     // IDamage
     public void Damage()
     {
-        _deliteProgressTime = 0;
+        if (MoveState != MoveStates.Nomal) return;
 
-        IsStop = false;
+        MoveState = MoveStates.Death;
 
-        OnDestroyHundle?.Invoke(this);
-        OnBulletDestroy?.Invoke(gameObject);
+        _soundManager.OnHit();
+
+        foreach (Collider collider in _colliders)
+            collider.enabled = false;
     }
 
     //----------------------------------------------------------------------------------
@@ -96,6 +168,7 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     [SerializeField]
     private int typeCount = 0;
 
+    [HideInInspector]
     public UnityEvent<GameObject> OnBulletDestroy;
 
     public void SetTypeCount(int typeCount)
@@ -115,6 +188,8 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     {
         if (other.CompareTag("Enemy"))
         {
+            if (MoveState != MoveStates.Nomal) return;
+
             if (other.TryGetComponent<IDamage>(out IDamage sr))
                 sr.Damage(transform.position);
         }
