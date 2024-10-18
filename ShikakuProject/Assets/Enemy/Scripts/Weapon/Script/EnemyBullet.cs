@@ -6,7 +6,7 @@ public class EnemyBullet : MonoBehaviour
 {
     Rigidbody rigidBody = null;
 
-    AudioSource audioSource = null;
+    AudioClip hitSE = null;
 
     ParticleSystem hitEffect = null;
 
@@ -26,11 +26,10 @@ public class EnemyBullet : MonoBehaviour
     public void Construct(Vector3 direction, float bulletSpeed, float lifeLimitTime, ParticleSystem hitEffect, AudioClip hitSE)
     {
         rigidBody = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
         rigidBody.velocity = direction * bulletSpeed;
         this.lifeLimitTime = lifeLimitTime;
         this.hitEffect = hitEffect;
-        audioSource.clip = hitSE;
+        this.hitSE = hitSE;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,7 +42,7 @@ public class EnemyBullet : MonoBehaviour
             iDamage.Damage();
         }
 
-        audioSource.Play();
+        DestroyAudioPlay.PlayClipAtPoint(hitSE, transform.position, 1f);
         Instantiate(hitEffect, transform.position, Quaternion.identity);
         Destroy(this.gameObject);
     }

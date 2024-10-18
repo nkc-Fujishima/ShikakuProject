@@ -12,4 +12,8 @@ public class EnemyEffectDataBase : ScriptableObject
     [Tooltip("倒されたときエフェクト")] public ParticleSystem DownEffect;
 
     [Tooltip("倒された時SE")]public AudioClip DownSE;
+
+    [Tooltip("消えるときエフェクト")] public ParticleSystem DestroyEffect;
+
+    [Tooltip("消えるときSE")] public AudioClip DestroySE;
 }
