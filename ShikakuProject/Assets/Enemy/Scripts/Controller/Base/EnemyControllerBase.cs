@@ -120,6 +120,9 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
 
             if (countTime > parameter.ToDestroyTime)
             {
+                Instantiate(effect.DestroyEffect, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + effectPosY, gameObject.transform.position.z), Quaternion.Euler(90, 0, 0));
+                DestroyAudioPlay.PlayClipAtPoint(effect.DestroySE, gameObject.transform.position, 1f);
+
                 gameObject.SetActive(false);
             }
         }
