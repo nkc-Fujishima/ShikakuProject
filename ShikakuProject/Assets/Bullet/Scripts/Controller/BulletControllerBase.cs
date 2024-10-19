@@ -123,8 +123,8 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
         IsStop = false;
 
-        if (_effectExplosionPrefab)
-            Instantiate(_effectExplosionPrefab, transform.position, _effectExplosionPrefab.transform.rotation);
+        Instantiate(_effectExplosionPrefab, transform.position, _effectExplosionPrefab.transform.rotation);
+        _soundManager.OnDeath(transform.position);
 
         OnDestroyHundle?.Invoke(this);
         OnBulletDestroy?.Invoke(gameObject);

@@ -101,6 +101,7 @@ MonoBehaviour:
     _audioSource: {fileID: 4982218314653224955}
     _soundSpawn: {fileID: 8300000, guid: 3e19f22e6cb383b4d8f03b43956ab420, type: 3}
     _soundHit: {fileID: 8300000, guid: b47119202e611754d833a11981958d65, type: 3}
+    _soundDeath: {fileID: 8300000, guid: 2a5e7703e469b204b852ccf33b2fea79, type: 3}
   _effectExplosionPrefab: {fileID: 4073135747539754241, guid: b099136de60a0424b8c57616ca54bd91, type: 3}
   _colliders:
   - {fileID: 6564372838033131388}
