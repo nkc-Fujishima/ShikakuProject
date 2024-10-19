@@ -35,7 +35,6 @@ public class PlayerButtonDetector
         _playerInput.actions["Avoid"].performed += OnInputAvoid;
     }
 
-
     private void OnInputMove(InputAction.CallbackContext context)
     {
         _inputStick = context.ReadValue<Vector3>();
@@ -43,21 +42,21 @@ public class PlayerButtonDetector
 
     private void OnInputFire(InputAction.CallbackContext context)
     {
-        OnButtonFireDown.Invoke();
+        OnButtonFireDown?.Invoke();
     }
 
     private void OnInputBulletSelectLeft(InputAction.CallbackContext context)
     {
-        OnButtonBulletSelectLeftDown.Invoke();
+        OnButtonBulletSelectLeftDown?.Invoke();
     }
 
     private void OnInputBulletSelectRight(InputAction.CallbackContext context)
     {
-        OnButtonBulletSelectRightDown.Invoke();
+        OnButtonBulletSelectRightDown?.Invoke();
     }
 
     private void OnInputAvoid(InputAction.CallbackContext context)
     {
-        OnButtonAvoidDown.Invoke();
+        OnButtonAvoidDown?.Invoke();
     }
 }

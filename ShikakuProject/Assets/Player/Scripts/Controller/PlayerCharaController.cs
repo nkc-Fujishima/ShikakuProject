@@ -196,8 +196,6 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         // âÒîÉ{É^ÉìÇâüÇµÇΩèÍçáÇÃä÷êî
         public void OnAvoid()
         {
-            Debug.Log("ÇÊÇŒÇÍÇ∆Çî");
-
             data.SoundOnEvasion();
 
             data.Animator.SetTrigger("AvoidTrigger");
@@ -224,6 +222,9 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         public override void OnEnter()
         {
             data.Animator.SetBool("Walk", false);
+
+            buttonDetector.OnButtonFireDown.RemoveListener(OnFire);
+            buttonDetector.OnButtonAvoidDown.RemoveListener(OnAvoid);
 
             buttonDetector.OnButtonFireDown.AddListener(OnFire);
             buttonDetector.OnButtonAvoidDown.AddListener(OnAvoid);
@@ -252,6 +253,9 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         public override void OnEnter()
         {
             data.Animator.SetBool("Walk", true);
+
+            buttonDetector.OnButtonFireDown.RemoveListener(OnFire);
+            buttonDetector.OnButtonAvoidDown.RemoveListener(OnAvoid);
 
             buttonDetector.OnButtonFireDown.AddListener(OnFire);
             buttonDetector.OnButtonAvoidDown.AddListener(OnAvoid);
