@@ -8,12 +8,14 @@ public class UITargetCountManager : MonoBehaviour
 
     [SerializeField]
     private Text _textTargetMax;
+    
 
     public void OnStart(int targetMax)
     {
         _textTargetMax.text = targetMax.ToString();
 
         TargetCount(targetMax);
+
     }
 
     public void TargetCount(int targetRemaining)

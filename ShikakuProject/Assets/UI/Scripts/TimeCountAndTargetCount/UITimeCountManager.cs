@@ -17,8 +17,6 @@ public class UITimeCountManager : MonoBehaviour
 
     private const int WARNING_COUNT_START_SECOND = 5 + 1;
 
-    private bool _isWarning = false;
-
 
     private float _timeMax = 0;
 
