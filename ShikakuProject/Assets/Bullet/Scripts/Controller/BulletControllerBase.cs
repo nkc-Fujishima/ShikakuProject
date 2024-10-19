@@ -61,7 +61,6 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
         if (_deliteProgressTime > _deliteTime)
         {
-            _deliteProgressTime = 0;
             OnEnabled();
         }
     }
@@ -122,6 +121,8 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
         MoveState = MoveStates.None;
 
         IsStop = false;
+
+        _deliteProgressTime = 0;
 
         Instantiate(_effectExplosionPrefab, transform.position, _effectExplosionPrefab.transform.rotation);
         _soundManager.OnDeath(transform.position);
