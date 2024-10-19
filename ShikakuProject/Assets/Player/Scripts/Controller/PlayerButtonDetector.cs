@@ -59,4 +59,19 @@ public class PlayerButtonDetector
     {
         OnButtonAvoidDown?.Invoke();
     }
+
+
+    public void OnDestroy()
+    {
+        _playerInput.actions["Move"].performed -= OnInputMove;
+        _playerInput.actions["Fire"].performed -= OnInputFire;
+        _playerInput.actions["BulletSelectLeft"].performed -= OnInputBulletSelectLeft;
+        _playerInput.actions["BulletSelectRight"].performed -= OnInputBulletSelectRight;
+        _playerInput.actions["Avoid"].performed -= OnInputAvoid;
+
+        OnButtonFireDown.RemoveAllListeners();
+        OnButtonBulletSelectLeftDown.RemoveAllListeners();
+        OnButtonBulletSelectRightDown.RemoveAllListeners();
+        OnButtonAvoidDown.RemoveAllListeners();
+    }
 }

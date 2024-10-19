@@ -125,6 +125,11 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         CheckSkillCoolTime();
     }
 
+    private void OnDestroy()
+    {
+        _buttonDetector.OnDestroy();
+    }
+
 
     //----------------------------------------------------------------------------------
     // ステートを指定された状態に変化させる
@@ -190,7 +195,7 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
             // 生成
             playerStatus.GetSkillSpawnBullet(selectBulletType.Value);
-            data.OnBulletSpawn.Invoke();
+            data.OnBulletSpawn?.Invoke();
         }
 
         // 回避ボタンを押した場合の関数
@@ -410,7 +415,6 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         for (int i = 0; i < _playerStatus.GetSkillLength; ++i)
         {
             if (_playerStatus.GetSkillIsSelectable(i)) continue;
-
 
             _playerStatus.GetSkillCheckCoolTimeCount(i, Time.deltaTime);
 
