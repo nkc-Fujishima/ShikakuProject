@@ -84,7 +84,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.5, y: 1, z: 2.5}
-  m_Center: {x: 0, y: 1, z: 0.74}
+  m_Center: {x: 0, y: 1, z: 0.04}
 --- !u!114 &2362984168328327310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +135,7 @@ CapsuleCollider:
   m_Radius: 0.6
   m_Height: 2.5
   m_Direction: 2
-  m_Center: {x: 0, y: 0.6, z: 0.3}
+  m_Center: {x: 0, y: 0.6, z: -0.4}
 --- !u!1 &4838783076389477498
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4886101968738366, guid: d2edcf95960b81249bf3f4a30ad1a908, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4886101968738366, guid: d2edcf95960b81249bf3f4a30ad1a908, type: 3}
       propertyPath: m_LocalRotation.w
