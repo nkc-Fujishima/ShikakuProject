@@ -103,6 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillImagePrefab: {fileID: 3150390998487716227, guid: e2d25e39dc6e1e442aff7bfbc31db534, type: 3}
+  _guideImageLPrefab: {fileID: 2406496673839079935, guid: a1dacf12a97e28440a78f01d4a5672c9, type: 3}
+  _guideImageRPrefab: {fileID: 8877934776991077157, guid: 61f58ded1bcd68b408e5f23d58be05c9, type: 3}
   _skillParentTransform: {fileID: 315534853373944661}
   _selectPoint: {fileID: 8160092701323593848}
   _activePoint: {fileID: 1382830238300097615}

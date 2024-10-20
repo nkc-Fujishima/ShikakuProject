@@ -8,6 +8,13 @@ public class UISkillListManager : MonoBehaviour
     private UISkillListPrefabData _skillImagePrefab;
 
     [SerializeField]
+    private RectTransform _guideImageLPrefab;
+
+    [SerializeField]
+    private RectTransform _guideImageRPrefab;
+
+
+    [SerializeField]
     private Transform _skillParentTransform;
 
     [SerializeField]
@@ -24,7 +31,9 @@ public class UISkillListManager : MonoBehaviour
 
 
 
-    private UISkillListPrefabData[] _skillImageList;
+    private UISkillListPrefabData[] _skillImages;
+
+    private Transform[] _guideImages = new Transform[2];
 
     private int _selectSkill = -1;
 
@@ -43,7 +52,7 @@ public class UISkillListManager : MonoBehaviour
         float generatedStandardWidth = generatedWidth * (textures.Length - 1) / 2;
 
 
-        _skillImageList = new UISkillListPrefabData[textures.Length];
+        _skillImages = new UISkillListPrefabData[textures.Length];
 
 
         for (int i = 0; i < textures.Length; ++i)
@@ -65,32 +74,56 @@ public class UISkillListManager : MonoBehaviour
             spawnObj.transform.localPosition = spawnPosition;
 
 
-            _skillImageList[i] = spawnObj.GetComponent<UISkillListPrefabData>();
+            _skillImages[i] = spawnObj.GetComponent<UISkillListPrefabData>();
 
             // テクスチャを設定
-            _skillImageList[i].SetSprite(textures[i]);
+            _skillImages[i].SetSprite(textures[i]);
 
         }
 
         // 0が選択された状態にする
         SelectSkill(0);
+
+
+        // ガイド用のUIも生成する
+        GameObject guideObjL = Instantiate(_guideImageLPrefab.gameObject, transform.position, Quaternion.identity);
+        GameObject guideObjR = Instantiate(_guideImageRPrefab.gameObject, transform.position, Quaternion.identity);
+
+        guideObjL.transform.SetParent(_skillParentTransform);
+        guideObjR.transform.SetParent(_skillParentTransform);
+
+        guideObjL.transform.localScale = Vector3.one;
+        guideObjR.transform.localScale = Vector3.one;
+
+        // ポジション設定
+        Vector2 guideSpawnPosition = Vector2.zero;
+        guideSpawnPosition.y = _notActivePoint.position.y;
+
+        guideSpawnPosition.x = -generatedWidth - generatedStandardWidth;
+        guideObjL.transform.localPosition = guideSpawnPosition;
+
+        guideSpawnPosition.x = generatedWidth * textures.Length - generatedStandardWidth;
+        guideObjR.transform.localPosition = guideSpawnPosition;
+
+        _guideImages[0] = guideObjL.transform;
+        _guideImages[1] = guideObjR.transform;
     }
 
     //---------------------------------------------------------------------------------------------
     // 選択状態を変更する
     public void SelectSkill(int selectType)
     {
-        if (selectType < 0 || _skillImageList.Length <= selectType) return;
+        if (selectType < 0 || _skillImages.Length <= selectType) return;
 
         // 選択されてた項目
-        if (0 <= _selectSkill && _selectSkill < _skillImageList.Length)
+        if (0 <= _selectSkill && _selectSkill < _skillImages.Length)
         {
-            _skillImageList[_selectSkill].ImageTransform.DOMoveY(_activePoint.position.y, 0.3f);
+            _skillImages[_selectSkill].ImageTransform.DOMoveY(_activePoint.position.y, 0.3f);
         }
 
         // 選択された項目
-        _skillImageList[selectType].ImageTransform.DOPause();
-        _skillImageList[selectType].ImageTransform.DOMoveY(_selectPoint.position.y, 0.3f);
+        _skillImages[selectType].ImageTransform.DOPause();
+        _skillImages[selectType].ImageTransform.DOMoveY(_selectPoint.position.y, 0.3f);
 
         _selectSkill = selectType;
     }
@@ -107,7 +140,7 @@ public class UISkillListManager : MonoBehaviour
 
     private void OnStartSelected()
     {
-        _coolTime = new bool[_skillImageList.Length];
+        _coolTime = new bool[_skillImages.Length];
 
         for (int i = 0; i < _coolTime.Length; ++i)
             _coolTime[i] = true;
@@ -115,7 +148,7 @@ public class UISkillListManager : MonoBehaviour
 
     public void DisplayCooldown(int type, float cooldown)
     {
-        _skillImageList[type].SetCooldown(cooldown);
+        _skillImages[type].SetCooldown(cooldown);
 
         if (cooldown == 0)
         {
@@ -125,7 +158,7 @@ public class UISkillListManager : MonoBehaviour
 
             _coolTime[type] = false;
 
-            _skillImageList[type].BackImage.DOColor(_selectBackColor, 0.5f).SetEase(Ease.InOutElastic);
+            _skillImages[type].BackImage.DOColor(_selectBackColor, 0.5f).SetEase(Ease.InOutElastic);
         }
         else
         {
@@ -135,7 +168,7 @@ public class UISkillListManager : MonoBehaviour
 
             _coolTime[type] = true;
 
-            _skillImageList[type].BackImage.DOColor(_notSelectBackColor, 0.5f).SetEase(Ease.OutElastic);
+            _skillImages[type].BackImage.DOColor(_notSelectBackColor, 0.5f).SetEase(Ease.OutElastic);
         }
     }
 
@@ -146,9 +179,14 @@ public class UISkillListManager : MonoBehaviour
     {
         Transform standardPoint = isActive ? _activePoint : _notActivePoint;
 
-        for (int i = 0; i < _skillImageList.Length; ++i)
+        for (int i = 0; i < _skillImages.Length; ++i)
         {
-            _skillImageList[i].ImageTransform.DOMoveY(standardPoint.position.y, 0.5f);
+            _skillImages[i].ImageTransform.DOMoveY(standardPoint.position.y, 0.5f);
+        }
+
+        for(int i=0;i<_guideImages.Length;++i)
+        {
+            _guideImages[i].DOMoveY(standardPoint.position.y, 0.5f);
         }
     }
 }
