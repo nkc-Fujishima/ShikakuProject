@@ -163,41 +163,61 @@ public class DrawMapEditor : EditorWindow
         {
             int length = 0;
             Texture2D elementTexture = null;
+            Texture2D[] baseTexture = null;
 
             switch ((StageTileType)Enum.ToObject(typeof(StageTileType), elementCount))
             {
                 case StageTileType.Ground:
                     length = _saveData.StageObjectElementData.GroundData.Prefabs.Length;
                     elementTexture = _saveData.StageObjectElementData.GroundData.Texture;
+                    baseTexture = new Texture2D[length];
+                    for (int i = 0; i < length; ++i)
+                        baseTexture[i] = AssetPreview.GetAssetPreview(_saveData.StageObjectElementData.GroundData.Prefabs[i]);
                     break;
+
                 case StageTileType.Obstacle:
                     length = _saveData.StageObjectElementData.ObstacleData.Prefabs.Length;
                     elementTexture = _saveData.StageObjectElementData.ObstacleData.Texture;
+                    baseTexture = new Texture2D[length];
+                    for (int i = 0; i < length; ++i)
+                        baseTexture[i] = AssetPreview.GetAssetPreview(_saveData.StageObjectElementData.ObstacleData.Prefabs[i]);
                     break;
+
                 case StageTileType.Player:
                     length = 1;
                     elementTexture = _saveData.StageObjectElementData.PlayerData.Texture;
+                    baseTexture = new Texture2D[length];
+                    for (int i = 0; i < length; ++i)
+                        baseTexture[i] = AssetPreview.GetAssetPreview(_saveData.StageObjectElementData.PlayerData.PlayerPlefab.gameObject);
                     break;
+
                 case StageTileType.Enemy:
                     length = _saveData.StageObjectElementData.EnemyDatas.EnemyPlefabs.Length;
                     elementTexture = _saveData.StageObjectElementData.EnemyDatas.Texture;
+                    baseTexture = new Texture2D[length];
+                    for (int i = 0; i < length; ++i)
+                        baseTexture[i] = AssetPreview.GetAssetPreview(_saveData.StageObjectElementData.EnemyDatas.EnemyPlefabs[i].gameObject);
                     break;
             }
 
             // テクスチャを設定
-            _saveData.ElementTypeTextures[elementCount] = InitializeTextures(elementTexture, length);
+            _saveData.ElementTypeTextures[elementCount] = InitializeTextures(baseTexture, length, elementTexture);
         }
     }
 
     //-------------------------------------------------------------------------------------
     // 画像に複数数字を入れる
-    private Texture2D[] InitializeTextures(Texture2D baseTexture, int prefabLength)
+    private Texture2D[] InitializeTextures(Texture2D[] baseTexture, int prefabLength, Texture2D elementTexture)
     {
-        Texture2D[] textureList = _textureProcessing.TextureCreate(prefabLength, baseTexture);
+
+        Texture2D[] textures = new Texture2D[prefabLength];
+        for (int i = 0; i < prefabLength; ++i)
+            textures[i] = _textureProcessing.ResizeTexture(baseTexture[i], 512, 512);
+
+        Texture2D[] textureList = _textureProcessing.TextureCreate(prefabLength, textures, elementTexture);
 
         return textureList;
     }
-
 
     //-------------------------------------------------------------------------------------
     // ステージをセーブする

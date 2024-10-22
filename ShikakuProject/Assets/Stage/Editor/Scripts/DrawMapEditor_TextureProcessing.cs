@@ -1,6 +1,5 @@
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class DrawMapEditor_TextureProcessing
 {
@@ -70,16 +69,36 @@ public class DrawMapEditor_TextureProcessing
         _diagonalTexture = diagonalArrow;
     }
 
-    public Texture2D[] TextureCreate(int number, Texture2D texture)
+    public Texture2D[] TextureCreate(int number, Texture2D[] texture, Texture2D elementTexture)
     {
         Texture2D[] newTexture = new Texture2D[number];
 
         for (int i = 0; i < number; ++i)
         {
-            newTexture[i] = DrawNumberTextureToBottomLeft(i, texture);
+            newTexture[i] = DrawNumberTextureToBottomLeft(i, texture[i]);
+            newTexture[i] = DrawElementTextureToBottomRight(newTexture[i], elementTexture);
         }
 
         return newTexture;
+    }
+
+    private Texture2D DrawElementTextureToBottomRight(Texture2D texture, Texture2D elementTexture)
+    {
+        // 引数のTexture2Dから色情報を抜き取る
+        TextureColor textureColor = new(texture);
+        TextureColor elementTextureColor = new(elementTexture);
+
+        int digitX = textureColor.X - elementTextureColor.X;
+
+        // 画像に色を塗る
+        textureColor.DrawTexture(elementTextureColor, digitX, 256);
+
+        // 制作した画像を出力
+        Texture2D texture2D = new(textureColor.X, textureColor.Y);
+        texture2D.SetPixels(textureColor.Colors);
+        texture2D.Apply();
+
+        return texture2D;
     }
 
     private Texture2D DrawNumberTextureToBottomLeft(int number, Texture2D texture)
@@ -218,5 +237,23 @@ public class DrawMapEditor_TextureProcessing
         rotatedTexture.Apply();
 
         return rotatedTexture;
+    }
+
+    // テクスチャをリサイズする
+    public Texture2D ResizeTexture(Texture2D source, int width, int height)
+    {
+        RenderTexture rt = RenderTexture.GetTemporary(width, height);
+        Graphics.Blit(source, rt);
+        RenderTexture previous = RenderTexture.active;
+        RenderTexture.active = rt;
+
+        Texture2D result = new Texture2D(width, height);
+        result.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+        result.Apply();
+
+        RenderTexture.active = previous;
+        RenderTexture.ReleaseTemporary(rt);
+
+        return result;
     }
 }

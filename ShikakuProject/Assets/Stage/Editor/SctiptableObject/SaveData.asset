@@ -15,15 +15,15 @@ MonoBehaviour:
   StageObjectElementData: {fileID: 11400000, guid: 0322bff9b3139ee42ba1319cbea6254e, type: 2}
   DrawMapData: {fileID: 11400000, guid: aa990393250890c40931e4d0541f341c, type: 2}
   NumberTextures:
-  - {fileID: 2800000, guid: c3330a9ed81dd624cb254978bb22346c, type: 3}
-  - {fileID: 2800000, guid: f2b4166d0a841aa44acd202b0fd24dd9, type: 3}
-  - {fileID: 2800000, guid: 52fee56e788a5a74daf7e07a91eeb17a, type: 3}
-  - {fileID: 2800000, guid: 97f5a484be50d7e4a987d9a4bb849fa0, type: 3}
-  - {fileID: 2800000, guid: 13332b259894e2947a7d12e6071b5ab0, type: 3}
-  - {fileID: 2800000, guid: 9f263a74eb1c3ec41a0ee4db00dc18e4, type: 3}
-  - {fileID: 2800000, guid: e236b8b2987f45643b96412104003039, type: 3}
-  - {fileID: 2800000, guid: 4617da335ed0e1c48b47173fdc085e4f, type: 3}
-  - {fileID: 2800000, guid: 957c04ebb9aae7f4cb0e675a1cc843db, type: 3}
-  - {fileID: 2800000, guid: 775d83c4e125bc148b0a24e6d399457c, type: 3}
-  UpArrowTexture: {fileID: 2800000, guid: bedbc35b8e98fa948aff43385eacf40d, type: 3}
-  DiagonalArrowTexture: {fileID: 2800000, guid: 3a9b4344a0610a74b9334f1827ce0d6f, type: 3}
+  - {fileID: 2800000, guid: 05bf5d6fd7891a14a92c7486a325eb29, type: 3}
+  - {fileID: 2800000, guid: bdcb1aca62abb384780d44cc3062b911, type: 3}
+  - {fileID: 2800000, guid: 3f5bddd1b9045cc47bc7360d904ff194, type: 3}
+  - {fileID: 2800000, guid: 417578f3031fa2c40a0609842295e8c5, type: 3}
+  - {fileID: 2800000, guid: 15c8392a9b839b14e9bd87ef7a5f94d1, type: 3}
+  - {fileID: 2800000, guid: a1d818bf48517704b8ca7c5cd3d2ca4b, type: 3}
+  - {fileID: 2800000, guid: d7719de3259cd1d46b3970656522edf1, type: 3}
+  - {fileID: 2800000, guid: 80b2d08d5cb8b234294995349c305854, type: 3}
+  - {fileID: 2800000, guid: c78b7253f49c80a4cac5a864ae788d21, type: 3}
+  - {fileID: 2800000, guid: 41327d870f086df49bf19d2c2112b052, type: 3}
+  UpArrowTexture: {fileID: 2800000, guid: 59d599da712834b44b6f0b3421348ac1, type: 3}
+  DiagonalArrowTexture: {fileID: 2800000, guid: 37dff26b63208194bae1ea22f803837e, type: 3}
