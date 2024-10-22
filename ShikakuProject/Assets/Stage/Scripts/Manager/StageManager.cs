@@ -40,7 +40,7 @@ public class StageManager : MonoBehaviour
     private NavMeshSurface _navMesh;
 
     [SerializeField]
-    private UIClearTarget _uiClearTarget;
+    private UIStartSetting _uiClearTarget;
 
     [SerializeField]
     private UIResult _uiResult;
