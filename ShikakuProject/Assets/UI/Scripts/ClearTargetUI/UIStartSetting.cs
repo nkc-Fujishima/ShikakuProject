@@ -5,13 +5,13 @@ using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
-public class UIClearTarget : MonoBehaviour
+public class UIStartSetting : MonoBehaviour
 {
-    [Header("オブジェクト設定"), SerializeField] Image clearTargetBackImage;
-    [SerializeField] Text clearTargetText;
-    [SerializeField] GameObject buttonInfoObject;
+    [Header("オブジェクト設定"),Tooltip("クリア目標表示背景"), SerializeField] Image clearTargetBackImage;
+    [Tooltip("クリア目標表示テキスト"),SerializeField] Text clearTargetText;
+    [Tooltip("ステージ開始時に押すボタン情報オブジェクト"),SerializeField] GameObject buttonInfoObject;
 
-    [Header("数値設定"), Tooltip("クリア目標テキスト"), SerializeField] string[] clearTargetTexts;
+    [Header("数値設定"), Tooltip("クリア目標テキスト内容"), SerializeField] string[] clearTargetTexts;
     [Tooltip("背景のYサイズ"), SerializeField] float backImageYSize;
     [Tooltip("背景のYサイズ拡縮時間"), SerializeField] float backImageScaleChangeTime;
     [Tooltip("ボタン情報のYサイズ"), SerializeField] float infoYSize;
