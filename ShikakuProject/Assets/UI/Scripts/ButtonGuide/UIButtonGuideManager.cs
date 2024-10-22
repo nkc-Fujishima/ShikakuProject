@@ -28,8 +28,6 @@ public class UIButtonGuideManager : MonoBehaviour
             _isFirst = false;
             return;
         }
-
-        Debug.Log("‚Í‚¢");
         _guideImage.DOMoveY(standardPoint.position.y, 0.5f);
 
     }
