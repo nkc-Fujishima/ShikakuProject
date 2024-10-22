@@ -203,12 +203,12 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         {
             data.SoundOnEvasion();
 
-            data.Animator.SetTrigger("AvoidTrigger");
+            data.Animator.SetBool("Dodge", true);
 
             stateChanger.ChangeState(stateHolder.AvoidState);
 
             // 向いてる方向に回避
-            data.Rigidbody.AddForce(data.PlayerTransform.forward * 2800);
+            data.Rigidbody.AddForce(data.PlayerTransform.forward * playerStatus.DodgePower);
         }
 
         // 死んだときの関数
@@ -332,13 +332,9 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     {
         public Avoid(IStateChangeable stateChanger, PlayerStateHolder stateHolder, PlayerButtonDetector buttonDetector, PlayerStatusParameter playerStatus, PlayerData data, ReactiveProperty<int> selectBulletType) : base(stateChanger, stateHolder, buttonDetector, playerStatus, data, selectBulletType) { }
 
-        private const float STOP_TIME = 1.4f;
-
-        private float countTime = STOP_TIME;
+        private const float GETTING_UP_TIME = 0.4f;
 
         private CancellationTokenSource cts = null;
-
-        private bool isMoved = false;
 
         public override void OnEnter()
         {
@@ -354,9 +350,17 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         {
         }
 
+
+        private float countTime = 0;
+
+        private bool isMovedAfterDelay = false;
+
         private async void SwitchStateAfterDelay()
         {
-            if (!isMoved) isMoved = true;
+            if (!isMovedAfterDelay) isMovedAfterDelay = true;
+
+            if (countTime == 0)
+                countTime = playerStatus.DodgeStopTime - GETTING_UP_TIME;
 
             cts = new CancellationTokenSource();
             var startTime = Time.time;
@@ -366,18 +370,54 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
                 await UniTask.Delay(TimeSpan.FromSeconds(countTime), cancellationToken: cts.Token);
 
                 // 指定された秒数待った
-                countTime = STOP_TIME;
-                isMoved = false;
+                countTime = playerStatus.DodgeStopTime - GETTING_UP_TIME;
+                isMovedAfterDelay = false;
+                data.Animator.SetBool("Dodge", false);
+
+                float timePassed = Time.time - startTime - countTime;
+                SwitchStateGettingUp(timePassed);
+            }
+            catch (OperationCanceledException)
+            {
+                // キャンセルされた場合の処理
+                if (isMovedAfterDelay)
+                {
+                    // 残り時間を計算
+                    countTime -= Time.time - startTime;
+
+                    return;
+                }
+            }
+        }
+
+        private float countTimeGettingUp = GETTING_UP_TIME;
+
+        private bool isMovedGettingUp = false;
+
+        private async void SwitchStateGettingUp(float timePassed)
+        {
+            if (!isMovedGettingUp) isMovedGettingUp = true;
+
+            cts = new CancellationTokenSource();
+            var startTime = Time.time;
+
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(countTimeGettingUp), cancellationToken: cts.Token);
+
+                // 指定された秒数待った
+                countTimeGettingUp = GETTING_UP_TIME;
+                isMovedGettingUp = false;
 
                 stateChanger.ChangeState(stateHolder.IdleState);
             }
             catch (OperationCanceledException)
             {
                 // キャンセルされた場合の処理
-                if (isMoved)
+                if (isMovedGettingUp)
                 {
                     // 残り時間を計算
-                    countTime -= Time.time - startTime;
+                    countTimeGettingUp -= Time.time - startTime;
 
                     return;
                 }
