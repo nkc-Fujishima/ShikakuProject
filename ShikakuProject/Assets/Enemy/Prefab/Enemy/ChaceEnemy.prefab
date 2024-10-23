@@ -1074,7 +1074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d77c6e51e2e9c445a304cf40f15bfb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewAngle: 200
+  viewAngle: 140
   viewDistance: 50
   viewHeight: 1
   noAlertMaterial: {fileID: 2100000, guid: d8e10f5ce8f7bc34fbe947186271d295, type: 2}
