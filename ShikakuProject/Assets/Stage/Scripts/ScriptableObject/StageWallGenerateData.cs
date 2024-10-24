@@ -55,7 +55,7 @@ public class StageWallGenerateData : ScriptableObject
     [SerializeField]
     private int _spaceValue;
 
-    public void GenerateSpiralWall(int mapX, int mapY, float tileScale)
+    public void GenerateSpiralWall(int mapX, int mapY, float tileScale, PhysicMaterial physicMaterial)
     {
         GameObject wallObject = new("WallObject");
 
@@ -166,6 +166,7 @@ public class StageWallGenerateData : ScriptableObject
             GameObject childObject = new ("ChildObject" + i);
             childObject.transform.parent = wallColliderObject.transform;
             BoxCollider boxCollider = childObject.AddComponent<BoxCollider>();
+            boxCollider.material = physicMaterial;
 
             // 位置とサイズを設定
             switch (i)

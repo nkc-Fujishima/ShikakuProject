@@ -63,10 +63,13 @@ public class PlayerStatusParameter : ScriptableObject
     private float _moveSpeed;
 
     [SerializeField]
-    private float _dodgePower = 2800;
+    private Vector2 _dodgePower;
 
     [SerializeField]
     private float _dodgeStopTime = 1.4f;
+
+    [SerializeField]
+    private float _dodgeDrag = 15;
 
 
     internal int GetSkillLength => _skillData.Length;
@@ -84,9 +87,11 @@ public class PlayerStatusParameter : ScriptableObject
 
     internal float MoveSpeed => _moveSpeed;
 
-    public float DodgePower => _dodgePower;
+    internal Vector2 DodgePower => _dodgePower;
 
-    public float DodgeStopTime =>_dodgeStopTime;
+    internal float DodgeStopTime =>_dodgeStopTime;
+
+    internal float DodgeDrag => _dodgeDrag;
 
 
     internal void OnStart()

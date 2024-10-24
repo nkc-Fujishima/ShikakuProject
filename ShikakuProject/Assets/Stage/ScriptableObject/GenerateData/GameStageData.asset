@@ -15,7 +15,7 @@ MonoBehaviour:
   StageMapData:
   - {fileID: 11400000, guid: a47736ab13b374d49941debc979886d9, type: 2}
   - {fileID: 11400000, guid: 5d1abb371dfa59e48954ff48e96f076e, type: 2}
-  - {fileID: 11400000, guid: 3720dff80fc6ea04f9687d12792f7475, type: 2}
+  - {fileID: 11400000, guid: 287ea52fd21d86444bc732a388de47bd, type: 2}
   - {fileID: 11400000, guid: c7c2878340fea0445b28bbe144c81c01, type: 2}
   - {fileID: 11400000, guid: 48510123aebc153468574b27bd70a2d9, type: 2}
   - {fileID: 11400000, guid: 287ea52fd21d86444bc732a388de47bd, type: 2}
@@ -23,3 +23,5 @@ MonoBehaviour:
   TileWidth: 1.6
   TileHeight: 1.6
   _stageWallGenerateData: {fileID: 11400000, guid: 51ffb0b059ca11549bfc44eb7966b0bd, type: 2}
+  _physicMaterialGround: {fileID: 13400000, guid: 742cc1006d239314dad2c4c55582e94a, type: 2}
+  _physicMaterialWall: {fileID: 13400000, guid: 2bf111f5ed026ce4dae1a0ae19885004, type: 2}

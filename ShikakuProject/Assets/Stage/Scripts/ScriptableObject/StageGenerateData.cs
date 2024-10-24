@@ -1,3 +1,4 @@
+using StageDelaunayTriangles;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,12 @@ public class StageGenerateData : ScriptableObject
 
     [SerializeField]
     private StageWallGenerateData _stageWallGenerateData;
+
+    [SerializeField]
+    private PhysicMaterial _physicMaterialGround;
+
+    [SerializeField]
+    private PhysicMaterial _physicMaterialWall;
 
 
     private Transform stageManagerTransform = null;
@@ -45,6 +52,8 @@ public class StageGenerateData : ScriptableObject
         List<GameObject> enemyList = new();
         GameObject playerObject = null;
 
+        List<Square> squares = new ();
+
         // マップを生成する座標を設定
         Vector3 instancePosition = centralPoint;
         instancePosition.x -= TileWidth * mapData.X / 2 - TileWidth / 2;
@@ -66,17 +75,17 @@ public class StageGenerateData : ScriptableObject
                 {
                     case StageTileType.Enemy:
                         enemyList.Add(InstanceObject(tileData, countX, countY, instancePosition));
-                        InstanceGroundObject(new StageTile(StageTileType.Ground), countX, countY, instancePosition);
+                        InstanceGroundObject(new(StageTileType.Ground), countX, countY, instancePosition);
                         break;
 
                     case StageTileType.Player:
                         playerObject = InstanceObject(tileData, countX, countY, instancePosition);
-                        InstanceGroundObject(new StageTile(StageTileType.Ground), countX, countY, instancePosition);
+                        InstanceGroundObject(new(StageTileType.Ground), countX, countY, instancePosition);
                         break;
 
                     case StageTileType.Obstacle:
                         InstanceObject(tileData, countX, countY, instancePosition);
-                        InstanceGroundObject(new StageTile(StageTileType.Ground), countX, countY, instancePosition);
+                        InstanceGroundObject(new(StageTileType.Ground), countX, countY, instancePosition);
                         break;
 
                     case StageTileType.Ground:
@@ -84,6 +93,13 @@ public class StageGenerateData : ScriptableObject
                         break;
 
                     case StageTileType.None:
+                        Vector2Int p1 = new(countX, countY);
+                        Vector2Int p2 = new(countX + 1, countY);
+                        Vector2Int p3 = new(countX + 1, countY + 1);
+                        Vector2Int p4 = new(countX, countY + 1);
+                        Square newSquare = new(p1, p2, p3, p4);
+                        squares.Add(newSquare);
+                        break;
                     default:
                         break;
                 }
@@ -93,9 +109,36 @@ public class StageGenerateData : ScriptableObject
         enemyObjs = enemyList.ToArray();
         playerObj = playerObject;
 
+
         // 壁を作る
         if (_stageWallGenerateData)
-            _stageWallGenerateData.GenerateSpiralWall(mapData.X, mapData.Y, TileWidth);
+            _stageWallGenerateData.GenerateSpiralWall(mapData.X, mapData.Y, TileWidth, _physicMaterialWall);
+
+
+        // 地面のコライダーを作る
+        List<Vector2Int> stageSidePoint = new()
+        {
+            // ステージの角
+            new(0, 0),
+            new(mapData.X, 0),
+            new(mapData.X, mapData.Y),
+            new(0, mapData.Y),
+        };
+
+        // 落とし穴になっている部分
+        for (int i = 0; i < squares.Count; ++i)
+        {
+            Triangle[] t = squares[i].GetTriangle();
+            for (int j = 0; j < t.Length; j++)
+            {
+                Vector2Int[] tps = t[j].GetPointsToVector2Int();
+                stageSidePoint.Add(tps[0]);
+                stageSidePoint.Add(tps[1]);
+                stageSidePoint.Add(tps[2]);
+            }
+        }
+
+        InstanceGroundMesh(stageSidePoint, squares.ToArray());
     }
 
     // オブジェクトを生成
@@ -112,7 +155,7 @@ public class StageGenerateData : ScriptableObject
 
         if (stageManagerTransform)
             if (tileData.TileType == StageTileType.Obstacle)
-                instanceObject.transform.parent = stageManagerTransform;
+                instanceObject.transform.SetParent(stageManagerTransform);
 
         return instanceObject;
     }
@@ -128,8 +171,52 @@ public class StageGenerateData : ScriptableObject
         GameObject instanceObject = Instantiate(objectPlefab, instancePosition, Quaternion.identity);
 
         if (stageManagerTransform)
-            instanceObject.transform.parent = stageManagerTransform;
+            instanceObject.transform.SetParent(stageManagerTransform);
 
         return instanceObject;
+    }
+
+
+    //----------------------------------------------------------------------------------------------------------------
+    // 三角形からメッシュコライダーを作って地面を生成
+    private void InstanceGroundMesh(List<Vector2Int> pointList, Square[] square = null)
+    {
+        DelaunayTriangles triangles = new(pointList, square);
+
+        GameObject newObject = new ("GroundMeshCollision");
+        newObject.transform.SetParent(stageManagerTransform);
+
+        MeshCollider meshCollider = newObject.AddComponent<MeshCollider>();
+        meshCollider.material = _physicMaterialGround;
+
+        Mesh myMesh = new();
+
+        // コライダーの頂点を設定
+        Vector3[] newVertex = new Vector3[pointList.Count];
+        int vertexCount = 0;
+        foreach (Vector2Int point in pointList)
+        {
+            Vector3 newVector3 = Vector3.zero;
+            newVector3.x = point.x * TileWidth - TileWidth / 2;
+            newVector3.z = -point.y * TileWidth + TileWidth / 2;
+            newVertex[vertexCount++] = newVector3;
+        }
+
+        // 三角形を指定
+        List<int> myTriangles = new ();
+        foreach (Triangle tri in triangles.TriangleSet)
+        {
+            int[] pNumber = new int[3];
+            pNumber[0] = pointList.IndexOf(new((int)tri.P1.x, (int)tri.P1.y));
+            pNumber[1] = pointList.IndexOf(new((int)tri.P2.x, (int)tri.P2.y));
+            pNumber[2] = pointList.IndexOf(new((int)tri.P3.x, (int)tri.P3.y));
+
+            myTriangles.AddRange(pNumber);
+        }
+
+        // 反映させる
+        myMesh.SetVertices(newVertex);
+        myMesh.SetTriangles(myTriangles, 0);
+        meshCollider.sharedMesh = myMesh;
     }
 }

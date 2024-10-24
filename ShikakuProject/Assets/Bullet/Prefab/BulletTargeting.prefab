@@ -111,7 +111,7 @@ MonoBehaviour:
   OnBulletDestroy:
     m_PersistentCalls:
       m_Calls: []
-  _moveSpeed: 3
+  _moveSpeed: 4
   _animator: {fileID: 640648046226377513}
 --- !u!136 &6564372838033131388
 CapsuleCollider:

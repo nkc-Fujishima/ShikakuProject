@@ -208,7 +208,10 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
             stateChanger.ChangeState(stateHolder.AvoidState);
 
             // Œü‚¢‚Ä‚é•ûŒü‚É‰ñ”ğ
-            data.Rigidbody.AddForce(data.PlayerTransform.forward * playerStatus.DodgePower);
+            //data.Rigidbody.velocity = data.PlayerTransform.forward * playerStatus.DodgePower.x + 
+            //                          data.PlayerTransform.up * playerStatus.DodgePower.y;
+            data.Rigidbody.drag = playerStatus.DodgeDrag;
+            data.Rigidbody.AddForce(data.PlayerTransform.forward * playerStatus.DodgePower.x);
         }
 
         // €‚ñ‚¾‚Æ‚«‚ÌŠÖ”
@@ -376,6 +379,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
                 float timePassed = Time.time - startTime - countTime;
                 SwitchStateGettingUp(timePassed);
+
+                data.Rigidbody.drag = 0;
             }
             catch (OperationCanceledException)
             {

@@ -22,6 +22,7 @@ MonoBehaviour:
   - _bulletPlefab: {fileID: 2362984168328327310, guid: cbfda06413f3256429846f2b10b8b3f3, type: 3}
     _coolTime: 1
     _texture: {fileID: 21300000, guid: 934c21c52fc01744884053aa0fd29f3a, type: 3}
-  _moveSpeed: 5
-  _dodgePower: 2800
+  _moveSpeed: 4
+  _dodgePower: {x: 2800, y: 0}
   _dodgeStopTime: 1.4
+  _dodgeDrag: 15
