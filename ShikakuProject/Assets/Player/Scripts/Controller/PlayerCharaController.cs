@@ -67,6 +67,10 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
     [SerializeField]
     private ParticleSystem _particleStep;
 
+    [SerializeField]
+    private ParticleSystem _particleDamage;
+
+
     private IState _iState = null;
 
     private PlayerButtonDetector _buttonDetector;
@@ -554,6 +558,9 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
         _buttonDetector.OnButtonBulletSelectLeftDown.RemoveListener(OnBulletSelectLeft);
         _buttonDetector.OnButtonBulletSelectRightDown.RemoveListener(OnBulletSelectRight);
+
+        if (_particleDamage)
+            Instantiate(_particleDamage, transform.position + transform.up, Quaternion.identity);
 
         _isMove = false;
 

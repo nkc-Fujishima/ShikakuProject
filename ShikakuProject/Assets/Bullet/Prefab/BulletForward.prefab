@@ -81,7 +81,8 @@ MonoBehaviour:
     _soundSpawn: {fileID: 8300000, guid: 704d5009feb935a4cb91b1c0b7995268, type: 3}
     _soundHit: {fileID: 8300000, guid: b47119202e611754d833a11981958d65, type: 3}
     _soundDeath: {fileID: 8300000, guid: 2a5e7703e469b204b852ccf33b2fea79, type: 3}
-  _effectExplosionPrefab: {fileID: 4073135747539754241, guid: b099136de60a0424b8c57616ca54bd91, type: 3}
+  _particleExplosion: {fileID: 4376742797344565153, guid: b099136de60a0424b8c57616ca54bd91, type: 3}
+  _particleDamage: {fileID: 1323656519675362538, guid: 5666d41634c45ba4fb8bbc8e251a867c, type: 3}
   _colliders:
   - {fileID: 1325413744144736656}
   - {fileID: 4801518324545881629}

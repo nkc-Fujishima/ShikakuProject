@@ -28,7 +28,10 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
     internal BulletSoundManager _soundManager;
 
     [SerializeField]
-    private GameObject _effectExplosionPrefab;
+    private ParticleSystem _particleExplosion;
+    
+    [SerializeField]
+    private ParticleSystem _particleDamage;
 
     [SerializeField]
     private Collider[] _colliders;
@@ -124,7 +127,7 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
         _deliteProgressTime = 0;
 
-        Instantiate(_effectExplosionPrefab, transform.position, _effectExplosionPrefab.transform.rotation);
+        Instantiate(_particleExplosion, transform.position, _particleExplosion.transform.rotation);
         _soundManager.OnDeath(transform.position);
 
         OnDestroyHundle?.Invoke(this);
@@ -155,6 +158,9 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
             collider.enabled = false;
 
         BulletRigidbody.isKinematic = true;
+
+        if (_particleDamage)
+            Instantiate(_particleDamage, transform.position + transform.up, Quaternion.identity);
     }
 
     //----------------------------------------------------------------------------------
