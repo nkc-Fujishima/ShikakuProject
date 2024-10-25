@@ -27,8 +27,14 @@ public class PlayerManager
 
     public void StopPlayer()
     {
-        PlayerCharaController.Death();
         PlayerCharaController.DisableMovement();
+    }
+
+    //------------------------------------------------------------------------------------------------
+    // ŠÔØ‚ê‚É‚È‚Á‚½ê‡‚ÉŒÄ‚Ño‚·ŠÖ”
+    public void TimeUp()
+    {
+        PlayerCharaController.Death();
     }
 
     //------------------------------------------------------------------------------------------------
