@@ -27,6 +27,7 @@ public class PlayerManager
 
     public void StopPlayer()
     {
+        PlayerCharaController.Death();
         PlayerCharaController.DisableMovement();
     }
 

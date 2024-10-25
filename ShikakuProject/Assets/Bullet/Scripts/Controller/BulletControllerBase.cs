@@ -136,7 +136,7 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
 
     //----------------------------------------------------------------------------------
-    // ƒ_ƒ[ƒW‚ğó‚¯‚Ä€‚Ê‚Æ‚«‚Ìˆ—
+    // €‚Ê‚Æ‚«‚Ìˆ—
     private void Death()
     {
         if (MoveState != MoveStates.Nomal) return;

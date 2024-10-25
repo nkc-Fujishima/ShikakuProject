@@ -547,10 +547,12 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
 
     //----------------------------------------------------------------------------------
-    // ƒ_ƒ[ƒW‚ğó‚¯‚Ä€‚Ê‚Æ‚«‚Ìˆ—
-    private void Death()
+    // €‚Ê‚Æ‚«‚Ìˆ—
+    public void Death()
     {
         if (!_isMove) return;
+
+        _isMove = false;
 
         _buttonDetector.OnButtonBulletSelectLeftDown.RemoveListener(OnBulletSelectLeft);
         _buttonDetector.OnButtonBulletSelectRightDown.RemoveListener(OnBulletSelectRight);
@@ -558,12 +560,11 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         if (_particleDamage)
             Instantiate(_particleDamage, transform.position + transform.up, Quaternion.identity);
 
-        _isMove = false;
-
         Datas.OnDeath?.Invoke();
 
         OnDestroyHundle?.Invoke(this);
     }
+
 
     //----------------------------------------------------------------------------------
     // IChaceable
