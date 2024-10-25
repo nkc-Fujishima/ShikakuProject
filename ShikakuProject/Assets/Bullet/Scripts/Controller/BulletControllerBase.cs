@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BoxCollider))]
-public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage, IStoppable, IDestroy, IBulletManaged
+public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage, IStoppable, IDestroy, IBulletManaged, IFallable
 {
     protected enum MoveStates
     {
@@ -136,17 +136,8 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
 
     //----------------------------------------------------------------------------------
-    // åpè≥êÊÇ…éùÇ¡ÇƒÇŸÇµÇ¢ä÷êî
-    protected abstract void OnMove();
-
-
-    //----------------------------------------------------------------------------------
-    // IChaceable
-    public Transform chacebleTransform { get { return transform; } }
-
-    //----------------------------------------------------------------------------------
-    // IDamage
-    public void Damage()
+    // É_ÉÅÅ[ÉWÇéÛÇØÇƒéÄÇ Ç∆Ç´ÇÃèàóù
+    private void Death()
     {
         if (MoveState != MoveStates.Nomal) return;
 
@@ -161,6 +152,30 @@ public abstract class BulletControllerBase : MonoBehaviour, IChaceable, IDamage,
 
         if (_particleDamage)
             Instantiate(_particleDamage, transform.position + transform.up, Quaternion.identity);
+    }
+
+
+    //----------------------------------------------------------------------------------
+    // åpè≥êÊÇ…éùÇ¡ÇƒÇŸÇµÇ¢ä÷êî
+    protected abstract void OnMove();
+
+
+    //----------------------------------------------------------------------------------
+    // IChaceable
+    public Transform chacebleTransform { get { return transform; } }
+
+    //----------------------------------------------------------------------------------
+    // IDamage
+    public void Damage()
+    {
+        Death();
+    }
+
+    //----------------------------------------------------------------------------------
+    // IFallable
+    public void FallRiver()
+    {
+        Death();
     }
 
     //----------------------------------------------------------------------------------

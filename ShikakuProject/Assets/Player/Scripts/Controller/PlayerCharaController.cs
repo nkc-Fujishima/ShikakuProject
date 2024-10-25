@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody))]
 
-public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateChangeable, IDestroy
+public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateChangeable, IDestroy, IFallable
 {
     [System.Serializable]
     public class PlayerData
@@ -547,12 +547,8 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
 
     //----------------------------------------------------------------------------------
-    // IChaceable
-    public Transform chacebleTransform { get { return transform; } }
-
-    //----------------------------------------------------------------------------------
-    // IDamage
-    public void Damage()
+    // É_ÉÅÅ[ÉWÇéÛÇØÇƒéÄÇ Ç∆Ç´ÇÃèàóù
+    private void Death()
     {
         if (!_isMove) return;
 
@@ -567,5 +563,23 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         Datas.OnDeath?.Invoke();
 
         OnDestroyHundle?.Invoke(this);
+    }
+
+    //----------------------------------------------------------------------------------
+    // IChaceable
+    public Transform chacebleTransform { get { return transform; } }
+
+    //----------------------------------------------------------------------------------
+    // IDamage
+    public void Damage()
+    {
+        Death();
+    }
+
+    //----------------------------------------------------------------------------------
+    // IFallable
+    public void FallRiver()
+    {
+        Death();
     }
 }

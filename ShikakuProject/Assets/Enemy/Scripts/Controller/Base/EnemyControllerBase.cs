@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDamage
+public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDamage, IFallable
 {
     [Header("オブジェクト設定"), Tooltip("エネミーのパラメータスクリプタブルオブジェクト"), SerializeField] protected EnemyParameterDataBase parameter;
     [Tooltip("エネミーで使用するエフェクト群スクリプタブルオブジェクト"), SerializeField] protected EnemyEffectDataBase effect;
@@ -48,6 +48,7 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
         if (iState != null) iState.OnEnter();
     }
 
+    // ダメージを食らった場合の処理
     public void Damage(Vector3 position)
     {
         // ダメージを与えてくる対象へのベクトルと自身の前方ベクトルで内積
@@ -60,6 +61,18 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
         // パラメータ内のダメージを受けない角度以上のみダメージを受けてイベントを発火
         if (angle < parameter.InvincibleAngle) return;
 
+        Death();
+    }
+
+    // ステージから落ちた場合の処理
+    public void FallRiver()
+    {
+        Death();
+    }
+
+    // 死ぬときの処理
+    private void Death()
+    {
         ChangeState(dieState);
 
         //this.gameObject.SetActive(false);
