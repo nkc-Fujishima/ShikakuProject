@@ -252,8 +252,8 @@ public class StageManager : MonoBehaviour
         TimeCounter = new();
         TimeCounter.SetTimer(timeLimit);
 
-        TimeCounter.OnTimeUpEvent += GameOver;
         TimeCounter.OnTimeUpEvent += _playerManager.TimeUp;
+        TimeCounter.OnTimeUpEvent += GameOver;
     }
 
 
@@ -285,6 +285,7 @@ public class StageManager : MonoBehaviour
         _isResult = true;
 
         TimeCounter.OnTimeUpEvent -= GameOver;
+        TimeCounter.OnTimeUpEvent -= _playerManager.TimeUp;
 
         // ƒQ[ƒ€‚ªI—¹‚µ‚½‚Æ‚«‚ÉŒÄ‚ÔŠÖ”‚ğŒÄ‚Ô
         OnResult();
