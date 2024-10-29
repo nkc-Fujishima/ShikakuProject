@@ -116,8 +116,6 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
             CountTimeRates[i] = new(1);
         }
 
-        CursorController cursorController = Instantiate(cursor);
-        cursorController.Construct(transform);
     }
 
     private void Update()
@@ -526,6 +524,9 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
         _isMove = true;
 
         _iState.OnEnter();
+
+        CursorController cursorController = Instantiate(cursor);
+        cursorController.Construct(transform);
     }
 
     //----------------------------------------------------------------------------------

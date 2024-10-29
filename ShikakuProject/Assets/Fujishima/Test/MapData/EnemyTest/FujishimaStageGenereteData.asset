@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6736654c0c043354da7da71d3108a249, type: 3}
-  m_Name: StageGenereteData
+  m_Name: FujishimaStageGenereteData
   m_EditorClassIdentifier: 
   StageMapData:
-  - {fileID: 11400000, guid: b795b4ba3d9368342ae9a15d2dee03e5, type: 2}
+  - {fileID: 11400000, guid: 85f7adbce8ffb7d41aff94426bafdaed, type: 2}
   ElementData: {fileID: 11400000, guid: 0322bff9b3139ee42ba1319cbea6254e, type: 2}
   TileWidth: 1.6
   TileHeight: 1.6
   _stageWallGenerateData: {fileID: 0}
+  _physicMaterialGround: {fileID: 0}
+  _physicMaterialWall: {fileID: 0}

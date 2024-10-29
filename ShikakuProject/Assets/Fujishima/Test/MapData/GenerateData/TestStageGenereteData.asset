@@ -19,3 +19,6 @@ MonoBehaviour:
   ElementData: {fileID: 11400000, guid: 0322bff9b3139ee42ba1319cbea6254e, type: 2}
   TileWidth: 1.6
   TileHeight: 1.6
+  _stageWallGenerateData: {fileID: 11400000, guid: 51ffb0b059ca11549bfc44eb7966b0bd, type: 2}
+  _physicMaterialGround: {fileID: 0}
+  _physicMaterialWall: {fileID: 0}
