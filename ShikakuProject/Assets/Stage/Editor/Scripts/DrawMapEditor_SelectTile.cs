@@ -31,17 +31,26 @@ public class DrawMapEditor_SelectTile
         EditorGUILayout.LabelField("壁、障害物");
         int selectedIndex1 = CheckSelectedIndex(typeObstacle, saveData);
 
-        EditorGUILayout.LabelField("プレイヤー");
-        int selectedIndex2 = CheckSelectedIndex(typePlayer, saveData);
+        int selectedIndex2 = 0;
+        int selectedIndex3 = 0;
+        if (saveData.IsMobPlacement)
+        {
+            EditorGUILayout.LabelField("プレイヤー");
+            selectedIndex2 = CheckSelectedIndex(typePlayer, saveData);
 
-        EditorGUILayout.LabelField("敵");
-        int selectedIndex3 = CheckSelectedIndex(typeEnemy, saveData);
+            EditorGUILayout.LabelField("敵");
+            selectedIndex3 = CheckSelectedIndex(typeEnemy, saveData);
+        }
 
 
         if (selectedIndex0 != _selectedStageElementButtonIndices[(int)typeGround]) SelectStageElementButton(typeGround, selectedIndex0);
         else if (selectedIndex1 != _selectedStageElementButtonIndices[(int)typeObstacle]) SelectStageElementButton(typeObstacle, selectedIndex1);
-        else if (selectedIndex2 != _selectedStageElementButtonIndices[(int)typePlayer]) SelectStageElementButton(typePlayer, selectedIndex2);
-        else if (selectedIndex3 != _selectedStageElementButtonIndices[(int)typeEnemy]) SelectStageElementButton(typeEnemy, selectedIndex3);
+
+        if (saveData.IsMobPlacement)
+        {
+            if (selectedIndex2 != _selectedStageElementButtonIndices[(int)typePlayer]) SelectStageElementButton(typePlayer, selectedIndex2);
+            else if (selectedIndex3 != _selectedStageElementButtonIndices[(int)typeEnemy]) SelectStageElementButton(typeEnemy, selectedIndex3);
+        }
 
         EditorGUILayout.LabelField("消しゴム");
         // なしが押された場合は初期化する
