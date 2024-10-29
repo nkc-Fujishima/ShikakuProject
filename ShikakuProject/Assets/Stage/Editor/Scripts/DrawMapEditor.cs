@@ -60,6 +60,9 @@ public class DrawMapEditor : EditorWindow
 
         // パレット
         DrawToolbar();
+
+        MobPlacementButton();
+
         SetStageObjectElementData();
         _selectTile.SelectElement(_saveData);
 
@@ -92,20 +95,23 @@ public class DrawMapEditor : EditorWindow
             }
             if (GUILayout.Button("セーブ", EditorStyles.toolbarButton))
             {
-                // プレイヤーがいない、もしくは複数設定されてたら保存しない
-                if (!_saveData.IsCheckOnePlayer())
+                if (_saveData.IsMobPlacement)
                 {
-                    EditorUtility.DisplayDialog("Warning", "プレイヤーが配置されてないか\n複数体配置された状態になってるよ" +
-                                                         "\n\n必ず１体だけになるように配置してね", "OK");
-                    return;
-                }
+                    // プレイヤーがいない、もしくは複数設定されてたら保存しない
+                    if (!_saveData.IsCheckOnePlayer())
+                    {
+                        EditorUtility.DisplayDialog("Warning", "プレイヤーが配置されてないか\n複数体配置された状態になってるよ" +
+                                                             "\n\n必ず１体だけになるように配置してね", "OK");
+                        return;
+                    }
 
-                // 敵が配置されてなかったら保存しない
-                if (!_saveData.IsCheckExistenceEnemy())
-                {
-                    EditorUtility.DisplayDialog("Warning", "敵が一体も配置されてないよ" +
-                                                         "\n\n必ず１体以上配置してね", "OK");
-                    return;
+                    // 敵が配置されてなかったら保存しない
+                    if (!_saveData.IsCheckExistenceEnemy())
+                    {
+                        EditorUtility.DisplayDialog("Warning", "敵が一体も配置されてないよ" +
+                                                             "\n\n必ず１体以上配置してね", "OK");
+                        return;
+                    }
                 }
 
                 SaveStageMap();
@@ -129,6 +135,14 @@ public class DrawMapEditor : EditorWindow
 
             _madeMap.AllFillButton(_saveData, _selectTile.SelectStageTile);
         }
+    }
+
+
+    //-------------------------------------------------------------------------------------
+    // モブを配置する場合のボタン
+    private void MobPlacementButton()
+    {
+        _saveData.IsMobPlacement = EditorGUILayout.Toggle("プレイヤー、敵を配置する", _saveData.IsMobPlacement);
     }
 
 
@@ -227,12 +241,13 @@ public class DrawMapEditor : EditorWindow
         // 保存先のファイルパスを取得する
         var filePath = EditorUtility.SaveFilePanel("Save", "Assets", "StageData", "asset");
 
-        string[] hogePath = Regex.Split(filePath, "/Assets/");
-        string assetPath = "Assets/" + hogePath[1];
 
         // パスが入っていれば選択されたということ（キャンセルされたら入ってこない）
         if (!string.IsNullOrEmpty(filePath))
         {
+            string[] hogePath = Regex.Split(filePath, "/Assets/");
+            string assetPath = "Assets/" + hogePath[1];
+
             //保存処理
 
             //変更ここから

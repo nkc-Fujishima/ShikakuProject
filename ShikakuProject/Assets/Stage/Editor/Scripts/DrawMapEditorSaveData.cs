@@ -20,6 +20,9 @@ public class DrawMapEditorSaveData : ScriptableObject
     public Texture2D UpArrowTexture;
     public Texture2D DiagonalArrowTexture;
 
+    // ステージにプレイヤーを配置するかどうか
+    public bool IsMobPlacement = true;
+
 
     public void SurchDrawMapData()
     {
