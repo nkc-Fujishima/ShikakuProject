@@ -241,12 +241,13 @@ public class DrawMapEditor : EditorWindow
         // 保存先のファイルパスを取得する
         var filePath = EditorUtility.SaveFilePanel("Save", "Assets", "StageData", "asset");
 
-        string[] hogePath = Regex.Split(filePath, "/Assets/");
-        string assetPath = "Assets/" + hogePath[1];
 
         // パスが入っていれば選択されたということ（キャンセルされたら入ってこない）
         if (!string.IsNullOrEmpty(filePath))
         {
+            string[] hogePath = Regex.Split(filePath, "/Assets/");
+            string assetPath = "Assets/" + hogePath[1];
+
             //保存処理
 
             //変更ここから
