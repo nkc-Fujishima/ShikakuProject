@@ -16,8 +16,8 @@ public class UIStartSetting : MonoBehaviour
     [Tooltip("背景のYサイズ拡縮時間"), SerializeField] float backImageScaleChangeTime;
     [Tooltip("ボタン情報のYサイズ"), SerializeField] float infoYSize;
     [Tooltip("ボタン情報のYサイズ拡縮時間"), SerializeField] float infoScaleChangeTime;
-    [Tooltip("テキストの開始配置位置"), SerializeField] float startTextXPosition;
-    [Tooltip("テキストの終了配置位置"), SerializeField] float endTextXPosition;
+    [Tooltip("テキストの開始配置位置"), SerializeField] Transform startTextXPosition;
+    [Tooltip("テキストの終了配置位置"), SerializeField] Transform endTextXPosition;
     [Tooltip("テキストの配置までの時間"), SerializeField] float textXPositionMoveTime;
 
 
@@ -44,7 +44,7 @@ public class UIStartSetting : MonoBehaviour
         buttonInfoObject.SetActive(true);
 
         UniTask scaleTask = clearTargetBackImage.rectTransform.DOScaleY(backImageYSize, backImageScaleChangeTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
-        UniTask moveTask = clearTargetText.rectTransform.DOMoveX(startTextXPosition, textXPositionMoveTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
+        UniTask moveTask = clearTargetText.rectTransform.DOMoveX(startTextXPosition.position.x, textXPositionMoveTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
         UniTask infoTask = buttonInfoObject.transform.DOScaleY(infoYSize, backImageScaleChangeTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
 
         await UniTask.WhenAll(scaleTask, moveTask, infoTask);
@@ -53,7 +53,7 @@ public class UIStartSetting : MonoBehaviour
     public async UniTask CloseGameStartUI()
     {
         UniTask scaleTask = clearTargetBackImage.rectTransform.DOScaleY(0, backImageScaleChangeTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
-        UniTask moveTask = clearTargetText.rectTransform.DOMoveX(endTextXPosition, textXPositionMoveTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
+        UniTask moveTask = clearTargetText.rectTransform.DOMoveX(endTextXPosition.position.x, textXPositionMoveTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
         UniTask infoTask = buttonInfoObject.transform.DOScaleY(0, backImageScaleChangeTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
 
         await UniTask.WhenAll(scaleTask, moveTask, infoTask);
