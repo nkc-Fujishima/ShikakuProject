@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 707d5828f7a0f8148ad537bf470ec4a2, type: 3}
   m_Name: SaveData
   m_EditorClassIdentifier: 
+  ElementTypeTexture_Ground: {fileID: 2800000, guid: 730e925bd4f49ba44a149c7b5960b43b, type: 3}
+  ElementTypeTexture_Enemy: {fileID: 2800000, guid: d3baaaeb0de80fb41bc4893a165327d3, type: 3}
+  ElementTypeTexture_X: {fileID: 2800000, guid: ee429086671bb394ba6c3d635320f6f9, type: 3}
+  ElementTypeTexture_Flag: {fileID: 2800000, guid: 86902ee2f0adf154694ed23c5da24d9e, type: 3}
   StageObjectElementData: {fileID: 11400000, guid: 0322bff9b3139ee42ba1319cbea6254e, type: 2}
   DrawMapData: {fileID: 11400000, guid: aa990393250890c40931e4d0541f341c, type: 2}
   NumberTextures:
@@ -27,3 +31,4 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 41327d870f086df49bf19d2c2112b052, type: 3}
   UpArrowTexture: {fileID: 2800000, guid: 59d599da712834b44b6f0b3421348ac1, type: 3}
   DiagonalArrowTexture: {fileID: 2800000, guid: 37dff26b63208194bae1ea22f803837e, type: 3}
+  IsMobPlacement: 1

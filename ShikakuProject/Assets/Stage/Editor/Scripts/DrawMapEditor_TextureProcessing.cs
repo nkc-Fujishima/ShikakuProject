@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DrawMapEditor_TextureProcessing
@@ -76,13 +75,18 @@ public class DrawMapEditor_TextureProcessing
         for (int i = 0; i < number; ++i)
         {
             newTexture[i] = DrawNumberTextureToBottomLeft(i, texture[i]);
-            newTexture[i] = DrawElementTextureToBottomRight(newTexture[i], elementTexture);
+            newTexture[i] = DrawElementTextureToOverRight(newTexture[i], elementTexture);
         }
 
         return newTexture;
     }
 
-    private Texture2D DrawElementTextureToBottomRight(Texture2D texture, Texture2D elementTexture)
+    public Texture2D TextureCreate(int number, Texture2D texture)
+    {
+        return DrawNumberTextureToBottomLeft(number, texture);
+    }
+
+    private Texture2D DrawElementTextureToOverRight(Texture2D texture, Texture2D elementTexture)
     {
         // ˆø”‚ÌTexture2D‚©‚çFî•ñ‚ð”²‚«Žæ‚é
         TextureColor textureColor = new(texture);
@@ -91,7 +95,7 @@ public class DrawMapEditor_TextureProcessing
         int digitX = textureColor.X - elementTextureColor.X;
 
         // ‰æ‘œ‚ÉF‚ð“h‚é
-        textureColor.DrawTexture(elementTextureColor, digitX, 256);
+        textureColor.DrawTexture(elementTextureColor, digitX, textureColor.Y - elementTextureColor.Y);
 
         // §ì‚µ‚½‰æ‘œ‚ðo—Í
         Texture2D texture2D = new(textureColor.X, textureColor.Y);

@@ -6,6 +6,12 @@ public class DrawMapEditorSaveData : ScriptableObject
     // タイル画像の情報
     public Texture2D[][] ElementTypeTextures;
 
+    // 配置する要素画像の情報
+    public Texture2D ElementTypeTexture_Ground;
+    public Texture2D ElementTypeTexture_Enemy;
+    public Texture2D ElementTypeTexture_X;
+    public Texture2D ElementTypeTexture_Flag;
+
     //パレットのデータ
     public StageObjectElementData StageObjectElementData = null;
 

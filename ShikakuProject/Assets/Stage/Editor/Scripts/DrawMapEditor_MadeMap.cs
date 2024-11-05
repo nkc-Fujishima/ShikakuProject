@@ -1,6 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 // ステージを制作するウィンドウ
 public class DrawMapEditor_MadeMap
@@ -33,10 +32,9 @@ public class DrawMapEditor_MadeMap
         // 選択されなかったら終了
         if (selectedGridIndex == -1) return;
 
-
-        // もし同じ種類のタイルでボタンを押した場合
         Vector2Int selectGrid = new (selectedGridIndex % saveData.DrawMapData.X, selectedGridIndex / saveData.DrawMapData.X);
 
+        // もし同じ種類のタイルでボタンを押した場合
         if (selectStageTile.TileType == saveData.GetTileTypeOnTileData(selectGrid.x, selectGrid.y) &&
             selectStageTile.ElementCount == saveData.GetElementCountOnTileData(selectGrid.x, selectGrid.y))
         {

@@ -68,6 +68,8 @@ public class DrawMapEditor : EditorWindow
 
         AllFillButton();
 
+        MadeWaypointButton();
+
         // 改行
         horizontalSplitView.Split();
 
@@ -125,7 +127,7 @@ public class DrawMapEditor : EditorWindow
     {
         EditorGUILayout.LabelField("選択してる要素で塗りつぶし");
 
-        if (GUILayout.Button("塗りつぶし", EditorStyles.toolbarButton))
+        if (GUILayout.Button("塗りつぶし"))
         {
             if (_saveData.DrawMapData.X == 0 || _saveData.DrawMapData.Y == 0)
             {
@@ -145,6 +147,17 @@ public class DrawMapEditor : EditorWindow
         _saveData.IsMobPlacement = EditorGUILayout.Toggle("プレイヤー、敵を配置する", _saveData.IsMobPlacement);
     }
 
+    //-------------------------------------------------------------------------------------
+    // 巡回ポイントを設定する画面に移動するボタン
+    private void MadeWaypointButton()
+    {
+        if (GUILayout.Button("巡回ポイントを設定"))
+        {
+            if (_saveData.DrawMapData.X == 0 || _saveData.DrawMapData.Y == 0) return;
+
+            DrawMapEditor_MadeWaypoint.Open(_saveData);
+        }
+    }
 
     //-------------------------------------------------------------------------------------
     // 配置する要素を保持しているスクリプタブルオブジェクトを取得
