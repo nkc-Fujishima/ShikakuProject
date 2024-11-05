@@ -128,7 +128,7 @@ public class MadeWaypoint_MapWindow : EditorWindow
     // テクスチャを設定
     private void SetTexture()
     {
-        Vector2Int mapMax = new Vector2Int(_saveData.DrawMapData.X, _saveData.DrawMapData.Y);
+        Vector2Int mapMax = new(_saveData.DrawMapData.X, _saveData.DrawMapData.Y);
 
         _mapTextures = new Texture2D[mapMax.x * mapMax.y];
 
@@ -187,7 +187,7 @@ public class MadeWaypoint_MapWindow : EditorWindow
                 // 条件が合わない場合弾く
                 if (point.x < 0 || mapMax.x <= point.x || point.y < 0 || mapMax.y <= point.y)
                 {
-                    List<Vector2Int> hashPointsList = new List<Vector2Int>(points);
+                    List<Vector2Int> hashPointsList = new(points);
                     hashPointsList.Remove(point);
                     pointDatas = hashPointsList.ToArray();
 
@@ -202,7 +202,7 @@ public class MadeWaypoint_MapWindow : EditorWindow
                 bool isSubjectEnemy = !_isWaypoint && tileType == StageTileType.Enemy;
                 if (!(isSubjectGround || isSubjectEnemy))
                 {
-                    List<Vector2Int> hashPointsList = new List<Vector2Int>(points);
+                    List<Vector2Int> hashPointsList = new(points);
                     hashPointsList.Remove(point);
                     pointDatas = hashPointsList.ToArray();
 
@@ -235,7 +235,7 @@ public class MadeWaypoint_MapWindow : EditorWindow
     {
         if (_isWaypoint) return;
 
-        if (_saveData?.DrawMapData?.WaypointData?[_index]?.EnemyAtPoint != null)
+        if (_saveData.DrawMapData.WaypointData[_index].EnemyAtPoint != null)
         {
             _saveData.DrawMapData.WaypointData[_index].EnemyAtPoint =
                 new HashSet<Vector2Int>(_saveData.DrawMapData.WaypointData[_index].EnemyAtPoint).ToArray();

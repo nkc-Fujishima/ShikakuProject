@@ -251,7 +251,7 @@ public class DrawMapEditor_TextureProcessing
         RenderTexture previous = RenderTexture.active;
         RenderTexture.active = rt;
 
-        Texture2D result = new Texture2D(width, height);
+        Texture2D result = new(width, height);
         result.ReadPixels(new Rect(0, 0, width, height), 0, 0);
         result.Apply();
 
