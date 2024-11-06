@@ -75,7 +75,9 @@ public class DrawMapEditor_TextureProcessing
         for (int i = 0; i < number; ++i)
         {
             newTexture[i] = DrawNumberTextureToBottomLeft(i, texture[i]);
-            newTexture[i] = DrawElementTextureToOverRight(newTexture[i], elementTexture);
+
+            if (elementTexture != null)
+                newTexture[i] = DrawElementTextureToOverRight(newTexture[i], elementTexture);
         }
 
         return newTexture;

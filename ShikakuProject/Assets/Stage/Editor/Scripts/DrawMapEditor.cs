@@ -196,7 +196,8 @@ public class DrawMapEditor : EditorWindow
             {
                 case StageTileType.Ground:
                     length = _saveData.StageObjectElementData.GroundData.Prefabs.Length;
-                    elementTexture = _saveData.StageObjectElementData.GroundData.Texture;
+                    //elementTexture = _saveData.StageObjectElementData.GroundData.Texture;
+                    elementTexture = null;
                     baseTexture = new Texture2D[length];
                     for (int i = 0; i < length; ++i)
                         baseTexture[i] = AssetPreview.GetAssetPreview(_saveData.StageObjectElementData.GroundData.Prefabs[i]);
