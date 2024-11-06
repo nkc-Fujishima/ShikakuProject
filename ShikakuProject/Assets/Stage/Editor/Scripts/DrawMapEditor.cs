@@ -271,6 +271,8 @@ public class DrawMapEditor : EditorWindow
 
             saveAsset.CopyTileData(_saveData.DrawMapData);
 
+            saveAsset.CopyWaypointData(_saveData.DrawMapData);
+
             //ïœçXÇ±Ç±Ç‹Ç≈
             AssetDatabase.StopAssetEditing();
 

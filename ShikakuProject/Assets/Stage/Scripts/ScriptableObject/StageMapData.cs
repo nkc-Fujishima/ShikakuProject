@@ -63,4 +63,9 @@ public class StageMapData : ScriptableObject
             }
         }
     }
+
+    public void CopyWaypointData(StageMapData mapData)
+    {
+        WaypointData = new(mapData.WaypointData);
+    }
 }
