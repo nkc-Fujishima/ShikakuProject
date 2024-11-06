@@ -15,28 +15,25 @@ public class StageSelectCursorController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        leftCursorImage.rectTransform.DOMoveX(leftCursorImage.transform.position.x * moveOutSideRatio, moveTime).SetLoops(-1, LoopType.Yoyo);
-        rightCursorImage.rectTransform.DOMoveX(rightCursorImage.transform.position.x * moveOutSideRatio, moveTime).SetLoops(-1, LoopType.Yoyo);
+        leftCursorImage.rectTransform.DOMoveX(leftCursorImage.transform.position.x * moveOutSideRatio, moveTime).SetLoops(-1, LoopType.Yoyo).SetLink(gameObject);
+        rightCursorImage.rectTransform.DOMoveX(rightCursorImage.transform.position.x * moveOutSideRatio, moveTime).SetLoops(-1, LoopType.Yoyo).SetLink(gameObject);
     }
 
     public void HideLeftCursorImage()
     {
         leftCursorImage.gameObject.SetActive(false);
 
-        Debug.Log("起動");
     }
 
     public void HideRightCursorImage()
     {
         rightCursorImage.gameObject.SetActive(false);
-        Debug.Log("起動");
     }
 
     public void HideCursorImage()
     {
         leftCursorImage.gameObject.SetActive(false);
         rightCursorImage.gameObject.SetActive(false);
-        Debug.Log("起動");
 
     }
 
@@ -44,6 +41,5 @@ public class StageSelectCursorController : MonoBehaviour
     {
         leftCursorImage.gameObject.SetActive(true);
         rightCursorImage.gameObject.SetActive(true);
-        Debug.Log("起動");
     }
 }

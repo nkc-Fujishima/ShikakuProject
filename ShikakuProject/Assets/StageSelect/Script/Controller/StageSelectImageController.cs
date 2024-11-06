@@ -11,6 +11,7 @@ public class StageSelectImageController : MonoBehaviour
 
     [Header("数値設定"), Tooltip("ズーム間隔"), SerializeField] float zoomSpan;
     [Tooltip("ズーム最小値"), SerializeField] Vector3 zoomMinSize;
+    [Tooltip("初期位置"), SerializeField] Vector3 initialPos;
     [Tooltip("移動時間"), SerializeField] float moveTime;
 
     // Start is called before the first frame update
@@ -24,10 +25,10 @@ public class StageSelectImageController : MonoBehaviour
         stageSelectImage.transform.DOMove(StageImage.rectTransform.position, moveTime);
     }
 
-    public void ResetImagePosition(Vector3 position)
+    public void ResetImagePosition()
     {
         DOTween.Kill(this.transform);
-        stageSelectImage.GetComponent<RectTransform>().anchoredPosition = position;
+        stageSelectImage.GetComponent<RectTransform>().anchoredPosition = initialPos;
     }
 
     public void RestartZoom()

@@ -11,13 +11,7 @@ public class StageSelectPresenter : MonoBehaviour
     [Tooltip("ステージセレクトイメージコントローラ"), SerializeField] StageSelectImageController stageSelectImageController;
     [Tooltip("ステージイメージコントローラ"), SerializeField] StageImagesController stageImagesController;
     [Tooltip("カーソルイメージコントローラ"), SerializeField] StageSelectCursorController stageSelectCursorController;
-
-    [Header("数値設定"), Tooltip("ステージイメージオブジェクト移動位置"), SerializeField]
-    Vector3[] stageImagePositions;
-    [Tooltip("セレクトイメージ初期位置"), SerializeField] Vector3 initialPos;
-    [Tooltip("ワールドイメージオブジェクト移動位置"), SerializeField] Vector3[] worldImageObjectPositions;
-    [Tooltip("ステート毎の選択ワールドの移動位置"), SerializeField] Vector3[] stateChangeWorldImagePosition;
-
+    [Tooltip("インフォメーションコントローラ"),SerializeField] InformationController informationController;
 
     // Start is called before the first frame update
     void Start()
@@ -29,11 +23,13 @@ public class StageSelectPresenter : MonoBehaviour
         // セレクト中のワールド---------------------------------------------------------------------------------------------
         stageSelectManager.SelectingWorld.Subscribe(worldCount =>
         {
-            worldObjectsController.SetObjectPosition(worldCount, worldImageObjectPositions[0]);
-            worldObjectsController.SetObjectPosition(worldCount - 1, worldImageObjectPositions[1]);
-            worldObjectsController.SetObjectPosition(worldCount + 1, worldImageObjectPositions[2]);
+            worldObjectsController.SetMainPosition(worldCount);
+            worldObjectsController.SetPrevPosition(worldCount - 1);
+            worldObjectsController.SetMainNextPosition(worldCount + 1);
 
             worldObjectsController.SetCurrentSelectWorldObject(worldCount);
+
+            informationController.SetWorldName(worldCount);
         }).AddTo(this);
 
         // ステージセレクトシーン内でのステート---------------------------------------------------------------------------------------------
@@ -44,10 +40,14 @@ public class StageSelectPresenter : MonoBehaviour
                 case StageState.WorldSelect:
                     // セレクトイメージ
                     stageSelectImageController.Disable();
-                    stageSelectImageController.ResetImagePosition(initialPos);
+                    stageSelectImageController.ResetImagePosition();
 
                     // ワールドイメージ
-                    worldObjectsController.SetStageSelectStatePosition(stateChangeWorldImagePosition[0]);
+                    worldObjectsController.SetWorldSelectStatePosition();
+
+                    // インフォメーション
+                    informationController.SetWorldSelectStatePosition();
+                    informationController.SetWorldSelectButtonInfo();
                     break;
                 case StageState.StageSelect:
                     // セレクトイメージ
@@ -55,14 +55,18 @@ public class StageSelectPresenter : MonoBehaviour
                     stageSelectImageController.RestartZoom();
 
                     // ワールドイメージ
-                    worldObjectsController.SetStageSelectStatePosition(stateChangeWorldImagePosition[1]);
+                    worldObjectsController.SetStageSelectStatePosition();
 
                     // カーソルイメージ
                     stageSelectCursorController.HideCursorImage();
+
+                    // インフォメーション
+                    informationController.SetStageSelectStatePosition();
+                    informationController.SetStageSelectButtonInfo();
                     break;
             }
 
-            stageImagesController.SetPosition(stageImagePositions[(int)state]);
+            stageImagesController.SetPosition((int)state);
         }).AddTo(this);
 
         // ワールドの選択数ハンドル---------------------------------------------------------------------------------------------

@@ -9,19 +9,43 @@ public class WorldObjectsController : MonoBehaviour
     List<GameObject> worldImageObjects = new List<GameObject>();
 
     [Header("数値設定"), Tooltip("移動時間"), SerializeField] float moveTime;
+    [Tooltip("ワールドセレクト時移動位置"), SerializeField] Vector3[] movePos;
+
+    [Tooltip("ステージセレクトとワールドセレクト切り替え時の位置"), SerializeField]
+    Vector3[] waitPos;
 
     GameObject currentSelectObject = null;
 
-    public void SetObjectPosition(int selectWorldObjectCount, Vector3 position)
+
+    // ワールドセレクトでのワールド切り替え時--------------------------------------------------------------------------
+    public void SetMainPosition(int selectWorldObjectCount)
     {
         if (selectWorldObjectCount < 0 || selectWorldObjectCount > worldImageObjects.Count - 1) return;
 
-        worldImageObjects[selectWorldObjectCount].transform.DOMove(position, moveTime);
+        worldImageObjects[selectWorldObjectCount].transform.DOMove(movePos[0], moveTime);
+    }
+    public void SetPrevPosition(int selectWorldObjectCount)
+    {
+        if (selectWorldObjectCount < 0 || selectWorldObjectCount > worldImageObjects.Count - 1) return;
+
+        worldImageObjects[selectWorldObjectCount].transform.DOMove(movePos[1], moveTime);
+    }
+    public void SetMainNextPosition(int selectWorldObjectCount)
+    {
+        if (selectWorldObjectCount < 0 || selectWorldObjectCount > worldImageObjects.Count - 1) return;
+
+        worldImageObjects[selectWorldObjectCount].transform.DOMove(movePos[2], moveTime);
+    }
+    //-----------------------------------------------------------------------------------------------------------------
+
+    public void SetWorldSelectStatePosition()
+    {
+        currentSelectObject.transform.DOMove(waitPos[0], moveTime);
     }
 
-    public void SetStageSelectStatePosition(Vector3 position)
+    public void SetStageSelectStatePosition()
     {
-        currentSelectObject.transform.DOMove(position, moveTime);
+        currentSelectObject.transform.DOMove(waitPos[1], moveTime);
     }
 
     public void SetCurrentSelectWorldObject(int selectWorldObjectCount)
