@@ -2,7 +2,7 @@
     "name": "UIInput",
     "maps": [
         {
-            "name": "Title",
+            "name": "UI",
             "id": "d61d40ef-6c1a-4b78-b088-6f1374d00dc4",
             "actions": [
                 {

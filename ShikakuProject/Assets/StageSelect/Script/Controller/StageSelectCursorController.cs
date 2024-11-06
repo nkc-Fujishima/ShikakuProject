@@ -1,0 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
+
+public class StageSelectCursorController : MonoBehaviour
+{
+    [Header("オブジェクト設定"), Tooltip("左側カーソルイメージ"), SerializeField] Image leftCursorImage;
+    [Tooltip("右側カーソルイメージ"), SerializeField] Image rightCursorImage;
+
+    [Header("数値設定"), Tooltip("移動時間"), SerializeField] float moveTime;
+    [Tooltip("外側への移動倍率"), SerializeField] float moveOutSideRatio;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        leftCursorImage.rectTransform.DOMoveX(leftCursorImage.transform.position.x * moveOutSideRatio, moveTime).SetLoops(-1, LoopType.Yoyo);
+        rightCursorImage.rectTransform.DOMoveX(rightCursorImage.transform.position.x * moveOutSideRatio, moveTime).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void HideLeftCursorImage()
+    {
+        leftCursorImage.gameObject.SetActive(false);
+
+        Debug.Log("起動");
+    }
+
+    public void HideRightCursorImage()
+    {
+        rightCursorImage.gameObject.SetActive(false);
+        Debug.Log("起動");
+    }
+
+    public void HideCursorImage()
+    {
+        leftCursorImage.gameObject.SetActive(false);
+        rightCursorImage.gameObject.SetActive(false);
+        Debug.Log("起動");
+
+    }
+
+    public void VisibleCursorImage()
+    {
+        leftCursorImage.gameObject.SetActive(true);
+        rightCursorImage.gameObject.SetActive(true);
+        Debug.Log("起動");
+    }
+}

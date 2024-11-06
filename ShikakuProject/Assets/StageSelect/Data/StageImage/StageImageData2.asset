@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0f6929a714458e42bdaccd13be03496, type: 3}
-  m_Name: StageSelectData
+  m_Script: {fileID: 11500000, guid: e4756a434184ec247b3a0e5fb80062c1, type: 3}
+  m_Name: StageImageData2
   m_EditorClassIdentifier: 
-  StageSelectNumber: 0
+  stageImages:
+  - {fileID: 21300000, guid: 30c840ec1d50d6146a4d03cff3c505b4, type: 3}
+  - {fileID: 21300000, guid: b0692fa2483642b4088899aa3f505b9b, type: 3}
