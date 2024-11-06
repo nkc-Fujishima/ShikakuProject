@@ -96,10 +96,9 @@ public class TitleManager : MonoBehaviour, IStateChangeable
 
         public void OnUpdate()
         {
-
             if (playerInput.actions["Dicision"].WasPerformedThisFrame())
             {
-                stateChanger.ChangeState(manager.stageSelectState);
+                SceneManager.LoadScene("StageSelect");
             }
         }
     }

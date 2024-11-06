@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class WorldImageController : MonoBehaviour
 {
-    [SerializeField] WorldImageParameter parameter = null;
+    [SerializeField] WorldImageObjectParameter parameter = null;
 
     float rotateCount = 0;
-    public void Construct(WorldImageParameter parameter)
+    public void Construct(WorldImageObjectParameter parameter)
     {
         this.parameter = parameter;
     }

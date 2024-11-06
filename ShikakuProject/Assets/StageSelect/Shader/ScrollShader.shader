@@ -1,4 +1,4 @@
-Shader "Custom/ScrollShader"
+Shader "Custom/UI/ScrollShader"
 {
     Properties
     {
