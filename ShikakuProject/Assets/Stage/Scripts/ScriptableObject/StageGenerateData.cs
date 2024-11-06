@@ -1,6 +1,8 @@
 using StageDelaunayTriangles;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static StageMapData;
 
 [CreateAssetMenu(fileName = "StageGenerateData", menuName = "Stage/Generator/GenerateData")]
 public class StageGenerateData : ScriptableObject
@@ -74,7 +76,9 @@ public class StageGenerateData : ScriptableObject
                 switch (tileData.TileType)
                 {
                     case StageTileType.Enemy:
-                        enemyList.Add(InstanceObject(tileData, countX, countY, instancePosition));
+                        GameObject instanceObject = InstanceObject(tileData, countX, countY, instancePosition);
+                        enemyList.Add(instanceObject);
+                        AwardWaypointToEnemy(stageCount, countX, countY, ref instanceObject);
                         InstanceGroundObject(new(StageTileType.Ground), countX, countY, instancePosition);
                         break;
 
@@ -174,6 +178,43 @@ public class StageGenerateData : ScriptableObject
             instanceObject.transform.SetParent(stageManagerTransform);
 
         return instanceObject;
+    }
+
+
+    //----------------------------------------------------------------------------------------------------------------
+    // 巡回ポイントを付与
+    private void AwardWaypointToEnemy(int stageCount, int pointX, int pointY, ref GameObject targetObject)
+    {
+        if (!targetObject.TryGetComponent<IWaypointHolder>(out IWaypointHolder holder)) return;
+
+        StageMapData mapData = StageMapData[stageCount];
+
+        foreach (StageWaypointData waypointData in mapData.WaypointData)
+        {
+            int index = Array.IndexOf(waypointData.EnemyAtPoint, new Vector2Int(pointX, pointY));
+
+            if (index == -1) continue;
+
+            // 対象の敵に該当していたらホルダーに情報を設定
+
+            Vector2Int[] waypoints = waypointData.Waypoint;
+
+            Vector3[] settingDatas = new Vector3[waypoints.Length];
+
+            for (int i = 0; i < waypoints.Length; ++i)
+            {
+                Vector3 settingPoint = targetObject.transform.position;
+                settingPoint.x = waypoints[i].x * TileWidth;
+                settingPoint.z = -waypoints[i].y * TileWidth;
+
+                settingDatas[i] = settingPoint;
+            }
+
+            List<Vector3> newList = new(settingDatas);
+            holder.SetWaypoints(newList);
+
+            return;
+        }
     }
 
 

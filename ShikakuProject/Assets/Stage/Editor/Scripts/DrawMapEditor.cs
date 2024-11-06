@@ -66,7 +66,11 @@ public class DrawMapEditor : EditorWindow
         SetStageObjectElementData();
         _selectTile.SelectElement(_saveData);
 
+        EditorGUILayout.LabelField("ステージ塗りツール");
         AllFillButton();
+
+        EditorGUILayout.LabelField("その他設定項目");
+        MadeWaypointButton();
 
         // 改行
         horizontalSplitView.Split();
@@ -123,9 +127,7 @@ public class DrawMapEditor : EditorWindow
     // 塗りつぶしをするボタン
     private void AllFillButton()
     {
-        EditorGUILayout.LabelField("選択してる要素で塗りつぶし");
-
-        if (GUILayout.Button("塗りつぶし", EditorStyles.toolbarButton))
+        if (GUILayout.Button("選択してる要素で塗りつぶし"))
         {
             if (_saveData.DrawMapData.X == 0 || _saveData.DrawMapData.Y == 0)
             {
@@ -145,6 +147,17 @@ public class DrawMapEditor : EditorWindow
         _saveData.IsMobPlacement = EditorGUILayout.Toggle("プレイヤー、敵を配置する", _saveData.IsMobPlacement);
     }
 
+    //-------------------------------------------------------------------------------------
+    // 巡回ポイントを設定する画面に移動するボタン
+    private void MadeWaypointButton()
+    {
+        if (GUILayout.Button("巡回ポイントを設定"))
+        {
+            if (_saveData.DrawMapData.X == 0 || _saveData.DrawMapData.Y == 0) return;
+
+            DrawMapEditor_MadeWaypoint.Open(_saveData);
+        }
+    }
 
     //-------------------------------------------------------------------------------------
     // 配置する要素を保持しているスクリプタブルオブジェクトを取得
@@ -257,6 +270,8 @@ public class DrawMapEditor : EditorWindow
             AssetDatabase.CreateAsset(saveAsset, assetPath);
 
             saveAsset.CopyTileData(_saveData.DrawMapData);
+
+            saveAsset.CopyWaypointData(_saveData.DrawMapData);
 
             //変更ここまで
             AssetDatabase.StopAssetEditing();

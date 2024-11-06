@@ -1,24 +1,38 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "StageMapData", menuName = "Stage/Data/StageMap")]
+[System.Serializable]
 public class StageMapData : ScriptableObject
 {
-    [SerializeField] private int x = 0;
-    [SerializeField] private int y = 0;
-
-    public int X { get { return x; } set { x = value; } }
-    public int Y { get { return y; } set { y = value; } }
-
-
-    public StageTiles[] TileDatas;
-
     [System.Serializable]
     public struct StageTiles
     {
         public StageTile[] TileData;
     }
 
+    [System.Serializable]
+    public class StageWaypointData
+    {
+        public Vector2Int[] Waypoint; 
+        public Vector2Int[] EnemyAtPoint;
+    }
+
+
+    [SerializeField] private int x = 0;
+    [SerializeField] private int y = 0;
+
     private StageTiles[] DotsMapTile { get { return this.TileDatas; } set { TileDatas = value; } }
+
+
+    public StageTiles[] TileDatas;
+
+    public List<StageWaypointData> WaypointData = new();
+
+
+    public int X { get { return x; } set { x = value; } }
+    public int Y { get { return y; } set { y = value; } }
+
 
     public void ResetArray()
     {
@@ -48,5 +62,10 @@ public class StageMapData : ScriptableObject
                 DotsMapTile[selectX].TileData[selectY] = mapData.TileDatas[selectX].TileData[selectY];
             }
         }
+    }
+
+    public void CopyWaypointData(StageMapData mapData)
+    {
+        WaypointData = new(mapData.WaypointData);
     }
 }
