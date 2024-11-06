@@ -66,8 +66,10 @@ public class DrawMapEditor : EditorWindow
         SetStageObjectElementData();
         _selectTile.SelectElement(_saveData);
 
+        EditorGUILayout.LabelField("ステージ塗りツール");
         AllFillButton();
 
+        EditorGUILayout.LabelField("その他設定項目");
         MadeWaypointButton();
 
         // 改行
@@ -125,9 +127,7 @@ public class DrawMapEditor : EditorWindow
     // 塗りつぶしをするボタン
     private void AllFillButton()
     {
-        EditorGUILayout.LabelField("選択してる要素で塗りつぶし");
-
-        if (GUILayout.Button("塗りつぶし"))
+        if (GUILayout.Button("選択してる要素で塗りつぶし"))
         {
             if (_saveData.DrawMapData.X == 0 || _saveData.DrawMapData.Y == 0)
             {

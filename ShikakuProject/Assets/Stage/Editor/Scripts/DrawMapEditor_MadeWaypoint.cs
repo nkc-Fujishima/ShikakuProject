@@ -57,7 +57,7 @@ public class DrawMapEditor_MadeWaypoint : EditorWindow
 
     private void AddButton()
     {
-        if (GUILayout.Button("—v‘f‚ð’Ç‰Á", EditorStyles.toolbarButton))
+        if (GUILayout.Button("—v‘f‚ð’Ç‰Á"))
         {
             _saveData.DrawMapData.WaypointData.Add(new());
 
