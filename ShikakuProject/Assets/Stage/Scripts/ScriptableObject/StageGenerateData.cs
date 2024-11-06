@@ -189,6 +189,8 @@ public class StageGenerateData : ScriptableObject
 
         StageMapData mapData = StageMapData[stageCount];
 
+        if (mapData.WaypointData == null) return;
+
         foreach (StageWaypointData waypointData in mapData.WaypointData)
         {
             int index = Array.IndexOf(waypointData.EnemyAtPoint, new Vector2Int(pointX, pointY));
