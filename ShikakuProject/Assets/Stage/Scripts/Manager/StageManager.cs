@@ -48,6 +48,10 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     private StageSelectData _stageSelectData;
 
+    // フジシマ追加 11/06---------------------------------
+    [SerializeField] StageSelectData StageSelectData;
+    //----------------------------------------------------
+
 
     private PlayerManager _playerManager;
     private BulletManager _bulletManager;
@@ -264,7 +268,7 @@ public class StageManager : MonoBehaviour
 
     private async void StageClear()
     {
-        if(_isResult) return;
+        if (_isResult) return;
         _isResult = true;
 
         _enemyManager.OnClearHundle -= StageClear;
@@ -272,11 +276,34 @@ public class StageManager : MonoBehaviour
         // ゲームが終了したときに呼ぶ関数を呼ぶ
         OnResult();
 
+        bool isNextStage = false;
+
         await _uiResult.OpenGameClearUI();
-        await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);
+        await UniTask.WaitUntil(() =>
+        {
+            if (uiInput.actions["Dicision"].WasPressedThisFrame())
+            {
+                isNextStage = true;
+                return true;
+            }
+            if (uiInput.actions["Cancel"].WasPressedThisFrame())
+            {
+                isNextStage = false;
+                return true;
+            }
+            return false;
+        }, cancellationToken: cts.Token);
         await _uiResult.CloseResultUI();
 
-        SceneManager.LoadScene("TitleScene");
+        if(isNextStage)
+        {
+            StageSelectData.StageSelectNumber += 1;
+            SceneManager.LoadScene("GameScene");
+        }
+        else if(!isNextStage)
+        {
+            SceneManager.LoadScene("StageSelect");
+        }
     }
 
     private async void GameOver()
@@ -290,11 +317,33 @@ public class StageManager : MonoBehaviour
         // ゲームが終了したときに呼ぶ関数を呼ぶ
         OnResult();
 
+        bool isRetry = false;
+
         await _uiResult.OpenGameFailedUI();
-        await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);
+        await UniTask.WaitUntil(() =>
+        {
+            if (uiInput.actions["Dicision"].WasPressedThisFrame())
+            {
+                isRetry = true;
+                return true;
+            }
+            if (uiInput.actions["Cancel"].WasPressedThisFrame())
+            {
+                isRetry = false;
+                return true;
+            }
+            return false;
+        }, cancellationToken: cts.Token);
         await _uiResult.CloseResultUI();
 
-        SceneManager.LoadScene("TitleScene");
+        if (isRetry)
+        {
+            SceneManager.LoadScene("GameScene");
+        }
+        else if (!isRetry)
+        {
+            SceneManager.LoadScene("StageSelect");
+        }
     }
 
     // ゲームが終了したときに呼ばれる

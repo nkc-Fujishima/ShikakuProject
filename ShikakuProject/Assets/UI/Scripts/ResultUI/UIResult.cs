@@ -12,14 +12,18 @@ public class UIResult : MonoBehaviour
     [Tooltip("リザルトテキスト"), SerializeField] Text resultTextObject;
     [Tooltip("リザルトテキスト文言"), SerializeField] string[] resultTexts;
     [Tooltip("リザルトテキストカラー"), SerializeField] Color32[] resultTextColors;
-    [Tooltip("ステージ開始時に押すボタン情報オブジェクト"), SerializeField] GameObject buttonInfoObject;
+    [Tooltip("ステージ終了時に押すボタン情報オブジェクト"), SerializeField] GameObject buttonInfoObject;
+    [Tooltip("ステージ終了時のインフォメーションテキスト"), SerializeField] Text nextActionText;
 
+    [Header("数値設定")]
     [Tooltip("背景のYサイズ"), SerializeField] float backImageYSize;
     [Tooltip("背景のYサイズ拡縮時間"), SerializeField] float backImageScaleChangeTime;
     [Tooltip("文字のYサイズ"), SerializeField] float textYSize;
     [Tooltip("文字のYサイズ拡縮時間"), SerializeField] float textScaleChangeTime;
     [Tooltip("ボタン情報のYサイズ"), SerializeField] float infoYSize;
     [Tooltip("ボタン情報のYサイズ拡縮時間"), SerializeField] float infoScaleChangeTime;
+
+    [Header("文字設定"), Tooltip("次に行える行動を示すテキスト"), SerializeField] string[] nextActionStr;
 
     // ステージクリア時に表示するUI
     public async UniTask OpenGameClearUI()
@@ -31,6 +35,8 @@ public class UIResult : MonoBehaviour
         resultBackImageObject.sprite = resultBackImages[0];
         resultTextObject.text = resultTexts[0];
         resultTextObject.color = resultTextColors[0];
+
+        nextActionText.text = nextActionStr[0];
 
         UniTask imageScaleTask = resultBackImageObject.rectTransform.DOScaleY(backImageYSize, backImageScaleChangeTime).AsyncWaitForCompletion().AsUniTask();
         UniTask textScaleTask = resultTextObject.rectTransform.DOScaleY(textYSize, textScaleChangeTime).AsyncWaitForCompletion().AsUniTask();
@@ -49,6 +55,8 @@ public class UIResult : MonoBehaviour
         resultBackImageObject.sprite = resultBackImages[1];
         resultTextObject.text = resultTexts[1];
         resultTextObject.color = resultTextColors[1];
+
+        nextActionText.text = nextActionStr[1];
 
         UniTask imageScaleTask = resultBackImageObject.rectTransform.DOScaleY(backImageYSize, backImageScaleChangeTime).AsyncWaitForCompletion().AsUniTask();
         UniTask textScaleTask = resultTextObject.rectTransform.DOScaleY(textYSize, textScaleChangeTime).AsyncWaitForCompletion().AsUniTask();
