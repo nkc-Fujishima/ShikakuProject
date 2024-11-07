@@ -278,11 +278,17 @@ public class StageManager : MonoBehaviour
 
         bool isNextStage = false;
 
+        if (StageSelectData.StageSelectNumber >= StageSelectData.StageCountMax)
+        {
+            _uiResult.HideNextAction1();
+        }
         await _uiResult.OpenGameClearUI();
         await UniTask.WaitUntil(() =>
         {
             if (uiInput.actions["Dicision"].WasPressedThisFrame())
             {
+                if (StageSelectData.StageSelectNumber >= StageSelectData.StageCountMax) return false;
+
                 isNextStage = true;
                 return true;
             }
@@ -295,12 +301,14 @@ public class StageManager : MonoBehaviour
         }, cancellationToken: cts.Token);
         await _uiResult.CloseResultUI();
 
-        if(isNextStage)
+        if (isNextStage)
         {
+
             StageSelectData.StageSelectNumber += 1;
+
             SceneManager.LoadScene("GameScene");
         }
-        else if(!isNextStage)
+        else if (!isNextStage)
         {
             SceneManager.LoadScene("StageSelect");
         }

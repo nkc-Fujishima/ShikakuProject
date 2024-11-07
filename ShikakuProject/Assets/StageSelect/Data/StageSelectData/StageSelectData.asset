@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: StageSelectData
   m_EditorClassIdentifier: 
   StageSelectNumber: 0
+  StageCountMax: 8

@@ -12,7 +12,8 @@ public class UIResult : MonoBehaviour
     [Tooltip("リザルトテキスト"), SerializeField] Text resultTextObject;
     [Tooltip("リザルトテキスト文言"), SerializeField] string[] resultTexts;
     [Tooltip("リザルトテキストカラー"), SerializeField] Color32[] resultTextColors;
-    [Tooltip("ステージ終了時に押すボタン情報オブジェクト"), SerializeField] GameObject buttonInfoObject;
+    [Tooltip("ステージ終了時に押すボタン情報親オブジェクト"), SerializeField] GameObject buttonInfoObjectParent;
+    [Tooltip("ステージ終了時のオブジェクト_1"), SerializeField] GameObject buttonInfoObject; 
     [Tooltip("ステージ終了時のインフォメーションテキスト"), SerializeField] Text nextActionText;
 
     [Header("数値設定")]
@@ -30,7 +31,7 @@ public class UIResult : MonoBehaviour
     {
         resultBackImageObject.enabled = true;
         resultTextObject.enabled = true;
-        buttonInfoObject.SetActive(true);
+        buttonInfoObjectParent.SetActive(true);
 
         resultBackImageObject.sprite = resultBackImages[0];
         resultTextObject.text = resultTexts[0];
@@ -40,7 +41,7 @@ public class UIResult : MonoBehaviour
 
         UniTask imageScaleTask = resultBackImageObject.rectTransform.DOScaleY(backImageYSize, backImageScaleChangeTime).AsyncWaitForCompletion().AsUniTask();
         UniTask textScaleTask = resultTextObject.rectTransform.DOScaleY(textYSize, textScaleChangeTime).AsyncWaitForCompletion().AsUniTask();
-        UniTask infoTask = buttonInfoObject.transform.DOScaleY(infoYSize, backImageScaleChangeTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
+        UniTask infoTask = buttonInfoObjectParent.transform.DOScaleY(infoYSize, backImageScaleChangeTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
 
         await UniTask.WhenAll(imageScaleTask, textScaleTask);
     }
@@ -50,7 +51,7 @@ public class UIResult : MonoBehaviour
     {
         resultBackImageObject.enabled = true;
         resultTextObject.enabled = true;
-        buttonInfoObject.SetActive(true);
+        buttonInfoObjectParent.SetActive(true);
 
         resultBackImageObject.sprite = resultBackImages[1];
         resultTextObject.text = resultTexts[1];
@@ -60,21 +61,27 @@ public class UIResult : MonoBehaviour
 
         UniTask imageScaleTask = resultBackImageObject.rectTransform.DOScaleY(backImageYSize, backImageScaleChangeTime).AsyncWaitForCompletion().AsUniTask();
         UniTask textScaleTask = resultTextObject.rectTransform.DOScaleY(textYSize, textScaleChangeTime).AsyncWaitForCompletion().AsUniTask();
-        UniTask infoTask = buttonInfoObject.transform.DOScaleY(infoYSize, backImageScaleChangeTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
+        UniTask infoTask = buttonInfoObjectParent.transform.DOScaleY(infoYSize, backImageScaleChangeTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
 
         await UniTask.WhenAll(imageScaleTask, textScaleTask);
     }
 
+    // UIを閉じる
     public async UniTask CloseResultUI()
     {
         UniTask imageScaleTask = resultBackImageObject.rectTransform.DOScaleY(0, backImageScaleChangeTime).AsyncWaitForCompletion().AsUniTask();
         UniTask textScaleTask = resultTextObject.rectTransform.DOScaleY(0, textScaleChangeTime).AsyncWaitForCompletion().AsUniTask();
-        UniTask infoTask = buttonInfoObject.transform.DOScaleY(0, backImageScaleChangeTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
+        UniTask infoTask = buttonInfoObjectParent.transform.DOScaleY(0, backImageScaleChangeTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();
 
         await UniTask.WhenAll(imageScaleTask, textScaleTask);
 
         resultBackImageObject.enabled = false;
         resultTextObject.enabled = false;
+        buttonInfoObjectParent.SetActive(false);
+    }
+
+    public void HideNextAction1()
+    {
         buttonInfoObject.SetActive(false);
     }
 }

@@ -6,4 +6,6 @@ using UnityEngine;
 public class StageSelectData : ScriptableObject
 {
     [SerializeField] public int StageSelectNumber;
+
+    [SerializeField] public int StageCountMax;
 }
