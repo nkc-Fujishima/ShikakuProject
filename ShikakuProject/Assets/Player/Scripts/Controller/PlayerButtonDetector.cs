@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerButtonDetector
 {
-    private PlayerInput _playerInput;
+    private readonly PlayerInput _playerInput;
 
     private Vector3 _inputStick = new();
 
@@ -29,6 +29,7 @@ public class PlayerButtonDetector
     private void SetDelegate()
     {
         _playerInput.actions["Move"].performed += OnInputMove;
+        _playerInput.actions["Move"].canceled += OnInputMoveCanceled;
         _playerInput.actions["Fire"].performed += OnInputFire;
         _playerInput.actions["BulletSelectLeft"].performed += OnInputBulletSelectLeft;
         _playerInput.actions["BulletSelectRight"].performed += OnInputBulletSelectRight;
@@ -37,7 +38,12 @@ public class PlayerButtonDetector
 
     private void OnInputMove(InputAction.CallbackContext context)
     {
-        _inputStick = context.ReadValue<Vector3>();
+        Vector2 moveVectorData = context.ReadValue<Vector2>();
+        _inputStick = new Vector3(moveVectorData.x, 0, moveVectorData.y);
+    }
+    private void OnInputMoveCanceled(InputAction.CallbackContext context)
+    {
+        _inputStick = Vector3.zero;
     }
 
     private void OnInputFire(InputAction.CallbackContext context)
@@ -64,6 +70,7 @@ public class PlayerButtonDetector
     public void OnDestroy()
     {
         _playerInput.actions["Move"].performed -= OnInputMove;
+        _playerInput.actions["Move"].canceled -= OnInputMoveCanceled;
         _playerInput.actions["Fire"].performed -= OnInputFire;
         _playerInput.actions["BulletSelectLeft"].performed -= OnInputBulletSelectLeft;
         _playerInput.actions["BulletSelectRight"].performed -= OnInputBulletSelectRight;
