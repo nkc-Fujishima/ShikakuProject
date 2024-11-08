@@ -1047,13 +1047,4 @@ MonoBehaviour:
     - TileType: 1
       ElementCount: 0
       RotationY: 0
-  WaypointData:
-  - Waypoint:
-    - {x: 7, y: 6}
-    - {x: 10, y: 5}
-    - {x: 10, y: 5}
-    - {x: 12, y: 7}
-    - {x: 12, y: 7}
-    EnemyAtPoint:
-    - {x: 12, y: 2}
-    - {x: 8, y: 7}
+  WaypointData: []

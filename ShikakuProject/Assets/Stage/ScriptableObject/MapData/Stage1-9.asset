@@ -169,7 +169,7 @@ MonoBehaviour:
     - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
+    - TileType: 0
       ElementCount: 0
       RotationY: 0
     - TileType: 0
@@ -221,7 +221,7 @@ MonoBehaviour:
     - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
+    - TileType: 0
       ElementCount: 0
       RotationY: 0
     - TileType: 0
@@ -307,7 +307,7 @@ MonoBehaviour:
     - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
     - TileType: 0
@@ -326,7 +326,7 @@ MonoBehaviour:
     - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
+    - TileType: 0
       ElementCount: 0
       RotationY: 0
     - TileType: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
     - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
+    - TileType: 0
       ElementCount: 0
       RotationY: 0
     - TileType: 0
@@ -891,7 +891,7 @@ MonoBehaviour:
     - TileType: 3
       ElementCount: 0
       RotationY: 90
-    - TileType: 1
+    - TileType: 0
       ElementCount: 0
       RotationY: 0
     - TileType: 1
@@ -1047,3 +1047,4 @@ MonoBehaviour:
     - TileType: 1
       ElementCount: 0
       RotationY: 0
+  WaypointData: []
