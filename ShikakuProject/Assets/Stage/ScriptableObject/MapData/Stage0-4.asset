@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0282722244f3a84bac5900492adb0f4, type: 3}
-  m_Name: Stage1-5
+  m_Name: Stage0-4
   m_EditorClassIdentifier: 
   x: 24
   y: 14
@@ -120,10 +120,10 @@ MonoBehaviour:
     - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
+    - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
+    - TileType: 0
       ElementCount: 0
       RotationY: 0
     - TileType: 1
@@ -157,13 +157,22 @@ MonoBehaviour:
     - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
+    - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
+    - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
       ElementCount: 0
       RotationY: 0
     - TileType: 1
@@ -178,6 +187,40 @@ MonoBehaviour:
     - TileType: 1
       ElementCount: 0
       RotationY: 0
+  - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
     - TileType: 1
       ElementCount: 0
       RotationY: 0
@@ -197,175 +240,6 @@ MonoBehaviour:
     - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-  - TileData:
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-  - TileData:
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-  - TileData:
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-  - TileData:
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
     - TileType: 0
       ElementCount: 0
       RotationY: 0
@@ -373,153 +247,6 @@ MonoBehaviour:
       ElementCount: 0
       RotationY: 0
     - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 3
-      ElementCount: 1
-      RotationY: 90
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-  - TileData:
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 3
-      ElementCount: 2
-      RotationY: 135
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 3
-      ElementCount: 1
-      RotationY: 180
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-  - TileData:
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-  - TileData:
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 3
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 3
-      ElementCount: 1
-      RotationY: 135
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
       ElementCount: 0
       RotationY: 0
     - TileType: 0
@@ -527,12 +254,291 @@ MonoBehaviour:
       RotationY: 0
     - TileType: 2
       ElementCount: 0
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 0
       RotationY: 0
     - TileType: 0
       ElementCount: 0
       RotationY: 0
-  - TileData:
     - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 0
+      RotationY: 90
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
     - TileType: 0
@@ -565,16 +571,148 @@ MonoBehaviour:
     - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
   - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 0
+      RotationY: 45
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 0
+      RotationY: 135
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
     - TileType: 0
       ElementCount: 0
       RotationY: 0
@@ -588,8 +726,8 @@ MonoBehaviour:
       ElementCount: 0
       RotationY: 0
     - TileType: 3
-      ElementCount: 1
-      RotationY: 180
+      ElementCount: 0
+      RotationY: 90
     - TileType: 0
       ElementCount: 0
       RotationY: 0
@@ -602,23 +740,20 @@ MonoBehaviour:
     - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
   - TileData:
-    - TileType: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
     - TileType: 0
@@ -645,23 +780,23 @@ MonoBehaviour:
     - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
   - TileData:
-    - TileType: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
     - TileType: 0
@@ -682,25 +817,19 @@ MonoBehaviour:
     - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 3
-      ElementCount: 1
-      RotationY: 180
     - TileType: 0
       ElementCount: 0
       RotationY: 0
     - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 3
-      ElementCount: 1
-      RotationY: 270
-    - TileType: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
   - TileData:
@@ -716,25 +845,13 @@ MonoBehaviour:
     - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
     - TileType: 0
       ElementCount: 0
       RotationY: 0
     - TileType: 0
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
+    - TileType: 0
       ElementCount: 0
       RotationY: 0
     - TileType: 0
@@ -744,6 +861,18 @@ MonoBehaviour:
       ElementCount: 0
       RotationY: 0
     - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
       ElementCount: 0
       RotationY: 0
   - TileData:
@@ -775,135 +904,6 @@ MonoBehaviour:
       ElementCount: 0
       RotationY: 0
     - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-  - TileData:
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-  - TileData:
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 0
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-  - TileData:
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
-    - TileType: 1
       ElementCount: 0
       RotationY: 0
     - TileType: 1
