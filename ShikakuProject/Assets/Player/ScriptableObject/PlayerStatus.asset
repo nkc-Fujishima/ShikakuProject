@@ -23,6 +23,6 @@ MonoBehaviour:
     _coolTime: 1
     _texture: {fileID: 21300000, guid: 934c21c52fc01744884053aa0fd29f3a, type: 3}
   _moveSpeed: 4
-  _dodgePower: {x: 2800, y: 0}
+  _dodgePower: {x: 3000, y: 0}
   _dodgeStopTime: 1.4
   _dodgeDrag: 15
