@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: PlayerStatus
   m_EditorClassIdentifier: 
   _skillData:
-  - _bulletPlefab: {fileID: 7280281843749051914, guid: 74d24c7dce3dc8f4abc05a8db8e56269, type: 3}
-    _coolTime: 1
-    _texture: {fileID: 21300000, guid: 6d724f4c6fbbd234db4ade70868aad22, type: 3}
   - _bulletPlefab: {fileID: 4434634971654827573, guid: 5d092041bee278f44b4c9e906eaad3ed, type: 3}
     _coolTime: 1
     _texture: {fileID: 21300000, guid: 60fa6e5fdea59dd4cbd5e1df2723f98b, type: 3}
+  - _bulletPlefab: {fileID: 7280281843749051914, guid: 74d24c7dce3dc8f4abc05a8db8e56269, type: 3}
+    _coolTime: 1
+    _texture: {fileID: 21300000, guid: 6d724f4c6fbbd234db4ade70868aad22, type: 3}
   - _bulletPlefab: {fileID: 2362984168328327310, guid: cbfda06413f3256429846f2b10b8b3f3, type: 3}
     _coolTime: 1
     _texture: {fileID: 21300000, guid: 934c21c52fc01744884053aa0fd29f3a, type: 3}
