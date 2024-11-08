@@ -22,6 +22,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f07ac6cec4971464eb4c38efd162aae6, type: 2}
   - {fileID: 11400000, guid: 0fd1350dc2765b64b8135c69fd599aed, type: 2}
   - {fileID: 11400000, guid: 10dc54c9d3027ba4eaa9b03317491b19, type: 2}
+  - {fileID: 11400000, guid: 7876f666ac1166e41b83d949557cb7dd, type: 2}
+  - {fileID: 11400000, guid: 9ff1ba249f446fe4fac181dc47a046ae, type: 2}
   ElementData: {fileID: 11400000, guid: 0322bff9b3139ee42ba1319cbea6254e, type: 2}
   TileWidth: 1.6
   TileHeight: 1.6

@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TimeCountAndTargetCount
       objectReference: {fileID: 0}
+    - target: {fileID: 6661216342492710347, guid: 172d6985702a5d244b36283f851be2ec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7681440654555233710, guid: 172d6985702a5d244b36283f851be2ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2082,6 +2086,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkillList
       objectReference: {fileID: 0}
+    - target: {fileID: 2861185547231731940, guid: 07db5784eb9604449a52027e2bedc9b6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5394486449596208403, guid: 07db5784eb9604449a52027e2bedc9b6, type: 3}
       propertyPath: stageManager
       value: 
@@ -2610,6 +2618,10 @@ PrefabInstance:
     - target: {fileID: 1053558892813642442, guid: 1a4c1023c32331140b07013ef207a258, type: 3}
       propertyPath: m_Name
       value: ButtonGuide
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053558892813642442, guid: 1a4c1023c32331140b07013ef207a258, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1370921418766360404, guid: 1a4c1023c32331140b07013ef207a258, type: 3}
       propertyPath: _stageManager

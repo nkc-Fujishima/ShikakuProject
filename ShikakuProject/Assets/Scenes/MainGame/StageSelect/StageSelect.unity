@@ -2174,6 +2174,7 @@ MonoBehaviour:
   zoomMinSize: {x: 0.9, y: 0.9, z: 1}
   initialPos: {x: 200, y: 290, z: -50}
   moveTime: 0.2
+  offsetPosZ: 0.1
 --- !u!1 &1507007181
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public class StageSelectImageController : MonoBehaviour
     [Tooltip("ズーム最小値"), SerializeField] Vector3 zoomMinSize;
     [Tooltip("初期位置"), SerializeField] Vector3 initialPos;
     [Tooltip("移動時間"), SerializeField] float moveTime;
+    [Tooltip("セレクトイメージ画像Z位置オフセット"), SerializeField] float offsetPosZ;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,7 @@ public class StageSelectImageController : MonoBehaviour
 
     public void MoveImagePosition(Image StageImage)
     {
-        stageSelectImage.transform.DOMove(StageImage.rectTransform.position, moveTime);
+        stageSelectImage.transform.DOMove(new Vector3(StageImage.rectTransform.position.x, StageImage.rectTransform.position.y, StageImage.rectTransform.position.z - offsetPosZ), moveTime);
     }
 
     public void ResetImagePosition()

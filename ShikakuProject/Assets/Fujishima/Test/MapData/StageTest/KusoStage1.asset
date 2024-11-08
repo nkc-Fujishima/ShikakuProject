@@ -1,0 +1,1059 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0282722244f3a84bac5900492adb0f4, type: 3}
+  m_Name: KusoStage1
+  m_EditorClassIdentifier: 
+  x: 24
+  y: 14
+  TileDatas:
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 0
+      ElementCount: 2
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 0
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 3
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 2
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 2
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 2
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 3
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 1
+      ElementCount: 2
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 2
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 1
+      RotationY: 180
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 2
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 2
+      RotationY: 315
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 180
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 180
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 180
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 180
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 180
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 180
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 3
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 3
+      ElementCount: 2
+      RotationY: 315
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 2
+      RotationY: 45
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 90
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 1
+      RotationY: 315
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 2
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 2
+      RotationY: 180
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 90
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 3
+      ElementCount: 2
+      RotationY: 270
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 9
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 0
+      ElementCount: 0
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  - TileData:
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+    - TileType: 4
+      ElementCount: -1
+      RotationY: 0
+  WaypointData:
+  - Waypoint:
+    - {x: 7, y: 6}
+    - {x: 10, y: 5}
+    - {x: 10, y: 5}
+    - {x: 12, y: 7}
+    - {x: 12, y: 7}
+    EnemyAtPoint:
+    - {x: 12, y: 2}
+    - {x: 8, y: 7}
