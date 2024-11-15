@@ -350,9 +350,9 @@ MonoBehaviour:
     - TileType: 1
       ElementCount: 0
       RotationY: 0
-    - TileType: 1
-      ElementCount: 0
-      RotationY: 0
+    - TileType: 5
+      ElementCount: 10
+      RotationY: 135
     - TileType: 0
       ElementCount: 0
       RotationY: 0
@@ -1047,3 +1047,4 @@ MonoBehaviour:
     - TileType: 1
       ElementCount: 0
       RotationY: 0
+  WaypointData: []
