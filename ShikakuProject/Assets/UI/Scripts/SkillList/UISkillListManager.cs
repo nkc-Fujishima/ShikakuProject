@@ -33,7 +33,7 @@ public class UISkillListManager : MonoBehaviour
 
     private UISkillListPrefabData[] _skillImages;
 
-    private Transform[] _guideImages = new Transform[2];
+    private readonly Transform[] _guideImages = new Transform[2];
 
     private int _selectSkill = -1;
 

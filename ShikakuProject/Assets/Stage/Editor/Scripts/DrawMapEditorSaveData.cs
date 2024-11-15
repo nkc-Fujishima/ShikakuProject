@@ -75,8 +75,13 @@ public class DrawMapEditorSaveData : ScriptableObject
         {
             case StageTileType.Enemy:
             case StageTileType.Player:
+
+            // 11/14追加：チュートリアル要素
+            case StageTileType.Tutorial:
                 rotate = GetRotationOnTileData(selectX, selectY) + 45;
                 break;
+
+
             case StageTileType.Ground:
             case StageTileType.Obstacle:
                 rotate = GetRotationOnTileData(selectX, selectY) + 90;

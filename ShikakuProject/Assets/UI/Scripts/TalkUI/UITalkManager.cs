@@ -16,8 +16,8 @@ public class UITalkManager : MonoBehaviour
     [SerializeField]
     private CanvasGroup _canvasGroup;
 
-
-    private readonly float _talkUIOutlineThickness = 20;
+    [SerializeField]
+    private float _talkUIOutlineThickness = 20;
 
 
     private readonly float _duration = 0.2f;
@@ -67,7 +67,7 @@ public class UITalkManager : MonoBehaviour
 
     public void ActiveTalk()
     {
-        _canvasGroup.DOFade(1, _duration);
+        _canvasGroup.DOFade(1f, _duration);
 
         _transformTalk.DOLocalMove(_activePoint, _duration);
     }

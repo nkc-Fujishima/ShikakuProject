@@ -52,8 +52,7 @@ MonoBehaviour:
   _audioSource: {fileID: 4046691588288107385}
   _audioClip: {fileID: 8300000, guid: c078b1c9982139147969cc61db798445, type: 3}
   _rigidbodyChara: {fileID: 4732179916028910847}
-  _sensingDistance: 10
-  text: 
+  _sensingDistance: 4
 --- !u!1 &8527141826985784624
 GameObject:
   m_ObjectHideFlags: 0

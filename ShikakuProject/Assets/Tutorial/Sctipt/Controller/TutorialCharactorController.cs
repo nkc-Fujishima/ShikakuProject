@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TutorialCharactorController : MonoBehaviour
+public class TutorialCharactorController : MonoBehaviour, ITalkable
 {
     [SerializeField]
     private UITalkManager _talkManager;
@@ -20,9 +20,7 @@ public class TutorialCharactorController : MonoBehaviour
     [SerializeField]
     private float _sensingDistance = 10f;
 
-    [Header("˜b‚·“à—e")]
-    [SerializeField]
-    [Multiline(3)]
+
     private string text;
 
     private Transform _transformChara;
@@ -72,4 +70,9 @@ public class TutorialCharactorController : MonoBehaviour
     {
         _talkManager.EndTalk();
     }
+
+
+    // -------------------------------------------------------
+    // ITalkable
+    public string TalkText { set { text = value; } }
 }

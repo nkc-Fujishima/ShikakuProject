@@ -5,6 +5,7 @@ public enum StageTileType
     Player,
     Enemy,
     None,
+    Tutorial,
 }
 
 [System.Serializable]

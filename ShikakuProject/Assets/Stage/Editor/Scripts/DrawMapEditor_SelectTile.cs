@@ -23,6 +23,10 @@ public class DrawMapEditor_SelectTile
         StageTileType typePlayer = StageTileType.Player;
         StageTileType typeEnemy = StageTileType.Enemy;
 
+        // 11/14追加：チュートリアル要素
+        StageTileType typeTutorial = StageTileType.Tutorial;
+
+
         EditorGUILayout.LabelField("配置するオブジェクトを選択", EditorStyles.boldLabel);
 
         EditorGUILayout.LabelField("地面");
@@ -42,6 +46,14 @@ public class DrawMapEditor_SelectTile
             selectedIndex3 = CheckSelectedIndex(typeEnemy, saveData);
         }
 
+        // 11/14追加：チュートリアル要素
+        int selectedIndex4 = 0;
+        if (saveData.StageObjectElementData.TutorialData.TextDatas.Length != 0)
+        {
+            EditorGUILayout.LabelField("チュートリアル関連");
+            selectedIndex4 = CheckSelectedIndex(typeTutorial, saveData);
+        }
+
 
         if (selectedIndex0 != _selectedStageElementButtonIndices[(int)typeGround]) SelectStageElementButton(typeGround, selectedIndex0);
         else if (selectedIndex1 != _selectedStageElementButtonIndices[(int)typeObstacle]) SelectStageElementButton(typeObstacle, selectedIndex1);
@@ -50,6 +62,17 @@ public class DrawMapEditor_SelectTile
         {
             if (selectedIndex2 != _selectedStageElementButtonIndices[(int)typePlayer]) SelectStageElementButton(typePlayer, selectedIndex2);
             else if (selectedIndex3 != _selectedStageElementButtonIndices[(int)typeEnemy]) SelectStageElementButton(typeEnemy, selectedIndex3);
+            
+            // 11/14追加：チュートリアル要素
+            else if (saveData.StageObjectElementData.TutorialData.TextDatas.Length != 0)
+            {
+                Debug.Log("入った");
+                if (selectedIndex4 != _selectedStageElementButtonIndices[(int)typeTutorial])
+                {
+                    Debug.Log("haihaiiaiaoiiai");
+                    SelectStageElementButton(typeTutorial, selectedIndex4);
+                }
+            }
         }
 
         EditorGUILayout.LabelField("消しゴム");
@@ -67,13 +90,16 @@ public class DrawMapEditor_SelectTile
 
         int type = (int)elementType;
 
-        return GUILayout.SelectionGrid(_selectedStageElementButtonIndices[type], saveData.ElementTypeTextures[type], saveData.ElementTypeTextures[type].Length,
+        int selectInt= GUILayout.SelectionGrid(_selectedStageElementButtonIndices[type], saveData.ElementTypeTextures[type], saveData.ElementTypeTextures[type].Length,
                              GUILayout.Width(_buttonScale * saveData.ElementTypeTextures[type].Length), GUILayout.Height(_buttonScale));
+
+        return selectInt;
     }
 
     // 引数で指定された要素を選択状態にする
     private void SelectStageElementButton(StageTileType elementType, int selectedIndex)
     {
+        Debug.Log("選択された");
         // 選択されている要素に引数を入れ、それ以外は-1にする
         for (int i = 0; i < _selectedStageElementButtonIndices.Length; ++i)
         {
@@ -91,7 +117,7 @@ public class DrawMapEditor_SelectTile
     // 何も選択されていないようにする
     public void Initialization()
     {
-        _selectedStageElementButtonIndices = new int[4];
+        _selectedStageElementButtonIndices = new int[6];
 
         SelectStageElementButton(StageTileType.None, -1);
     }

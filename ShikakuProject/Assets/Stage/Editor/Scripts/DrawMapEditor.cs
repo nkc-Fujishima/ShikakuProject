@@ -180,7 +180,7 @@ public class DrawMapEditor : EditorWindow
     // エディタを開いた時、スクリプタブルオブジェクトが変更されたときに初期化する　StageTileTypeを使用
     private void Oninitialization()
     {
-        _saveData.ElementTypeTextures = new Texture2D[4][];
+        _saveData.ElementTypeTextures = new Texture2D[6][];
 
         _selectTile.Initialization();
 
@@ -196,7 +196,6 @@ public class DrawMapEditor : EditorWindow
             {
                 case StageTileType.Ground:
                     length = _saveData.StageObjectElementData.GroundData.Prefabs.Length;
-                    //elementTexture = _saveData.StageObjectElementData.GroundData.Texture;
                     elementTexture = null;
                     baseTexture = new Texture2D[length];
                     for (int i = 0; i < length; ++i)
@@ -226,8 +225,19 @@ public class DrawMapEditor : EditorWindow
                     for (int i = 0; i < length; ++i)
                         baseTexture[i] = AssetPreview.GetAssetPreview(_saveData.StageObjectElementData.EnemyDatas.EnemyPlefabs[i].gameObject);
                     break;
-            }
 
+                // 11/14追加：チュートリアル要素
+                case StageTileType.Tutorial:
+                    if (_saveData.StageObjectElementData.TutorialData.TextDatas.Length == 0) continue;
+                    length = _saveData.StageObjectElementData.TutorialData.TextDatas.Length;
+                    elementTexture = _saveData.StageObjectElementData.TutorialData.Texture;
+                    baseTexture = new Texture2D[length];
+                    for (int i = 0; i < length; ++i)
+                        baseTexture[i] = AssetPreview.GetAssetPreview(_saveData.StageObjectElementData.TutorialData.GetGameObject(i));
+                    break;
+
+            }
+            Debug.Log("テクスチャを節制します" + elementCount + "  length：" + length);
             // テクスチャを設定
             _saveData.ElementTypeTextures[elementCount] = InitializeTextures(baseTexture, length, elementTexture);
         }
@@ -237,10 +247,11 @@ public class DrawMapEditor : EditorWindow
     // 画像に複数数字を入れる
     private Texture2D[] InitializeTextures(Texture2D[] baseTexture, int prefabLength, Texture2D elementTexture)
     {
-
         Texture2D[] textures = new Texture2D[prefabLength];
         for (int i = 0; i < prefabLength; ++i)
+        {
             textures[i] = _textureProcessing.ResizeTexture(baseTexture[i], 512, 512);
+        }
 
         Texture2D[] textureList = _textureProcessing.TextureCreate(prefabLength, textures, elementTexture);
 

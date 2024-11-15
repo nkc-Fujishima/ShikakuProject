@@ -32,6 +32,39 @@ public class StageObjectElementData : ScriptableObject
         [SerializeField]
         public Texture2D Texture;
     }
+
+    // 11/14追加：チュートリアル要素
+    [System.Serializable]
+    public struct TutorialElementData
+    {
+        [SerializeField]
+        public TutorialTextData[] TextDatas;
+
+        [SerializeField]
+        public GameObject[] talkCharaPrefabs;
+
+        [SerializeField]
+        public Texture2D Texture;
+
+        public GameObject GetGameObject(int index)
+        {
+            int prefabIndex = TextDatas[index].PrefabIndex;
+            return talkCharaPrefabs[prefabIndex];
+        }
+    }
+
+    // 11/14追加：チュートリアル要素
+    [System.Serializable]
+    public struct TutorialTextData
+    {
+        [Header("話す内容")]
+        [SerializeField]
+        [Multiline(3)]
+        public string TalkText;
+
+        [SerializeField]
+        public int PrefabIndex;
+    }
     
 
     public PlayerElementData PlayerData;
@@ -41,6 +74,9 @@ public class StageObjectElementData : ScriptableObject
     public PrefabElementData GroundData;
 
     public PrefabElementData ObstacleData;
+
+    // 11/14追加：チュートリアル要素
+    public TutorialElementData TutorialData;
 
 
     public GameObject GetGameObject(StageTile tileData)
@@ -58,7 +94,12 @@ public class StageObjectElementData : ScriptableObject
 
             case StageTileType.Obstacle:
                 return ObstacleData.Prefabs[tileData.ElementCount];
-           
+
+            // 11/14追加：チュートリアル要素
+            case StageTileType.Tutorial:
+                int index = TutorialData.TextDatas[tileData.ElementCount].PrefabIndex;
+                return TutorialData.talkCharaPrefabs[index];
+
             default:
                 return null;
         }

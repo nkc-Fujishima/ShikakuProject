@@ -2,6 +2,7 @@ using StageDelaunayTriangles;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using static StageMapData;
 
 [CreateAssetMenu(fileName = "StageGenerateData", menuName = "Stage/Generator/GenerateData")]
@@ -104,6 +105,14 @@ public class StageGenerateData : ScriptableObject
                         Square newSquare = new(p1, p2, p3, p4);
                         squares.Add(newSquare);
                         break;
+
+                    // 11/14追加：チュートリアル要素
+                    case StageTileType.Tutorial:
+                        InstanceObject(new(StageTileType.Obstacle), countX, countY, instancePosition);
+                        InstanceObject(tileData, countX, countY, instancePosition);
+                        InstanceGroundObject(new(StageTileType.Ground), countX, countY, instancePosition);
+                        break;
+
                     default:
                         break;
                 }
@@ -151,6 +160,10 @@ public class StageGenerateData : ScriptableObject
         Vector3 instancePosition = new(countX * TileWidth, 0, -countY * TileWidth);
         instancePosition += centralPoint;
 
+        // 11/14追加：チュートリアル要素
+        if (tileData.TileType == StageTileType.Tutorial)
+            instancePosition.y += TileHeight;
+
         Quaternion instanceRotation = Quaternion.Euler(0, tileData.RotationY, 0);
 
         GameObject objectPlefab = ElementData.GetGameObject(tileData);
@@ -160,6 +173,11 @@ public class StageGenerateData : ScriptableObject
         if (stageManagerTransform)
             if (tileData.TileType == StageTileType.Obstacle)
                 instanceObject.transform.SetParent(stageManagerTransform);
+
+        // 11/14追加：チュートリアル要素
+        if (tileData.TileType == StageTileType.Tutorial)
+            if (instanceObject.TryGetComponent<ITalkable>(out ITalkable talkObject))
+                talkObject.TalkText = ElementData.TutorialData.TextDatas[tileData.ElementCount].TalkText;
 
         return instanceObject;
     }
