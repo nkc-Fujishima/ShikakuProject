@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: b68b99c2e57cef4419465c63c527201b
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 133012
+  packageName: AOE Magic spells Vol.1
+  packageVersion: 2.2.1
+  assetPath: Assets/Hovl Studio/Resources/Shaders/Blend_CenterGlow.shader
+  uploadId: 570735

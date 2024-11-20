@@ -63,6 +63,8 @@ public class ShootEnemyController : EnemyControllerBase
 
     private void Update()
     {
+        rigidBody.velocity = sandSlidable.GetSlideDirection();
+
         OnUpdate();
     }
 

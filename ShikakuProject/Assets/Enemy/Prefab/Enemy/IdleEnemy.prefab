@@ -1016,6 +1016,7 @@ GameObject:
   - component: {fileID: 1831407661642841283}
   - component: {fileID: 7006137589512803077}
   - component: {fileID: 8405825841815464692}
+  - component: {fileID: 8018074231358712500}
   m_Layer: 2
   m_Name: IdleEnemy
   m_TagString: Enemy
@@ -1248,3 +1249,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8018074231358712500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8481846770193400645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e581360d1d73d35428b85bedf26c169d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

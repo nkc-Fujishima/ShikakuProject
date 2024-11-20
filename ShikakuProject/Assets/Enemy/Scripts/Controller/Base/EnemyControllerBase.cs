@@ -20,6 +20,8 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
 
     protected AudioSource audioSource = null;
 
+    protected ISandSlidable sandSlidable = null;
+
     private CapsuleCollider[] colliders = null;
 
     public event Action<EnemyControllerBase> OnDestroyHundle = null;
@@ -29,6 +31,7 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         colliders = GetComponents<CapsuleCollider>();
+        sandSlidable = GetComponent<ISandSlidable>();
 
         dieState = new DieState(this.gameObject, animator, rigidBody, colliders, audioSource, parameter, effect);
 

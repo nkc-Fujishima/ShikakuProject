@@ -63,6 +63,8 @@ public class IdleEnemyController : EnemyControllerBase
 
     private void Update()
     {
+        rigidBody.velocity = sandSlidable.GetSlideDirection();
+
         OnUpdate();
     }
 
