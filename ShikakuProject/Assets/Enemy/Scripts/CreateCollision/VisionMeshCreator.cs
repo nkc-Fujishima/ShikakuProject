@@ -1,20 +1,23 @@
+using R3;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VisionMeshCreator : MonoBehaviour
 {
     [Header("数値設定")]
     public float viewAngle = 90f; // 視野角
-    public float viewDistance = 5f; // 視野の距離
+    public float viewRange = 5f; // 視野の距離
     public float viewHeight = 1f; // 視野の高さ
-    [Header("オブジェクト設定")]
-    public Material noAlertMaterial;
-    public Material AlertMaterial;
+
+    public ReactiveProperty<bool> IsAlert = new(false);
+
+    [HideInInspector]
+    public UnityEvent StartEvent = new();
 
 
     private MeshFilter viewMeshFilter;
     private Mesh viewMesh;
     private MeshCollider viewMeshCollider;
-    private MeshRenderer meshRenderer;
 
     public void SetUp()
     {
@@ -27,11 +30,9 @@ public class VisionMeshCreator : MonoBehaviour
         viewMeshCollider.isTrigger = true;
         viewMeshCollider.sharedMesh = viewMesh;
 
-        meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        meshRenderer.material = noAlertMaterial;
-        meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-
         UpdateViewMesh();
+
+        StartEvent.Invoke();
     }
 
     void UpdateViewMesh()
@@ -45,7 +46,7 @@ public class VisionMeshCreator : MonoBehaviour
         for (int i = 0; i <= segments; i++)
         {
             float angle = Mathf.Deg2Rad * (viewAngle / segments) * i - Mathf.Deg2Rad * (viewAngle / 2);
-            vertices[i + 1] = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * viewDistance;
+            vertices[i + 1] = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * viewRange;
         }
 
         // 上の面の頂点
@@ -116,10 +117,10 @@ public class VisionMeshCreator : MonoBehaviour
 
     public void ChangeMeshNoAlertMaterial()
     {
-        meshRenderer.material = noAlertMaterial;
+        IsAlert.Value = false;
     }
     public void ChangeMeshAlertMaterial()
     {
-        meshRenderer.material = AlertMaterial;
+        IsAlert.Value = true;
     }
 }
