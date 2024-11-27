@@ -37,23 +37,24 @@ public class StageGenerateData : ScriptableObject
     }
 
     // ステージを生成する
-    public void StageGenerete(int stageCount, out GameObject[] enemyObjs, out GameObject playerObj)
+    public void StageGenerete(int stageCount, out GameObject[] enemyObjs, out GameObject playerObj, out bool isTutorial)
     {
         Vector3 centralPoint = Vector3.zero;
         StageMapData mapData = StageMapData[stageCount];
         centralPoint.x += TileWidth * mapData.X / 2 - TileWidth / 2;
         centralPoint.z -= TileWidth * mapData.Y / 2 - TileWidth / 2;
 
-        StageGenerete(stageCount, centralPoint, out enemyObjs, out playerObj);
+        StageGenerete(stageCount, centralPoint, out enemyObjs, out playerObj, out isTutorial);
     }
 
     // ステージを生成する
-    public void StageGenerete(int stageCount, Vector3 centralPoint, out GameObject[] enemyObjs, out GameObject playerObj)
+    public void StageGenerete(int stageCount, Vector3 centralPoint, out GameObject[] enemyObjs, out GameObject playerObj, out bool isTutorial)
     {
         StageMapData mapData = StageMapData[stageCount];
 
         List<GameObject> enemyList = new();
         GameObject playerObject = null;
+        isTutorial = mapData.IsTutorial;
 
         List<Square> squares = new ();
 

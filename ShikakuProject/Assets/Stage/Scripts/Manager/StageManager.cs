@@ -78,6 +78,9 @@ public class StageManager : MonoBehaviour
 
     private CancellationTokenSource cts = null;
 
+    private bool isTutorial = false;
+
+
     private async void Awake()
     {
         switch (_sceneType)
@@ -99,9 +102,6 @@ public class StageManager : MonoBehaviour
 
                 // エネミーのスタート
                 StartEnemies();
-
-                // プレイヤーのスタート
-                StartPlayer();
 
                 break;
 
@@ -147,7 +147,8 @@ public class StageManager : MonoBehaviour
                 StartPlayer();
 
                 // タイマー関連を設定
-                TimeCounter.OnResume();
+                if (!isTutorial)
+                    TimeCounter.OnResume();
 
                 break;
         }
@@ -186,7 +187,7 @@ public class StageManager : MonoBehaviour
 
         int stageNumber = isMultipleTypes ? _stageSelectData.StageSelectNumber : 0;
 
-        _data.StageGenerete(stageNumber, out GameObject[] enemyObjects, out GameObject playerObject);
+        _data.StageGenerete(stageNumber, out GameObject[] enemyObjects, out GameObject playerObject, out isTutorial);
 
 
         // エネミーマネージャーのセットアップ
@@ -263,7 +264,10 @@ public class StageManager : MonoBehaviour
     private void InitializeTimeCounter()
     {
         TimeCounter = new();
-        TimeCounter.SetTimer(timeLimit);
+        if (isTutorial)
+            TimeCounter.SetTimer(100);
+        else
+            TimeCounter.SetTimer(timeLimit);
 
         TimeCounter.OnTimeUpEvent += _playerManager.TimeUp;
         TimeCounter.OnTimeUpEvent += GameOver;
