@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: GameStageData
   m_EditorClassIdentifier: 
   StageMapData:
+  - {fileID: 11400000, guid: 6c687013cba133147bb41a49296220d3, type: 2}
+  - {fileID: 11400000, guid: 5417ad688f6d2724cac155acfa7ecf01, type: 2}
+  - {fileID: 11400000, guid: da8a04cb777c1a24d92160a808fdd5df, type: 2}
+  - {fileID: 11400000, guid: f5aab86bb45e5d944af94bf5b9fbc470, type: 2}
+  - {fileID: 11400000, guid: 6f7173ee7481c8e4f908c31d81579554, type: 2}
+  - {fileID: 11400000, guid: ac301cb0d72da6240b9d8cc3c76ccfa3, type: 2}
   - {fileID: 11400000, guid: a47736ab13b374d49941debc979886d9, type: 2}
   - {fileID: 11400000, guid: 5d1abb371dfa59e48954ff48e96f076e, type: 2}
   - {fileID: 11400000, guid: 3720dff80fc6ea04f9687d12792f7475, type: 2}
