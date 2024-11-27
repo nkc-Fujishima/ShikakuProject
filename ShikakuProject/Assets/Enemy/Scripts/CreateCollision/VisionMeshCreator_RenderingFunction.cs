@@ -33,6 +33,8 @@ public class VisionMeshCreator_RenderingFunction : MonoBehaviour
     private Vector3 _temp;
     private RaycastHit _hit;
 
+    private bool setUpFlag = false;
+
 
     private void Start()
     {
@@ -60,6 +62,8 @@ public class VisionMeshCreator_RenderingFunction : MonoBehaviour
         _visionConeMesh.name = "VisionCone";
         _meshFilter = gameObject.AddComponent<MeshFilter>();
         _meshFilter.mesh = _visionConeMesh;
+
+        setUpFlag = true;
     }
 
     private void SetDeligate()
@@ -78,6 +82,8 @@ public class VisionMeshCreator_RenderingFunction : MonoBehaviour
 
     void RaySweep()
     {
+        if (!setUpFlag) return;
+
         // angle relative to players'/parents' forward vector
         _castAngle = -angleOfVision + Mathf.Deg2Rad * transform.eulerAngles.y;
 
