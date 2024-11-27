@@ -4,7 +4,7 @@ Shader "Custom/UI/Fade/GameStartFadeShader"
     {
         _ExpandStartPos("_Expand StartPos",vector) = (0,0,0,0)
 
-        _AnimationTime("Animation Time",Range(0,1)) = 0
+        _AnimationTime("Animation Time",Range(0,1.5)) = 0
     }
 
     SubShader
@@ -57,10 +57,10 @@ Shader "Custom/UI/Fade/GameStartFadeShader"
 
             float TestExpand(float2 uv,float animationTime)
             {
-                float distanceValueX = distance(_ExpandStartPos.x,uv.x);
+                float distanceValueX = distance(_ExpandStartPos.x,uv.x) * (16.0/9.0);
                 float distanceValueY = distance(_ExpandStartPos.y,uv.y);
 
-                float convert = step(distanceValueX,_AnimationTime)*step(distanceValueY,_AnimationTime);
+                float convert = step(distanceValueX,_AnimationTime) * step(distanceValueY,_AnimationTime);
 
                 return abs(convert - 1);
             }

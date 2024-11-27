@@ -29,6 +29,7 @@ public class StageManager : MonoBehaviour
     [Tooltip("ゲームタイプ設定(SceneType : Title の場合無効)"), SerializeField]
     private GameType gameType = GameType.AllKill;
     [Tooltip("ゲーム内での制限時間"), SerializeField] float timeLimit;
+    [Tooltip("ゲーム開始するまでの暗転時間(ミリ秒)"), SerializeField] int waitStartTime;
 
     // -------------------------------------------------------------------
 
@@ -50,6 +51,8 @@ public class StageManager : MonoBehaviour
 
     // フジシマ追加 11/06---------------------------------
     [SerializeField] StageSelectData StageSelectData;
+    [SerializeField] SceneChangeShaderController _sceneChangeShaderController;
+    [SerializeField] GameStartShaderController _gameStartShaderController;
     //----------------------------------------------------
 
 
@@ -123,9 +126,16 @@ public class StageManager : MonoBehaviour
                 // タイマーを設定
                 InitializeTimeCounter();
 
-                await _uiClearTarget.OpenGameStartUI((int)gameType);
-                await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);
-                await _uiClearTarget.CloseGameStartUI();
+                // フェード用UIセットアップ
+                SetUpFadeUI();
+
+                await UniTask.Delay(waitStartTime);
+
+                // ゲーム開始時フェードイン
+                await FadeInAsync();
+
+                // ステージ目標表示、ボタン入力待ち
+                await UntilPressButtonAsync();
 
                 // ゲームスタート
                 IsPlaying.Value = true;
@@ -135,7 +145,6 @@ public class StageManager : MonoBehaviour
 
                 // プレイヤーのスタート
                 StartPlayer();
-
 
                 // タイマー関連を設定
                 TimeCounter.OnResume();
@@ -306,10 +315,14 @@ public class StageManager : MonoBehaviour
 
             StageSelectData.StageSelectNumber += 1;
 
+            await FadeOutAsync();
+
             SceneManager.LoadScene("GameScene");
         }
         else if (!isNextStage)
         {
+            await FadeOutAsync();
+
             SceneManager.LoadScene("StageSelect");
         }
     }
@@ -346,10 +359,14 @@ public class StageManager : MonoBehaviour
 
         if (isRetry)
         {
+            await FadeOutAsync();
+
             SceneManager.LoadScene("GameScene");
         }
         else if (!isRetry)
         {
+            await FadeOutAsync();
+
             SceneManager.LoadScene("StageSelect");
         }
     }
@@ -365,6 +382,34 @@ public class StageManager : MonoBehaviour
 
         // プレイが終了
         IsPlaying.Value = false;
+    }
+
+    // UIのセットアップ--------------------------------------------------------------------------------------------------------
+    private void SetUpFadeUI()
+    {
+        _gameStartShaderController.SetUp(_playerManager.GetPlayerOnScreenPos());
+        _sceneChangeShaderController.SetUp();
+        _sceneChangeShaderController.SetFadeValueMin();
+    }
+
+    // ステージ開始画面フェードイン------------------------------------------------------------------------------------
+    private async UniTask FadeInAsync()
+    {
+        await _gameStartShaderController.FadeIn();
+    }
+
+    // ステージ終了時画面フェードアウト-------------------------------------------------------------------------------
+    private async UniTask FadeOutAsync()
+    {
+        await _sceneChangeShaderController.FadeOut();
+    }
+
+    // ボタン入力してゲーム開始を待つ処理-------------------------------------------------------------------------------
+    private async UniTask UntilPressButtonAsync()
+    {
+        await _uiClearTarget.OpenGameStartUI((int)gameType);
+        await UniTask.WaitUntil(() => uiInput.actions["Dicision"].WasPressedThisFrame(), cancellationToken: cts.Token);
+        await _uiClearTarget.CloseGameStartUI();
     }
 
     private void OnDestroy()
