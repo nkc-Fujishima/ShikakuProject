@@ -17,6 +17,7 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
     [Tooltip("ステージ選択数値オブジェクト"), SerializeField] StageSelectData selectData;
     [Tooltip("ステージイメージオブジェクト"), SerializeField] List<Image> stageImageObjects = new List<Image>();
     [Tooltip("ステージイメージデータ"), SerializeField] List<StageImageData> stageImageData = new List<StageImageData>();
+    [Tooltip("フェード用イメージ画像"), SerializeField] SceneChangeShaderController fadeController;
 
     [Header("数値設定"), Tooltip("ワールド選択可能数"), SerializeField] int worldObjects;
 
@@ -42,21 +43,24 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
 
     private void Update()
     {
-        iState.OnUpdate();
+        iState?.OnUpdate();
 
 
     }
 
-    void SetUp()
+    async void SetUp()
     {
-        playerInput = GetComponent<PlayerInput>();
-
         SelectingStage.Value = stageImageObjects[0];
 
-        stateManager = new StageSelectStateManager(this, playerInput, SelectingWorld, SelectingStage, StageState, worldObjects, stageImageObjects, stageImageData, selectData, worldSelectMinHundle, worldSelectMaxHundle, worldSelectNotMaxorMinHundle);
+        fadeController.SetUp();
+        await fadeController.FadeOut();
 
+        playerInput = GetComponent<PlayerInput>();
+
+        stateManager = new StageSelectStateManager(this, playerInput, SelectingWorld, SelectingStage, StageState, worldObjects, stageImageObjects, stageImageData, selectData, worldSelectMinHundle, worldSelectMaxHundle, worldSelectNotMaxorMinHundle, fadeController);
 
         ChangeState(stateManager.WorldSelectState);
+
     }
 
 
@@ -77,12 +81,12 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
 
         public StageSelectStateManager(IStateChangeable stateChanger, PlayerInput playerInput, ReactiveProperty<int> selectingWorld, ReactiveProperty<Image> selectingStage,
             ReactiveProperty<StageState> stageState, int worldObjects, List<Image> stageImageObjects, List<StageImageData> stageSelectData, StageSelectData selectData,
-                 Subject<R3.Unit> worldSelectMinHundle, Subject<R3.Unit> worldSelectMaxHundle, Subject<R3.Unit> worldSelectNotMaxorMinHundle)
+                 Subject<R3.Unit> worldSelectMinHundle, Subject<R3.Unit> worldSelectMaxHundle, Subject<R3.Unit> worldSelectNotMaxorMinHundle, SceneChangeShaderController fadeController)
         {
             informationHolder = new SelectInformationHolder();
 
             WorldSelectState = new WorldSelect(stateChanger, this, informationHolder, playerInput, selectingWorld, stageState, worldObjects, worldSelectMinHundle, worldSelectMaxHundle, worldSelectNotMaxorMinHundle);
-            StageSelectState = new StageSelect(stateChanger, this, informationHolder, playerInput, selectingStage, stageState, stageImageObjects, stageSelectData, selectData);
+            StageSelectState = new StageSelect(stateChanger, this, informationHolder, playerInput, selectingStage, stageState, stageImageObjects, stageSelectData, selectData, fadeController);
         }
     }
 
@@ -218,6 +222,8 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
 
         PlayerInput playerInput = null;
 
+        SceneChangeShaderController fadeController = null;
+
         ReactiveProperty<Image> selectingImage = null;
         ReactiveProperty<StageState> stageState = null;
 
@@ -229,7 +235,8 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
         const int waitTime = 400;
 
         public StageSelect(IStateChangeable stateChanger, StageSelectStateManager stateManager, SelectInformationHolder informationHolder
-            , PlayerInput playerInput, ReactiveProperty<Image> selectingImage, ReactiveProperty<StageState> stageState, List<Image> stageImageObjects, List<StageImageData> stageImageData, StageSelectData selectData)
+            , PlayerInput playerInput, ReactiveProperty<Image> selectingImage, ReactiveProperty<StageState> stageState, List<Image> stageImageObjects, List<StageImageData> stageImageData, StageSelectData selectData
+            , SceneChangeShaderController fadeController)
         {
             this.stateChanger = stateChanger;
             this.stateManager = stateManager;
@@ -240,6 +247,7 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
             this.stageImageObjects = stageImageObjects;
             this.stageImageData = stageImageData;
             this.selectData = selectData;
+            this.fadeController = fadeController;
         }
 
         public override async void OnEnter()
@@ -300,7 +308,7 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
             selectingImage.Value = stageImageObjects[informationHolder.stageSelect];
         }
 
-        void StageDicision(InputAction.CallbackContext context)
+        async void StageDicision(InputAction.CallbackContext context)
         {
             int selectNumber = 0;
 
@@ -316,6 +324,8 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
             playerInput.actions["Select"].started -= SelectStage;
             playerInput.actions["Dicision"].started -= StageDicision;
             playerInput.actions["Cancel"].started -= StageCancel;
+
+            await fadeController.FadeIn();
 
             SceneManager.LoadScene("GameScene");
         }

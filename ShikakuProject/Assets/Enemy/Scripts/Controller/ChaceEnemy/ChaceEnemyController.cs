@@ -64,7 +64,7 @@ public class ChaceEnemyController : EnemyControllerBase
         agent.enabled = true;
         agent.updatePosition = false;
 
-        ChaceEnemyStateManager stateHolder = new ChaceEnemyStateManager(animator, this.transform, parameter as ChaceEnemyParameterData, this, sandSlidable, chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody, effect as ChaceEnemyEffectData, audioSource);
+        ChaceEnemyStateManager stateHolder = new ChaceEnemyStateManager(animator, this.transform, parameter as ChaceEnemyParameterData, this,  chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody, effect as ChaceEnemyEffectData, audioSource);
 
         iState = stateHolder.idleState;
         if (iState != null) iState.OnEnter();
@@ -73,8 +73,6 @@ public class ChaceEnemyController : EnemyControllerBase
 
     private void Update()
     {
-        rigidBody.velocity = sandSlidable.GetSlideDirection();
-
         OnUpdate();
     }
 
@@ -168,7 +166,7 @@ public class ChaceEnemyController : EnemyControllerBase
 
         public IChaceable chaceTarget = null;
 
-        public ChaceEnemyStateManager(Animator animator, Transform transform, ChaceEnemyParameterData parameter, IStateChangeable stateChanger, ISandSlidable sandSlidable, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider, NavMeshAgent agent, Rigidbody rigidBody, ChaceEnemyEffectData effect, AudioSource audioSource)
+        public ChaceEnemyStateManager(Animator animator, Transform transform, ChaceEnemyParameterData parameter, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider, NavMeshAgent agent, Rigidbody rigidBody, ChaceEnemyEffectData effect, AudioSource audioSource)
         {
             this.animator = animator;
             this.transform = transform;
@@ -180,7 +178,7 @@ public class ChaceEnemyController : EnemyControllerBase
             this.agent = agent;
             this.rigidBody = rigidBody;
             idleState = new Idle(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource);
-            alertState = new Alert(this, this.animator, transform, parameter, this, stateChanger, sandSlidable, chaceableObjects, visionMeshCreator, agent, rigidBody, effect, audioSource);
+            alertState = new Alert(this, this.animator, transform, parameter, this, stateChanger,  chaceableObjects, visionMeshCreator, agent, rigidBody, effect, audioSource);
             attackState = new Attack(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, weaponCollider, effect, audioSource);
         }
 
@@ -272,12 +270,10 @@ public class ChaceEnemyController : EnemyControllerBase
 
         Rigidbody rigidBody = null;
         NavMeshAgent agent = null;
-        ISandSlidable sandSlidable = null;
-        public Alert(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameterData parameter, ChaceEnemyStateManager stateHollder, IStateChangeable stateChanger, ISandSlidable sandSlidable, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, NavMeshAgent agent, Rigidbody rigidBody, ChaceEnemyEffectData effect, AudioSource audioSource) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource)
+        public Alert(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameterData parameter, ChaceEnemyStateManager stateHollder, IStateChangeable stateChanger,  List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, NavMeshAgent agent, Rigidbody rigidBody, ChaceEnemyEffectData effect, AudioSource audioSource) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource)
         {
             this.agent = agent;
             this.rigidBody = rigidBody;
-            this.sandSlidable = sandSlidable;
         }
 
         public override void OnEnter()
@@ -339,7 +335,7 @@ public class ChaceEnemyController : EnemyControllerBase
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed * Time.deltaTime);
                 }
 
-                rigidBody.velocity = transform.forward * parameter.MoveSpeed + sandSlidable.GetSlideDirection();
+                rigidBody.velocity = transform.forward * parameter.MoveSpeed ;
 
                 // もしターゲットが攻撃範囲内ならば攻撃ステートへ移行
                 if (distance > parameter.AttackRange) return;
