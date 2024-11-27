@@ -63,11 +63,13 @@ public class TitleManager : MonoBehaviour, IStateChangeable
     class StateManager
     {
         public Title titleState = null;
+        public Fading fadingState = null;
 
 
         public StateManager(GameObject titleUI, PlayerInput playerInput, IStateChangeable stateChanger, SceneChangeShaderController fadeController)
         {
             this.titleState = new Title(titleUI, stateChanger, playerInput, fadeController, this);
+            this.fadingState = new Fading();
         }
     }
 
@@ -104,10 +106,27 @@ public class TitleManager : MonoBehaviour, IStateChangeable
         {
             if (playerInput.actions["Dicision"].WasPerformedThisFrame())
             {
-                await fadeController.FadeIn();
+                stateChanger.ChangeState(manager.fadingState);
+
+                await fadeController.FadeOut();
 
                 SceneManager.LoadScene("StageSelect");
             }
+        }
+    }
+
+    class Fading : IState
+    {
+        public void OnEnter()
+        {
+        }
+
+        public void OnExit()
+        {
+        }
+
+        public void OnUpdate()
+        {
         }
     }
 }

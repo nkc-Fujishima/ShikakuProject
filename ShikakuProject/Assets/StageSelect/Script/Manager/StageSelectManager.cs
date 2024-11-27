@@ -53,7 +53,7 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
         SelectingStage.Value = stageImageObjects[0];
 
         fadeController.SetUp();
-        await fadeController.FadeOut();
+        await fadeController.FadeIn();
 
         playerInput = GetComponent<PlayerInput>();
 
@@ -325,7 +325,7 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
             playerInput.actions["Dicision"].started -= StageDicision;
             playerInput.actions["Cancel"].started -= StageCancel;
 
-            await fadeController.FadeIn();
+            await fadeController.FadeOut();
 
             SceneManager.LoadScene("GameScene");
         }

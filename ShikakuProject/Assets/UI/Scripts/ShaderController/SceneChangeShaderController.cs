@@ -33,7 +33,7 @@ public class SceneChangeShaderController : MonoBehaviour
         material.SetVector("_DivideScreen", new Vector4(divideScreen, aspectRatio, 0, 0));
     }
 
-    public async UniTask FadeIn()
+    public async UniTask FadeOut()
     {
         while (countTime < fadeTimeMax)
         {
@@ -46,7 +46,7 @@ public class SceneChangeShaderController : MonoBehaviour
 
         await UniTask.CompletedTask;
     }
-    public async UniTask FadeOut()
+    public async UniTask FadeIn()
     {
         countTime = fadeTimeMax;
 

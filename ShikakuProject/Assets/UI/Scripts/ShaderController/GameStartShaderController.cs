@@ -9,7 +9,7 @@ public class GameStartShaderController : MonoBehaviour
     [Header("オブジェクト設定"), Tooltip("フェード用イメージ"), SerializeField] Image fadeImage;
 
     [Header("数値設定"), Tooltip("1段階目フェード速度"), SerializeField] float fadeSpeedPhase1;
-    [ Tooltip("2段階目フェード速度"), SerializeField] float fadeSpeedPhase2;
+    [Tooltip("2段階目フェード速度"), SerializeField] float fadeSpeedPhase2;
     [Tooltip("フェード1段階目に止めるアニメーション時間"), SerializeField] float fadeTaskPhase1;
     [Tooltip("フェード2段階目に止めるアニメーション時間"), SerializeField] float fadeTaskPhase2;
     [Tooltip("1段階目と2段階目の間の止める時間(ミリ秒)"), SerializeField] int fadeWaitTime;
@@ -22,13 +22,13 @@ public class GameStartShaderController : MonoBehaviour
     {
         material = fadeImage.material;
 
-        material.SetVector("_ExpandStartPos", new Vector4(screenPos.x, screenPos.y, 0, 0));
+        material.SetVector("_ExpandStartPos", new Vector4(screenPos.x / Screen.width, screenPos.y / Screen.height, 0, 0));
 
         // フェード用シェーダ-のアニメーション再生時間をリセット
         material.SetFloat("_AnimationTime", 0);
     }
 
-    public async UniTask FadeOut()
+    public async UniTask FadeIn()
     {
         // フェード1段階目の処理
         while (countTime < fadeTaskPhase1)

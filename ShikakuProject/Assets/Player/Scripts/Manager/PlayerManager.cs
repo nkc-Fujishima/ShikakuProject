@@ -1,4 +1,6 @@
 using R3;
+using System.Numerics;
+using UnityEngine;
 
 public class PlayerManager
 {
@@ -49,5 +51,10 @@ public class PlayerManager
     private void OnDeath()
     {
         OnDieHundle.OnNext(Unit.Default);
+    }
+
+    public UnityEngine.Vector3 GetPlayerOnScreenPos()
+    {
+        return Camera.main.WorldToScreenPoint(PlayerCharaController.transform.position);
     }
 }
