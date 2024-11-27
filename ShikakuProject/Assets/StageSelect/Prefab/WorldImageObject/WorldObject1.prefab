@@ -337,8 +337,6 @@ GameObject:
   - component: {fileID: 4395137778272358783}
   - component: {fileID: 8063766601016304722}
   - component: {fileID: 3773827313725875503}
-  - component: {fileID: 6020887883585330550}
-  - component: {fileID: 252368664584175604}
   - component: {fileID: 4375733844715103603}
   m_Layer: 2
   m_Name: IdleEnemy(Clone)
@@ -427,54 +425,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!136 &6020887883585330550
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633691460764047573}
-  m_Material: {fileID: 13400000, guid: 9588693951638e2418ac02abcd125e1c, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 5
-  m_Height: 14
-  m_Direction: 1
-  m_Center: {x: 0, y: 6, z: 0}
---- !u!136 &252368664584175604
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633691460764047573}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 6
-  m_Height: 16
-  m_Direction: 1
-  m_Center: {x: 0, y: 6, z: 0}
 --- !u!82 &4375733844715103603
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2522,10 +2474,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewAngle: 180
-  viewDistance: 70
+  viewRange: 5
   viewHeight: 1
-  noAlertMaterial: {fileID: 2100000, guid: d8e10f5ce8f7bc34fbe947186271d295, type: 2}
-  AlertMaterial: {fileID: 2100000, guid: b3c46a33465f5ac4189372b8b94dcb44, type: 2}
+  StartEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5624317378392824149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5068,7 +5021,6 @@ GameObject:
   - component: {fileID: 2677982584200560093}
   - component: {fileID: 2171975045970968990}
   - component: {fileID: 77960044706854869}
-  - component: {fileID: 6830797681272153146}
   m_Layer: 0
   m_Name: Player(Clone)
   m_TagString: Player
@@ -5183,31 +5135,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!136 &6830797681272153146
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5925311716837565901}
-  m_Material: {fileID: 13400000, guid: b401ec87953093b4db91f782a8631b61, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5974499959725397762
 GameObject:
   m_ObjectHideFlags: 0
@@ -5302,6 +5231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5853400760453873624}
+  - component: {fileID: 8095345990191916533}
   m_Layer: 0
   m_Name: WorldObject1
   m_TagString: Untagged
@@ -5365,6 +5295,19 @@ Transform:
   - {fileID: 1093222705342091913}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8095345990191916533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6004406542522622415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e050246334a4e64d969764d04542412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameter: {fileID: 11400000, guid: 605bb0a8e77293d41ae214cf36761768, type: 2}
 --- !u!1 &6303537328178104936
 GameObject:
   m_ObjectHideFlags: 0

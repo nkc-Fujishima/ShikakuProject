@@ -9242,7 +9242,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!136 &6740784933614015187
 CapsuleCollider:
@@ -11467,11 +11467,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5634498948879792076, guid: 5d092041bee278f44b4c9e906eaad3ed, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634498948879792076, guid: 5d092041bee278f44b4c9e906eaad3ed, type: 3}
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4434634971654827573, guid: 5d092041bee278f44b4c9e906eaad3ed, type: 3}
+    - {fileID: 1325413744144736656, guid: 5d092041bee278f44b4c9e906eaad3ed, type: 3}
+    - {fileID: 4801518324545881629, guid: 5d092041bee278f44b4c9e906eaad3ed, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3157533013680694416, guid: 5d092041bee278f44b4c9e906eaad3ed, type: 3}
     m_AddedGameObjects: []
@@ -11609,6 +11615,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4266228644432692428, guid: 74d24c7dce3dc8f4abc05a8db8e56269, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266228644432692428, guid: 74d24c7dce3dc8f4abc05a8db8e56269, type: 3}
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
@@ -11618,6 +11628,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7280281843749051914, guid: 74d24c7dce3dc8f4abc05a8db8e56269, type: 3}
+    - {fileID: 5229154914602760220, guid: 74d24c7dce3dc8f4abc05a8db8e56269, type: 3}
+    - {fileID: 8788643890947594291, guid: 74d24c7dce3dc8f4abc05a8db8e56269, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6770270999245936558, guid: 74d24c7dce3dc8f4abc05a8db8e56269, type: 3}
     m_AddedGameObjects: []
@@ -11639,6 +11651,10 @@ PrefabInstance:
     - target: {fileID: 590172738954542873, guid: cbfda06413f3256429846f2b10b8b3f3, type: 3}
       propertyPath: m_Name
       value: BulletTargeting
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006500102319784402, guid: cbfda06413f3256429846f2b10b8b3f3, type: 3}
+      propertyPath: m_Constraints
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 1006500102319784402, guid: cbfda06413f3256429846f2b10b8b3f3, type: 3}
       propertyPath: m_IsKinematic
@@ -11686,6 +11702,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2362984168328327310, guid: cbfda06413f3256429846f2b10b8b3f3, type: 3}
+    - {fileID: 6564372838033131388, guid: cbfda06413f3256429846f2b10b8b3f3, type: 3}
+    - {fileID: 8797750276476587703, guid: cbfda06413f3256429846f2b10b8b3f3, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4838783076389477498, guid: cbfda06413f3256429846f2b10b8b3f3, type: 3}
     m_AddedGameObjects: []

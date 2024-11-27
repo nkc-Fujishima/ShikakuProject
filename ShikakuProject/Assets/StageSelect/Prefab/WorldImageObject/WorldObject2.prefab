@@ -855,7 +855,6 @@ GameObject:
   - component: {fileID: 1680534639544998362}
   - component: {fileID: 7711369996518103666}
   - component: {fileID: 4210100754292152714}
-  - component: {fileID: 3543261815043030788}
   m_Layer: 0
   m_Name: Player(Clone)
   m_TagString: Player
@@ -970,31 +969,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!136 &3543261815043030788
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 699374024303336669}
-  m_Material: {fileID: 13400000, guid: b401ec87953093b4db91f782a8631b61, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &835044248161985153
 GameObject:
   m_ObjectHideFlags: 0
@@ -3305,8 +3281,6 @@ GameObject:
   - component: {fileID: 8164967784128482806}
   - component: {fileID: 1384730495363048319}
   - component: {fileID: 744397398699446012}
-  - component: {fileID: 6252178512477088391}
-  - component: {fileID: 7167185388734825695}
   - component: {fileID: 5278911261036997807}
   m_Layer: 0
   m_Name: ShootEnemy(Clone)
@@ -3395,54 +3369,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!136 &6252178512477088391
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3650299996767786019}
-  m_Material: {fileID: 13400000, guid: 9588693951638e2418ac02abcd125e1c, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 5
-  m_Height: 14
-  m_Direction: 1
-  m_Center: {x: 0, y: 6, z: 0}
---- !u!136 &7167185388734825695
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3650299996767786019}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 6
-  m_Height: 16
-  m_Direction: 1
-  m_Center: {x: 0, y: 6, z: 0}
 --- !u!82 &5278911261036997807
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3549,6 +3477,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5277782323109262416}
+  - component: {fileID: 892128060682190447}
   m_Layer: 0
   m_Name: WorldObject2
   m_TagString: Untagged
@@ -3607,6 +3536,19 @@ Transform:
   - {fileID: 585922908867712539}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &892128060682190447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3654069272196018509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e050246334a4e64d969764d04542412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameter: {fileID: 11400000, guid: 605bb0a8e77293d41ae214cf36761768, type: 2}
 --- !u!1 &3714114482689206880
 GameObject:
   m_ObjectHideFlags: 0
@@ -5830,10 +5772,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewAngle: 50
-  viewDistance: 100
+  viewRange: 5
   viewHeight: 1
-  noAlertMaterial: {fileID: 2100000, guid: d8e10f5ce8f7bc34fbe947186271d295, type: 2}
-  AlertMaterial: {fileID: 2100000, guid: b3c46a33465f5ac4189372b8b94dcb44, type: 2}
+  StartEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4310539221052183832
 MonoBehaviour:
   m_ObjectHideFlags: 0
