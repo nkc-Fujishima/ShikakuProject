@@ -86,9 +86,15 @@ public class TitleManager : MonoBehaviour, IStateChangeable
             this.seObject = seObject;
         }
 
-        public void OnEnter()
+        public async void OnEnter()
         {
             titleUI.SetActive(true);
+
+            fadeController.SetUp();
+            await fadeController.FadeIn();
+
+            playerInput.actions["Dicision"].started += ToStageSelect;
+            playerInput.actions["Cancel"].started += QuitGame;
         }
 
         public void OnExit()
@@ -96,29 +102,39 @@ public class TitleManager : MonoBehaviour, IStateChangeable
             titleUI.SetActive(false);
         }
 
-        public async void OnUpdate()
+        public void OnUpdate()
         {
-            // 決定ボタンを押したらステージセレクト画面へ遷移
-            if (playerInput.actions["Dicision"].WasPerformedThisFrame())
-            {
-                stateChanger.ChangeState(manager.fadingState);
-                seObject.Play();
+            
+        }
 
-                await fadeController.FadeOut();
+        private async void ToStageSelect(InputAction.CallbackContext context)
+        {
+            if (!context.started) return;
 
-                SceneManager.LoadScene("StageSelect");
-            }
+            playerInput.actions["Dicision"].started -= ToStageSelect;
+            playerInput.actions["Cancel"].started -= QuitGame;
 
-            // キャンセルボタンを押したらゲーム終了
-            if (playerInput.actions["Cancel"].WasPerformedThisFrame())
-            {
-                stateChanger.ChangeState(manager.fadingState);
-                seObject.Play();
+            stateChanger.ChangeState(manager.fadingState);
+            seObject.Play();
 
-                await fadeController.FadeOut();
+            await fadeController.FadeOut();
 
-                Application.Quit();
-            }
+            SceneManager.LoadScene("StageSelect");
+        }
+
+        private async void QuitGame(InputAction.CallbackContext context)
+        {
+            if (!context.started) return;
+
+            playerInput.actions["Dicision"].started -= ToStageSelect;
+            playerInput.actions["Cancel"].started -= QuitGame;
+
+            stateChanger.ChangeState(manager.fadingState);
+            seObject.Play();
+
+            await fadeController.FadeOut();
+
+            Application.Quit();
         }
     }
 

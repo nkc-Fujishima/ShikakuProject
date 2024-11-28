@@ -61,7 +61,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AnimationTime: -0.0024244506
+    - _AnimationTime: 25.405724
     - _AspectX: 8
     - _AspectY: 4.5
     - _BumpScale: 1
