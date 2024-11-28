@@ -9,6 +9,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System;
 using Unity.VisualScripting;
+using System.Xml.Linq;
 
 
 public class StageSelectManager : MonoBehaviour, IStateChangeable
@@ -86,7 +87,7 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
         {
             informationHolder = new SelectInformationHolder();
 
-            WorldSelectState = new WorldSelect(stateChanger, this, informationHolder, playerInput, selectingWorld, stageState, worldObjects, worldSelectMinHundle, worldSelectMaxHundle, worldSelectNotMaxorMinHundle, seController);
+            WorldSelectState = new WorldSelect(stateChanger, this, informationHolder, playerInput, selectingWorld, stageState, worldObjects, worldSelectMinHundle, worldSelectMaxHundle, worldSelectNotMaxorMinHundle, fadeController, seController);
             StageSelectState = new StageSelect(stateChanger, this, informationHolder, playerInput, selectingStage, stageState, stageImageObjects, stageSelectData, selectData, fadeController, seController);
         }
     }
@@ -115,6 +116,7 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
         Subject<R3.Unit> worldSelectMaxHundle = null;
         Subject<R3.Unit> worldSelectNotMaxorMinHundle = null;
 
+        SceneChangeShaderController fadeController = null;
         SEController seController = null;
 
         int worldObjects = 0;
@@ -126,7 +128,7 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
         public WorldSelect(IStateChangeable stateChanger, StageSelectStateManager stateManager, SelectInformationHolder informationHolder
             , PlayerInput playerInput, ReactiveProperty<int> selectingWorld, ReactiveProperty<StageState> stageState, int worldObjects
             , Subject<R3.Unit> worldSelectMinHundle, Subject<R3.Unit> worldSelectMaxHundle, Subject<R3.Unit> worldSelectNotMaxorMinHundle
-            , SEController seController)
+            , SceneChangeShaderController fadeController, SEController seController)
         {
             this.stateChanger = stateChanger;
             this.stateManager = stateManager;
@@ -138,6 +140,7 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
             this.worldSelectMinHundle = worldSelectMinHundle;
             this.worldSelectMaxHundle = worldSelectMaxHundle;
             this.worldSelectNotMaxorMinHundle = worldSelectNotMaxorMinHundle;
+            this.fadeController = fadeController;
             this.seController = seController;
         }
 
@@ -149,12 +152,14 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
             await UniTask.Delay(waitTime);
 
             playerInput.actions["Select"].started += SelectWorld;
+            playerInput.actions["Cancel"].started += ReturnTitle;
             playerInput.actions["Dicision"].started += WorldDicision;
         }
 
         public override void OnExit()
         {
             playerInput.actions["Select"].started -= SelectWorld;
+            playerInput.actions["Cancel"].started -= ReturnTitle;
             playerInput.actions["Dicision"].started -= WorldDicision;
         }
 
@@ -211,6 +216,21 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
 
             // 一番端のステージではない場合
             worldSelectNotMaxorMinHundle?.OnNext(R3.Unit.Default);
+        }
+
+        private async void ReturnTitle(InputAction.CallbackContext context)
+        {
+            if (!context.started) return;
+
+            playerInput.actions["Select"].started -= SelectWorld;
+            playerInput.actions["Cancel"].started -= ReturnTitle;
+            playerInput.actions["Dicision"].started -= WorldDicision;
+
+            seController.RingStageDicisionSE();
+
+            await fadeController.FadeOut();
+
+            SceneManager.LoadScene("TitleScene");
         }
     }
 
