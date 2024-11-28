@@ -98,6 +98,7 @@ public class TitleManager : MonoBehaviour, IStateChangeable
 
         public async void OnUpdate()
         {
+            // 決定ボタンを押したらステージセレクト画面へ遷移
             if (playerInput.actions["Dicision"].WasPerformedThisFrame())
             {
                 stateChanger.ChangeState(manager.fadingState);
@@ -106,6 +107,17 @@ public class TitleManager : MonoBehaviour, IStateChangeable
                 await fadeController.FadeOut();
 
                 SceneManager.LoadScene("StageSelect");
+            }
+
+            // キャンセルボタンを押したらゲーム終了
+            if (playerInput.actions["Cancel"].WasPerformedThisFrame())
+            {
+                stateChanger.ChangeState(manager.fadingState);
+                seObject.Play();
+
+                await fadeController.FadeOut();
+
+                Application.Quit();
             }
         }
     }
