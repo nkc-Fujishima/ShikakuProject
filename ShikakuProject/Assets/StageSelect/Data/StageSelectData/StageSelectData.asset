@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f6929a714458e42bdaccd13be03496, type: 3}
   m_Name: StageSelectData
   m_EditorClassIdentifier: 
-  StageSelectNumber: 6
+  StageSelectNumber: 17
   StageCountMax: 16

@@ -11,7 +11,7 @@ public class StageSelectPresenter : MonoBehaviour
     [Tooltip("ステージセレクトイメージコントローラ"), SerializeField] StageSelectImageController stageSelectImageController;
     [Tooltip("ステージイメージコントローラ"), SerializeField] StageImagesController stageImagesController;
     [Tooltip("カーソルイメージコントローラ"), SerializeField] StageSelectCursorController stageSelectCursorController;
-    [Tooltip("インフォメーションコントローラ"),SerializeField] InformationController informationController;
+    [Tooltip("インフォメーションコントローラ"),SerializeField] StageSelectInformationController informationController;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +45,7 @@ public class StageSelectPresenter : MonoBehaviour
                     // ワールドイメージ
                     worldObjectsController.SetWorldSelectStatePosition();
 
-                    // インフォメーション
+                    // ステージセレクトインフォメーション
                     informationController.SetWorldSelectStatePosition();
                     informationController.SetWorldSelectButtonInfo();
                     break;
@@ -60,7 +60,7 @@ public class StageSelectPresenter : MonoBehaviour
                     // カーソルイメージ
                     stageSelectCursorController.HideCursorImage();
 
-                    // インフォメーション
+                    // ステージセレクトインフォメーション
                     informationController.SetStageSelectStatePosition();
                     informationController.SetStageSelectButtonInfo();
                     break;

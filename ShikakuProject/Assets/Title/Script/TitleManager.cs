@@ -12,14 +12,10 @@ public class TitleManager : MonoBehaviour, IStateChangeable
     [Header("オブジェクト設定")]
     [SerializeField] GameObject titleUI;
     [SerializeField] GameObject stageSelectUI;
+    [Tooltip("SE用オブジェクト"), SerializeField] AudioSource seObject;
 
-    [Tooltip("ステージ画像オブジェクト"), SerializeField] List<Sprite> stageImages;
-    [Tooltip("stageImageにセットする画像"), SerializeField] List<Image> imageObjects;
-    [Tooltip("セレクト中イメージ画像"), SerializeField] Image selectImage;
     [Tooltip("フェード用イメージ画像"), SerializeField] SceneChangeShaderController fadeController;
 
-    [Tooltip("ステージセレクト数管理スクリプタブルオブジェクト"), SerializeField]
-    StageSelectData stageSelectData;
 
     StateManager manager = null;
 
@@ -32,12 +28,7 @@ public class TitleManager : MonoBehaviour, IStateChangeable
     {
         playerInput = GetComponent<PlayerInput>();
 
-        manager = new StateManager(titleUI, playerInput, this, fadeController);
-
-        for (int i = 0; i < imageObjects.Count; i++)
-        {
-            imageObjects[i].sprite = stageImages[i];
-        }
+        manager = new StateManager(titleUI, playerInput, this, fadeController, seObject);
 
         ChangeState(manager.titleState);
 
@@ -66,9 +57,9 @@ public class TitleManager : MonoBehaviour, IStateChangeable
         public Fading fadingState = null;
 
 
-        public StateManager(GameObject titleUI, PlayerInput playerInput, IStateChangeable stateChanger, SceneChangeShaderController fadeController)
+        public StateManager(GameObject titleUI, PlayerInput playerInput, IStateChangeable stateChanger, SceneChangeShaderController fadeController, AudioSource seObject)
         {
-            this.titleState = new Title(titleUI, stateChanger, playerInput, fadeController, this);
+            this.titleState = new Title(titleUI, stateChanger, playerInput, fadeController, this, seObject);
             this.fadingState = new Fading();
         }
     }
@@ -83,13 +74,16 @@ public class TitleManager : MonoBehaviour, IStateChangeable
 
         StateManager manager = null;
 
-        public Title(GameObject titleUI, IStateChangeable stateChanger, PlayerInput playerInput, SceneChangeShaderController fadeController, StateManager manager)
+        AudioSource seObject = null;
+
+        public Title(GameObject titleUI, IStateChangeable stateChanger, PlayerInput playerInput, SceneChangeShaderController fadeController, StateManager manager, AudioSource seObject)
         {
             this.titleUI = titleUI;
             this.stateChanger = stateChanger;
             this.playerInput = playerInput;
             this.fadeController = fadeController;
             this.manager = manager;
+            this.seObject = seObject;
         }
 
         public void OnEnter()
@@ -107,6 +101,7 @@ public class TitleManager : MonoBehaviour, IStateChangeable
             if (playerInput.actions["Dicision"].WasPerformedThisFrame())
             {
                 stateChanger.ChangeState(manager.fadingState);
+                seObject.Play();
 
                 await fadeController.FadeOut();
 

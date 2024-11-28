@@ -12,37 +12,11 @@ public class ChaceEnemyController : EnemyControllerBase
 
     // 追跡可能な対象リスト
     List<IChaceable> chaceableObjects = new List<IChaceable>(6);
-    // foreach中にリストが変更されることを防ぐための複製、基本こちらが変更され一定間隔で本リストに反映
+    // foreach中にリストが変更されることを防ぐための複製、こちらが変更され一定間隔で本メインのリストに反映
     List<IChaceable> copyList = new List<IChaceable>(6);
 
     VisionMeshCreator visionMeshCreator = null;
 
-
-    // 後日EnemyManagerのExecuteOnStartMethodで起動させたい
-    private void Start()
-    {
-        //base.Start();
-
-        //VisionSensor visionSensor = transform.Find("Sensor").GetComponent<VisionSensor>();
-        //BoxCollider weaponCollider = weapon.GetComponent<BoxCollider>();
-        //weaponCollider.enabled = false;
-
-        //visionMeshCreator = transform.Find("Sensor").GetComponent<VisionMeshCreator>();
-        //visionMeshCreator.SetUp();
-
-        //// 視界センサーのActionにターゲットリストの追加と削除メソッドを登録
-        //visionSensor.OnSensorInHundle += AddTarget;
-        //visionSensor.OnSensorOutHundle += RemoveTarget;
-
-        //NavMeshAgent agent = GetComponent<NavMeshAgent>();
-        //agent.enabled = true;
-        //Rigidbody rigidBody = GetComponent<Rigidbody>();
-
-        //ChaceEnemyStateManager stateHolder = new ChaceEnemyStateManager(animator, this.transform, parameter as ChaceEnemyParameter, this, chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody);
-
-        //iState = stateHolder.idleState;
-        //if (iState != null) iState.OnEnter();
-    }
 
     public override void OnStart()
     {
@@ -89,6 +63,35 @@ public class ChaceEnemyController : EnemyControllerBase
         }
     }
 
+
+
+    // ---------------------------------------------------
+    // リスト変更メソッド群
+    #region リスト変更メソッド群
+    // コピーリストに追跡対象を追加
+    private void AddTarget(IChaceable chaceableObject)
+    {
+        if (copyList.Contains(chaceableObject)) return;
+
+        copyList.Add(chaceableObject);
+        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle += RemoveTarget;
+    }
+
+    // コピーリストから追跡対象の要素をnullに変更
+    private void RemoveTarget(IChaceable chaceableObject)
+    {
+        if (!copyList.Contains(chaceableObject)) return;
+
+        copyList[copyList.IndexOf(chaceableObject)] = null;
+
+        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle -= RemoveTarget;
+    }
+
+    /// <summary>
+    /// リスト内のnullを削除
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns></returns>
     protected List<IChaceable> RemoveNullElements(List<IChaceable> list)
     {
         int count = 0;
@@ -104,47 +107,20 @@ public class ChaceEnemyController : EnemyControllerBase
 
         return list;
     }
-
-
-    // ---------------------------------------------------
-    // リスト変更メソッド群
-    #region リスト変更メソッド群
-    // コピーリストに追跡対象を追加
-    private void AddTarget(IChaceable chaceableObject)
-    {
-        if (copyList.Contains(chaceableObject)) return;
-
-        copyList.Add(chaceableObject);
-        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle += HundleTargetDestroy;
-    }
-
-    // コピーリストから追跡対象の要素をnullに変更
-    private void RemoveTarget(IChaceable chaceableObject)
-    {
-        if (!copyList.Contains(chaceableObject)) return;
-
-        copyList[copyList.IndexOf(chaceableObject)] = null;
-
-        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle -= HundleTargetDestroy;
-    }
-
-    private void HundleTargetDestroy(IChaceable chaceableObject)
-    {
-        RemoveTarget(chaceableObject);
-    }
     #endregion
 
 
     // -------------------------------------------------------------
-    // ここから各種ステートクラス
+    // ここから各種ステート関連クラス
 
     #region ステート管理クラス
     private class ChaceEnemyStateManager
     {
-        // 各種ステートインスタンス
+        // 各種ステートインスタンス---------------------
         public Idle idleState { get; }
         public Alert alertState { get; }
         public Attack attackState { get; }
+        //----------------------------------------------
 
         ChaceEnemyParameterData parameter = null;
 
@@ -245,9 +221,6 @@ public class ChaceEnemyController : EnemyControllerBase
                 RaycastHit toTargetHit;
                 if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) return;
 
-
-                Debug.DrawRay(toTargetRay.origin, toTargetRay.direction * toTargetHit.distance, Color.red);
-
                 IChaceable chaceableObject = null;
                 if (!toTargetHit.transform.TryGetComponent<IChaceable>(out chaceableObject)) continue;
 
@@ -301,13 +274,13 @@ public class ChaceEnemyController : EnemyControllerBase
 
             foreach (var enemy in chaceableObjects)
             {
+                // ターゲットとの間にレイを繋ぐ
                 Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
                 RaycastHit toTargetHit;
                 if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) continue;
 
-
-                Debug.DrawRay(toTargetRay.origin, toTargetRay.direction * toTargetHit.distance, Color.red);
-
+                // レイに初めてヒットしたオブジェクトが
+                // 追跡対象インタフェースを持ってい場合、無視をする
                 IChaceable chaceableObject = null;
                 if (!toTargetHit.transform.TryGetComponent<IChaceable>(out chaceableObject)) continue;
 
@@ -328,6 +301,8 @@ public class ChaceEnemyController : EnemyControllerBase
                 agent.SetDestination(manager.chaceTarget.chacebleTransform.position);
                 NavMeshPath path = agent.path;
 
+
+                // NavMeashのパスを用いて移動方向を変更
                 if (path.corners.Length > 1)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(agent.steeringTarget - transform.position);

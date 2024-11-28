@@ -11,7 +11,7 @@ public abstract class EnemyControllerBase : MonoBehaviour, IStateChangeable, IDa
 
     protected IState iState = null;
 
-    // 全エネミー共通処理のステート
+    // 全エネミー共通のやられた処理のステート
     private DieState dieState = null;
 
     protected Rigidbody rigidBody = null;
