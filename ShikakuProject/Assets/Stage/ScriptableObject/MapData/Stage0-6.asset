@@ -1048,3 +1048,4 @@ MonoBehaviour:
       ElementCount: 0
       RotationY: 0
   WaypointData: []
+  IsTutorial: 1
