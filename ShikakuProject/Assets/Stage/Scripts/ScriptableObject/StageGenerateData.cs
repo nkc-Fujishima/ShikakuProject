@@ -1,6 +1,7 @@
 using StageDelaunayTriangles;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static StageMapData;
@@ -51,6 +52,12 @@ public class StageGenerateData : ScriptableObject
     public void StageGenerete(int stageCount, Vector3 centralPoint, out GameObject[] enemyObjs, out GameObject playerObj, out bool isTutorial)
     {
         StageMapData mapData = StageMapData[stageCount];
+
+        enemyObjs = null;
+        playerObj = null;
+        isTutorial = false;
+
+        if (mapData == null) return;
 
         List<GameObject> enemyList = new();
         GameObject playerObject = null;
