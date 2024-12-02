@@ -66,7 +66,6 @@ public class DrawMapEditor_SelectTile
             // 11/14追加：チュートリアル要素
             else if (saveData.StageObjectElementData.TutorialData.TextDatas.Length != 0)
             {
-                Debug.Log("入った");
                 if (selectedIndex4 != _selectedStageElementButtonIndices[(int)typeTutorial])
                 {
                     Debug.Log("haihaiiaiaoiiai");
@@ -99,7 +98,6 @@ public class DrawMapEditor_SelectTile
     // 引数で指定された要素を選択状態にする
     private void SelectStageElementButton(StageTileType elementType, int selectedIndex)
     {
-        Debug.Log("選択された");
         // 選択されている要素に引数を入れ、それ以外は-1にする
         for (int i = 0; i < _selectedStageElementButtonIndices.Length; ++i)
         {

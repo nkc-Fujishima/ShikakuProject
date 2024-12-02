@@ -237,7 +237,6 @@ public class DrawMapEditor : EditorWindow
                     break;
 
             }
-            Debug.Log("テクスチャを節制します" + elementCount + "  length：" + length);
             // テクスチャを設定
             _saveData.ElementTypeTextures[elementCount] = InitializeTextures(baseTexture, length, elementTexture);
         }
