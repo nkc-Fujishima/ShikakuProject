@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,23 +18,6 @@ public class IdleEnemyController : EnemyControllerBase
 
     private void Start()
     {
-        //base.Start();
-
-        //VisionSensor visionSensor = transform.Find("Sensor").GetComponent<VisionSensor>();
-        //BoxCollider weaponCollider = weapon.GetComponent<BoxCollider>();
-        //weaponCollider.enabled = false;
-
-        //visionMeshCreator = transform.Find("Sensor").GetComponent<VisionMeshCreator>();
-        //visionMeshCreator.SetUp();
-
-        //// 視界センサーのActionにターゲットリストの追加と削除メソッドを登録
-        //visionSensor.OnSensorInHundle += AddTarget;
-        //visionSensor.OnSensorOutHundle += RemoveTarget;
-
-        //IdleEnemyStateManager stateHolder = new IdleEnemyStateManager(animator, this.transform, parameter as IdleEnemyParameter, this, chaceableObjects, visionMeshCreator, weaponCollider);
-
-        //iState = stateHolder.idleState;
-        //if (iState != null) iState.OnEnter();
     }
 
     public override void OnStart()
@@ -54,6 +35,7 @@ public class IdleEnemyController : EnemyControllerBase
         visionSensor.OnSensorInHundle += AddTarget;
         visionSensor.OnSensorOutHundle += RemoveTarget;
 
+        // ステートを生成、基本ステートに待機を設定
         IdleEnemyStateManager stateHolder = new IdleEnemyStateManager(animator, this.transform, parameter as IdleEnemyParameterData, this, chaceableObjects, visionMeshCreator, weaponCollider, effect as IdleEnemyEffectData, audioSource);
 
         iState = stateHolder.idleState;
@@ -79,6 +61,11 @@ public class IdleEnemyController : EnemyControllerBase
         }
     }
 
+    /// <summary>
+    /// リスト内のnullを削除
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns></returns>
     protected List<IChaceable> RemoveNullElements(List<IChaceable> list)
     {
         int count = 0;
@@ -194,6 +181,8 @@ public class IdleEnemyController : EnemyControllerBase
         {
             foreach (var enemy in chaceableObjects)
             {
+                // IChaceableを持っているオブジェクトが存在するかレイで確認
+                // その後、IChaceableとの間に遮る物が無ければ追跡対象に設定し、ステートを変更
                 Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
                 RaycastHit toTargetHit;
                 if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) return;
@@ -218,8 +207,6 @@ public class IdleEnemyController : EnemyControllerBase
     private class Alert : IdleEnemyStateBase
     {
         const float effectPosY = 3;
-
-        const int layerMask = ~(1 << 2);
 
         float distance = 0;
 
@@ -249,13 +236,13 @@ public class IdleEnemyController : EnemyControllerBase
 
             foreach (var enemy in chaceableObjects)
             {
+                // ターゲットとの間にレイを繋ぐ
                 Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
                 RaycastHit toTargetHit;
                 if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) continue;
 
-
-                Debug.DrawRay(toTargetRay.origin, toTargetRay.direction * toTargetHit.distance, Color.red);
-
+                // レイに初めてヒットしたオブジェクトが
+                // 追跡対象インタフェースを持っていない場合、無視をする
                 IChaceable chaceableObject = null;
                 if (!toTargetHit.transform.TryGetComponent<IChaceable>(out chaceableObject)) continue;
 
@@ -352,7 +339,7 @@ public class IdleEnemyController : EnemyControllerBase
         if (copyList.Contains(chaceableObject)) return;
 
         copyList.Add(chaceableObject);
-        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle += HundleTargetDestroy;
+        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle += RemoveTarget;
     }
 
     // コピーリストから追跡対象の要素をnullに変更
@@ -362,11 +349,6 @@ public class IdleEnemyController : EnemyControllerBase
 
         copyList[copyList.IndexOf(chaceableObject)] = null;
 
-        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle -= HundleTargetDestroy;
-    }
-
-    private void HundleTargetDestroy(IChaceable chaceableObject)
-    {
-        RemoveTarget(chaceableObject);
+        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle -= RemoveTarget;
     }
 }

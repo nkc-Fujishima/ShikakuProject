@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UI;
 
 public class StageImagesController : MonoBehaviour
 {
@@ -18,8 +15,12 @@ public class StageImagesController : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
     }
 
-    public void SetPosition(int state)
+    /// <summary>
+    /// 引数の値の要素にある移動場所にセレクトイメージ画像を移動させます
+    /// </summary>
+    /// <param name="stage"></param>
+    public void SetPosition(int stage)
     {
-        rectTransform.DOAnchorPos(movePos[state], moveTime);
+        rectTransform.DOAnchorPos(movePos[stage], moveTime);
     }
 }

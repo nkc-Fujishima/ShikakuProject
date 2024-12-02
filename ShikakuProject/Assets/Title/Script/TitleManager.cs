@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using Cysharp.Threading.Tasks;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -30,10 +25,10 @@ public class TitleManager : MonoBehaviour, IStateChangeable
 
         manager = new StateManager(titleUI, playerInput, this, fadeController, seObject);
 
-        ChangeState(manager.titleState);
-
         fadeController.SetUp();
         fadeController.SetFadeValueMin();
+
+        ChangeState(manager.titleState);
     }
 
     public void ChangeState(IState nextState)
@@ -86,11 +81,11 @@ public class TitleManager : MonoBehaviour, IStateChangeable
             this.seObject = seObject;
         }
 
+        // 出来る行動を登録
         public async void OnEnter()
         {
             titleUI.SetActive(true);
 
-            fadeController.SetUp();
             await fadeController.FadeIn();
 
             playerInput.actions["Dicision"].started += ToStageSelect;
@@ -107,6 +102,7 @@ public class TitleManager : MonoBehaviour, IStateChangeable
             
         }
 
+        // 登録した行動を削除し、ステージセレクトへ
         private async void ToStageSelect(InputAction.CallbackContext context)
         {
             if (!context.started) return;
@@ -122,6 +118,7 @@ public class TitleManager : MonoBehaviour, IStateChangeable
             SceneManager.LoadScene("StageSelect");
         }
 
+        // 登録した行動を削除し、ゲーム終了
         private async void QuitGame(InputAction.CallbackContext context)
         {
             if (!context.started) return;
@@ -138,6 +135,7 @@ public class TitleManager : MonoBehaviour, IStateChangeable
         }
     }
 
+    // フェード中に他の行動が出来ないようにするための無のクラス
     class Fading : IState
     {
         public void OnEnter()

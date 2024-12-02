@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CursorController : MonoBehaviour
@@ -27,6 +24,7 @@ public class CursorController : MonoBehaviour
 
         transform.Rotate(0, rotateSpeed * Time.deltaTime, 0, Space.World);
 
+        // 親のオブジェクトの表示がオフになった場合、削除
         if (parent.gameObject.activeSelf == false) OnDestroy();
     }
 

@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShootEnemyController : EnemyControllerBase
@@ -23,21 +21,6 @@ public class ShootEnemyController : EnemyControllerBase
 
     private void Start()
     {
-        //base.Start();
-
-        //VisionSensor visionSensor = transform.Find("Sensor").GetComponent<VisionSensor>();
-
-        //visionMeshCreator = transform.Find("Sensor").GetComponent<VisionMeshCreator>();
-        //visionMeshCreator.SetUp();
-
-        //// 視界センサーのActionにターゲットリストの追加と削除メソッドを登録
-        //visionSensor.OnSensorInHundle += AddTarget;
-        //visionSensor.OnSensorOutHundle += RemoveTarget;
-
-        //stateManager = new ShootEnemyStateManager(animator, this.transform, parameter as ShootEnemyParameter, this, chaceableObjects, visionMeshCreator);
-
-        //iState = stateManager.idleState;
-        //if (iState != null) iState.OnEnter();
     }
 
     public override void OnStart()
@@ -54,6 +37,7 @@ public class ShootEnemyController : EnemyControllerBase
         visionSensor.OnSensorInHundle += AddTarget;
         visionSensor.OnSensorOutHundle += RemoveTarget;
 
+        // ステートを生成、基本ステートに待機を設定
         stateManager = new ShootEnemyStateManager(animator, this.transform, parameter as ShootEnemyParameterData, this, chaceableObjects, visionMeshCreator, effect as ShootEnemyEffectData, audioSource);
 
         iState = stateManager.idleState;
@@ -173,6 +157,8 @@ public class ShootEnemyController : EnemyControllerBase
 
         public override void OnUpdate()
         {
+            // IChaceableを持っているオブジェクトが存在するかレイで確認
+            // その後、IChaceableとの間に遮る物が無ければ追跡対象に設定し、ステートを変更
             foreach (var enemy in chaceableObjects)
             {
                 Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
@@ -266,7 +252,6 @@ public class ShootEnemyController : EnemyControllerBase
 
 
     #region 攻撃ステート
-    // ステート切り替え時に武器オブジェクトの当たり判定のON・OFF切り替え
     // 攻撃ステートに入り一定時間経過で待機ステートに移行
     private class Attack : ShootEnemyStateBase
     {
@@ -311,9 +296,6 @@ public class ShootEnemyController : EnemyControllerBase
                 Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
                 RaycastHit toTargetHit;
                 if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) continue;
-
-
-                Debug.DrawRay(toTargetRay.origin, toTargetRay.direction * toTargetHit.distance, Color.red);
 
                 IChaceable chaceableObject = null;
                 if (!toTargetHit.transform.TryGetComponent<IChaceable>(out chaceableObject)) continue;
@@ -375,7 +357,7 @@ public class ShootEnemyController : EnemyControllerBase
         if (copyList.Contains(chaceableObject)) return;
 
         copyList.Add(chaceableObject);
-        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle += HundleTargetDestroy;
+        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle += RemoveTarget;
     }
 
     // コピーリストから追跡対象の要素をnullに変更
@@ -385,12 +367,7 @@ public class ShootEnemyController : EnemyControllerBase
 
         copyList[copyList.IndexOf(chaceableObject)] = null;
 
-        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle -= HundleTargetDestroy;
-    }
-
-    private void HundleTargetDestroy(IChaceable chaceableObject)
-    {
-        RemoveTarget(chaceableObject);
+        chaceableObject.chacebleTransform.GetComponent<IDestroy>().OnDestroyHundle -= RemoveTarget;
     }
 
 }

@@ -1,7 +1,5 @@
 using Cysharp.Threading.Tasks;
 using R3;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StageSelectPresenter : MonoBehaviour

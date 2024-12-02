@@ -129,6 +129,7 @@ public class StageManager : MonoBehaviour
                 // フェード用UIセットアップ
                 SetUpFadeUI();
 
+                
                 await UniTask.Delay(waitStartTime);
 
                 // ゲーム開始時フェードイン

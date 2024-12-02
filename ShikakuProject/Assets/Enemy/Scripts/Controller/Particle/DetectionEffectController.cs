@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DetectionEffectController : MonoBehaviour
@@ -8,6 +6,10 @@ public class DetectionEffectController : MonoBehaviour
 
     Transform parent = null;
 
+    /// <summary>
+    /// ©g‚ğ’Ç]‚³‚¹‚é‘ÎÛ‚ğŒˆ’è‚µ‚Ü‚·
+    /// </summary>
+    /// <param name="parent"></param>
     public void Construct(Transform parent)
     {
         this.parent = parent;

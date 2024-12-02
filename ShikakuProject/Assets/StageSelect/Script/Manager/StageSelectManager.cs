@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,15 +5,11 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using R3;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using System;
-using Unity.VisualScripting;
-using System.Xml.Linq;
 
 
 public class StageSelectManager : MonoBehaviour, IStateChangeable
 {
-    [Header("オブジェクト設定"), Tooltip("ワールドイメージのパラメータ"), SerializeField] WorldImageObjectParameter parameter;
+    [Header("オブジェクト設定")]
     [Tooltip("ステージ選択数値オブジェクト"), SerializeField] StageSelectData selectData;
     [Tooltip("ステージイメージオブジェクト"), SerializeField] List<Image> stageImageObjects = new List<Image>();
     [Tooltip("ステージイメージデータ"), SerializeField] List<StageImageData> stageImageData = new List<StageImageData>();
@@ -323,6 +318,7 @@ public class StageSelectManager : MonoBehaviour, IStateChangeable
         {
         }
 
+        // 左右上下ボタン押下時選択中のステージ数の変更
         void SelectStage(InputAction.CallbackContext context)
         {
             if (!context.started) return;

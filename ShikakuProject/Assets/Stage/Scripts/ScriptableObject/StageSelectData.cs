@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="StageSelectData",menuName ="Stage/Data/StageSelect")]
 public class StageSelectData : ScriptableObject
 {
-    [SerializeField] public int StageSelectNumber;
+    [Tooltip("現在選択しているステージの値"),SerializeField] public int StageSelectNumber;
 
-    [SerializeField] public int StageCountMax;
+    [Tooltip("選択できるステージの最大数"),SerializeField] public int StageCountMax;
 }

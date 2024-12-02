@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class EnemyManager : IEnemyListProvider
 {
@@ -12,11 +10,13 @@ public class EnemyManager : IEnemyListProvider
     public event Action OnEnemyDestroyHundle = null;
     public event Action OnClearHundle = null;
 
+    // リストにエネミーを追加
     public void AddEnemy(EnemyControllerBase enemy)
     {
         if (enemy != null) enemyList.Add(enemy);
     }
 
+    // エネミーリストから引数に送られたエネミーを削除
     private void RemoveEnemy(EnemyControllerBase enemy)
     {
         enemyList.Remove(enemy);
@@ -24,9 +24,11 @@ public class EnemyManager : IEnemyListProvider
 
         OnEnemyDestroyHundle?.Invoke();
 
+        // エネミーリスト内の要素が0になった場合、ゲームクリアイベントを発火
         if (enemyList.Count == 0) OnClearHundle?.Invoke();
     }
 
+    // リストに登録されているエネミーのゲームスタート時の初期設定を起動
     public void ExexuteEnemyStartMethod()
     {
         foreach(var enemy in enemyList)

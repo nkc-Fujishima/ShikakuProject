@@ -1,9 +1,7 @@
 using StageDelaunayTriangles;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using static StageMapData;
 
 [CreateAssetMenu(fileName = "StageGenerateData", menuName = "Stage/Generator/GenerateData")]

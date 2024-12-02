@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
@@ -21,6 +19,11 @@ public class UIStartSetting : MonoBehaviour
     [Tooltip("テキストの配置までの時間"), SerializeField] float textXPositionMoveTime;
 
 
+    /// <summary>
+    /// スタート用のUIを表示し終わるまでタスクを待ちます
+    /// </summary>
+    /// <param name="gameType"></param>
+    /// <returns></returns>
     public async UniTask OpenGameStartUI(int gameType)
     {
 
@@ -50,6 +53,10 @@ public class UIStartSetting : MonoBehaviour
         await UniTask.WhenAll(scaleTask, moveTask, infoTask);
     }
 
+    /// <summary>
+    /// スタート用のUIを閉じ終わるまでタスクを待ちます
+    /// </summary>
+    /// <returns></returns>
     public async UniTask CloseGameStartUI()
     {
         UniTask scaleTask = clearTargetBackImage.rectTransform.DOScaleY(0, backImageScaleChangeTime).SetEase(Ease.OutCubic).AsyncWaitForCompletion().AsUniTask();

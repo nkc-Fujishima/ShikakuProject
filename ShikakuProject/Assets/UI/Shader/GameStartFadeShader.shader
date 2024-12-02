@@ -47,16 +47,6 @@ Shader "Custom/UI/Fade/GameStartFadeShader"
 
             float Expand(float2 uv,float animationTime)
             {
-                float size = 0.5 + animationTime * 0.5;
-
-                float xValue = step(uv.x,size) * step(1.0 - uv.x,size); 
-                float yValue = step(uv.y,size) * step(1.0 - uv.y,size);
-
-                return xValue * yValue;
-            }
-
-            float TestExpand(float2 uv,float animationTime)
-            {
                 float distanceValueX = distance(_ExpandStartPos.x,uv.x) * (16.0/9.0);
                 float distanceValueY = distance(_ExpandStartPos.y,uv.y);
 
@@ -68,7 +58,7 @@ Shader "Custom/UI/Fade/GameStartFadeShader"
             float4 frag (v2f i) : SV_Target
             {
 
-                return float4(0,0,0,TestExpand(i.uv,_AnimationTime));
+                return float4(0,0,0,Expand(i.uv,_AnimationTime));
 
             }
             ENDCG

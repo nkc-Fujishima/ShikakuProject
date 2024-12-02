@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -34,10 +33,12 @@ public class ChaceEnemyController : EnemyControllerBase
         visionSensor.OnSensorInHundle += AddTarget;
         visionSensor.OnSensorOutHundle += RemoveTarget;
 
+        // RigidBodyの挙動とNavMeshの位置更新が競合するため、NavMeshの更新を止める
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         agent.enabled = true;
         agent.updatePosition = false;
 
+        // ステートを生成、基本ステートに待機を設定
         ChaceEnemyStateManager stateHolder = new ChaceEnemyStateManager(animator, this.transform, parameter as ChaceEnemyParameterData, this,  chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody, effect as ChaceEnemyEffectData, audioSource);
 
         iState = stateHolder.idleState;
@@ -215,6 +216,8 @@ public class ChaceEnemyController : EnemyControllerBase
 
         public override void OnUpdate()
         {
+            // IChaceableを持っているオブジェクトが存在するかレイで確認
+            // その後、IChaceableとの間に遮る物が無ければ追跡対象に設定し、ステートを変更
             foreach (var enemy in chaceableObjects)
             {
                 Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
@@ -280,7 +283,7 @@ public class ChaceEnemyController : EnemyControllerBase
                 if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) continue;
 
                 // レイに初めてヒットしたオブジェクトが
-                // 追跡対象インタフェースを持ってい場合、無視をする
+                // 追跡対象インタフェースを持っていない場合、無視をする
                 IChaceable chaceableObject = null;
                 if (!toTargetHit.transform.TryGetComponent<IChaceable>(out chaceableObject)) continue;
 
@@ -294,6 +297,7 @@ public class ChaceEnemyController : EnemyControllerBase
                 }
             }
 
+            // 追跡対象が存在する場合、NavMeshの経路を利用し、攻撃対象へ近づく
             if (manager.chaceTarget != null)
             {
                 agent.nextPosition = transform.position;
@@ -367,9 +371,10 @@ public class ChaceEnemyController : EnemyControllerBase
 
         public override void OnUpdate()
         {
+            // このステートに入ってからの経過時間がパラメータの攻撃クールタイムより上になったら
+            // 攻撃ステート解除
             countTime += Time.deltaTime;
             if (countTime > parameter.AttackCoolTime) stateChanger.ChangeState(manager.idleState);
-
         }
     }
     #endregion
@@ -383,10 +388,5 @@ public class ChaceEnemyController : EnemyControllerBase
         weapon.GetComponent<BoxCollider>().enabled = true;
         audioSource.clip = (effect as ChaceEnemyEffectData).slashSE;
         audioSource.Play();
-    }
-
-
-    private void ChangeToDieState()
-    {
     }
 }

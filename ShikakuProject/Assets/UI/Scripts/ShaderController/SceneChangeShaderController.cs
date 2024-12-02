@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
-using Unity.VisualScripting;
 
 public class SceneChangeShaderController : MonoBehaviour
 {
@@ -25,6 +22,9 @@ public class SceneChangeShaderController : MonoBehaviour
     {
     }
 
+    /// <summary>
+    /// セットアップ用関数　作用させるマテリアルの取得と画面分割の値をマテリアルにセットします
+    /// </summary>
     public void SetUp()
     {
         material = fadeImage.material;
@@ -33,6 +33,7 @@ public class SceneChangeShaderController : MonoBehaviour
         material.SetVector("_DivideScreen", new Vector4(divideScreen, aspectRatio, 0, 0));
     }
 
+    // 非同期でフェードアウトします
     public async UniTask FadeOut()
     {
         while (countTime < fadeTimeMax)
@@ -46,6 +47,8 @@ public class SceneChangeShaderController : MonoBehaviour
 
         await UniTask.CompletedTask;
     }
+
+    // 非同期でフェードインします
     public async UniTask FadeIn()
     {
         countTime = fadeTimeMax;
@@ -62,11 +65,13 @@ public class SceneChangeShaderController : MonoBehaviour
         await UniTask.CompletedTask;
     }
 
+    // 現在のアニメーション時間をMAXにします
     public void SetFadeValueMax()
     {
         material.SetFloat("_AnimationTime", fadeTimeMax);
     }
 
+    // 現在のアニメーション時間を0にします
     public void SetFadeValueMin()
     {
         material.SetFloat("_AnimationTime", 0);

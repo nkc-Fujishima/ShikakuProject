@@ -12,7 +12,7 @@ public class VisionSensor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
+        // 追跡対象インタフェースを持っている場合のみ、イベントを発火
         IChaceable chaceableObject = null;
 
         if (!other.transform.TryGetComponent<IChaceable>(out chaceableObject))
@@ -25,6 +25,7 @@ public class VisionSensor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        // 追跡対象インタフェースを持っている場合のみ、イベントを発火
         IChaceable chaceableObject = null;
 
         if (!other.TryGetComponent<IChaceable>(out chaceableObject)) return;
