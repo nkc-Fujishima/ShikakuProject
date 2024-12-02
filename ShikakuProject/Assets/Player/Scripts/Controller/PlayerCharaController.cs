@@ -209,9 +209,6 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
             stateChanger.ChangeState(stateHolder.AvoidState);
 
-            // Œü‚¢‚Ä‚é•ûŒü‚É‰ñ”ð
-            //data.Rigidbody.velocity = data.PlayerTransform.forward * playerStatus.DodgePower.x + 
-            //                          data.PlayerTransform.up * playerStatus.DodgePower.y;
             data.Rigidbody.drag = playerStatus.DodgeDrag;
             data.Rigidbody.AddForce(data.PlayerTransform.forward * playerStatus.DodgePower.x);
         }
