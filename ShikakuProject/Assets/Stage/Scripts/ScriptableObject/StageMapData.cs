@@ -29,6 +29,8 @@ public class StageMapData : ScriptableObject
 
     public List<StageWaypointData> WaypointData = new();
 
+    public int BaceGroundNumber = 0;
+
     public bool IsTutorial = false;
 
 

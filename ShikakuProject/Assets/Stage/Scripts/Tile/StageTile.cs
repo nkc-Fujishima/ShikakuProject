@@ -15,10 +15,10 @@ public struct StageTile
     public int ElementCount;
     public int RotationY;
 
-    public StageTile(StageTileType tileType)
+    public StageTile(StageTileType tileType, int elementCount = 0)
     {
         this.TileType = tileType;
-        ElementCount = 0;
+        ElementCount = elementCount;
         RotationY = 0;
     }
 }
