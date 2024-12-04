@@ -20,6 +20,7 @@ MonoBehaviour:
     - {fileID: 1984461002887702235, guid: bc9c333e711e22b4eb7326d1706b6241, type: 3}
     - {fileID: 2165810450220993465, guid: 7bf54cab5a998844fb7b633acc8dd9d3, type: 3}
     - {fileID: 2372645847885040337, guid: 76d2b21784d569e4d89faa36afed9ab6, type: 3}
+    - {fileID: 1581154532812098329, guid: 4f98ea9924329544394948a485130a54, type: 3}
     Texture: {fileID: 2800000, guid: 0419e5a49245abd4eb15b64b9962e046, type: 3}
   GroundData:
     Prefabs:
