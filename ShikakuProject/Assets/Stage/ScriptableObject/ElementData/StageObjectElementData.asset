@@ -46,6 +46,7 @@ MonoBehaviour:
     - {fileID: 5693390400144532889, guid: 7382d4cda940e084198e9fd1821ae97b, type: 3}
     - {fileID: 4764762501465603604, guid: ae66789072747e841b4aabedd43eb460, type: 3}
     - {fileID: 1041363401900740970, guid: b713c8b2f6470f141b4ff86266c41a9d, type: 3}
+    - {fileID: 2150302542539334354, guid: 97e677538220dae4da833a1d2d3c13a6, type: 3}
     Texture: {fileID: 2800000, guid: 22ca403d9658e8b45b07ec668dc4817b, type: 3}
   TutorialData:
     TextDatas:

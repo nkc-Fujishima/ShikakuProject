@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ground_Grass_D
+  m_Name: Ground_Block_D
   m_Shader: {fileID: 4800000, guid: ea1f173feb248164a9062e56ff51f2f6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -52,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 6644b617916b429428749006b4925a0a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4222ac6ed37c48c4285918f3c0586d96, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -92,7 +92,7 @@ Material:
     - _DstBlend: 0
     - _EdgeThickness: 1
     - _GlossMapScale: 1
-    - _Glossiness: 0
+    - _Glossiness: 0.71
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0

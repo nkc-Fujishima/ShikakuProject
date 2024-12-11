@@ -86,7 +86,7 @@ public class StageGenerateData : ScriptableObject
                         GameObject instanceObject = InstanceObject(tileData, countX, countY, instancePosition);
                         enemyList.Add(instanceObject);
                         AwardWaypointToEnemy(stageCount, countX, countY, ref instanceObject);
-                        InstanceGroundObject(new(StageTileType.Ground), countX, countY, instancePosition);
+                        InstanceGroundObject(new(StageTileType.Ground, mapData.BaceGroundNumber), countX, countY, instancePosition);
                         break;
 
                     case StageTileType.Player:
