@@ -5116,6 +5116,7 @@ MonoBehaviour:
   _playerStatus: {fileID: 11400000, guid: 2a895e04eec9fe74c94ffb77d26f359e, type: 2}
   _particleStep: {fileID: 3813129262990865509}
   _particleDamage: {fileID: 1323656519675362538, guid: 5666d41634c45ba4fb8bbc8e251a867c, type: 3}
+  _capsuleCollider: {fileID: 958992406848057135}
   Datas:
     _spawnBulletPoint: {fileID: 6063014141128993604}
     _animator: {fileID: 8241638771113780961}

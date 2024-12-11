@@ -10,9 +10,9 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
     ulong frameCount = 0;
 
     // 追跡可能な対象リスト
-    List<IChaceable> chaceableObjects = new List<IChaceable>(6);
+    readonly List<IChaceable> chaceableObjects = new (6);
     // foreach中にリストが変更されることを防ぐための複製、こちらが変更され一定間隔で本メインのリストに反映
-    List<IChaceable> copyList = new List<IChaceable>(6);
+    readonly List<IChaceable> copyList = new (6);
 
     VisionMeshCreator visionMeshCreator = null;
 
@@ -35,9 +35,9 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         agent.enabled = true;
         agent.updatePosition = false;
-        ChaceEnemyStateManager stateHolder = new ChaceEnemyStateManager(animator, this.transform, parameter as ChaceEnemyParameterData, this, chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody, effect as ChaceEnemyEffectData, audioSource, Waypoints);
-        iState = stateHolder.patrolState;
-        if (iState != null) iState.OnEnter();
+        ChaceEnemyStateManager stateHolder = new (animator, this.transform, parameter as PatrolEnemyParameterData, this, chaceableObjects, visionMeshCreator, weaponCollider, agent, rigidBody, effect as ChaceEnemyEffectData, audioSource, Waypoints);
+        iState = stateHolder.PatrolState;
+        iState?.OnEnter();
 
     }
 
@@ -113,51 +113,27 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
     private class ChaceEnemyStateManager
     {
         // 各種ステートインスタンス---------------------
-        public Idle idleState { get; }
-        public Patrol patrolState { get; }
-        public Alert alertState { get; }
-        public Attack attackState { get; }
+        public Idle IdleState { get; }
+        public Patrol PatrolState { get; }
+        public Alert AlertState { get; }
+        public Attack AttackState { get; }
         //----------------------------------------------
 
-        ChaceEnemyParameterData parameter = null;
+        readonly Animator animator = null;
 
-        Transform transform = null;
-
-        List<IChaceable> chaceableObjects = null;
-
-        IStateChangeable stateChanger = null;
-
-        VisionMeshCreator visionMeshCreator = null;
-
-        Animator animator = null;
-
-        Rigidbody rigidBody = null;
-
-        BoxCollider weaponCollider = null;
-
-        NavMeshAgent agent = null;
-
-        List<Vector3> waypoints = null;
+        readonly List<Vector3> waypoints = null;
 
         public IChaceable chaceTarget = null;
 
-        public ChaceEnemyStateManager(Animator animator, Transform transform, ChaceEnemyParameterData parameter, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider, NavMeshAgent agent, Rigidbody rigidBody, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints)
+        public ChaceEnemyStateManager(Animator animator, Transform transform, PatrolEnemyParameterData parameter, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider, NavMeshAgent agent, Rigidbody rigidBody, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints)
         {
             this.animator = animator;
-            this.transform = transform;
-            this.parameter = parameter;
-            this.stateChanger = stateChanger;
-            this.chaceableObjects = chaceableObjects;
-            this.visionMeshCreator = visionMeshCreator;
-            this.weaponCollider = weaponCollider;
-            this.agent = agent;
-            this.rigidBody = rigidBody;
             this.waypoints = waypoints;
 
-            idleState = new Idle(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource, waypoints);
-            patrolState = new Patrol(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, agent, rigidBody, effect, audioSource, this.waypoints);
-            alertState = new Alert(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, agent, rigidBody, effect, audioSource, waypoints);
-            attackState = new Attack(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, weaponCollider, effect, audioSource, waypoints);
+            IdleState = new Idle(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource, waypoints);
+            PatrolState = new Patrol(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, agent, rigidBody, effect, audioSource, this.waypoints);
+            AlertState = new Alert(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, agent, rigidBody, effect, audioSource, waypoints);
+            AttackState = new Attack(this, this.animator, transform, parameter, this, stateChanger, chaceableObjects, visionMeshCreator, weaponCollider, effect, audioSource, waypoints);
         }
 
     }
@@ -171,7 +147,7 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
         protected const int layerMask = ~(1 << 2);
 
         protected ChaceEnemyStateManager manager = null;
-        protected ChaceEnemyParameterData parameter = null;
+        protected PatrolEnemyParameterData parameter = null;
         protected Transform transform = null;
         protected Animator animator = null;
         protected IStateChangeable stateChanger = null;
@@ -182,9 +158,9 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
         protected List<Vector3> waypoints = null;
 
         // 追跡可能な対象リスト
-        protected List<IChaceable> chaceableObjects = new List<IChaceable>(6);
+        protected List<IChaceable> chaceableObjects = new (6);
 
-        public ChaceEnemyStateBase(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameterData parameter, ChaceEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints)
+        public ChaceEnemyStateBase(ChaceEnemyStateManager manager, Animator animator, Transform transform, PatrolEnemyParameterData parameter, ChaceEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints)
         {
             this.manager = manager;
             this.parameter = parameter;
@@ -208,7 +184,7 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
         // ステートに入ってから経った秒数
         float passedSeconds = 0;
 
-        public Idle(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameterData parameter, ChaceEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource, waypoints) { }
+        public Idle(ChaceEnemyStateManager manager, Animator animator, Transform transform, PatrolEnemyParameterData parameter, ChaceEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource, waypoints) { }
 
         public override void OnEnter()
         {
@@ -226,23 +202,23 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
         {
             foreach (var enemy in chaceableObjects)
             {
-                Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
+                Ray toTargetRay = new (new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
                 RaycastHit toTargetHit;
                 if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) return;
 
-                IChaceable chaceableObject = null;
+                IChaceable chaceableObject;
                 if (!toTargetHit.transform.TryGetComponent<IChaceable>(out chaceableObject)) continue;
 
                 manager.chaceTarget = chaceableObject;
             }
 
-            if (manager.chaceTarget != null) stateChanger.ChangeState(manager.alertState);
+            if (manager.chaceTarget != null) stateChanger.ChangeState(manager.AlertState);
 
-            if (passedSeconds >= 2)
+            if (passedSeconds >= parameter.IdleTime)
             {
                 Debug.Log(waypoints.Count);
                 if (waypoints.Count == 0) return;
-                    stateChanger.ChangeState(manager.patrolState);
+                    stateChanger.ChangeState(manager.PatrolState);
             }
             else
                 passedSeconds += Time.deltaTime;
@@ -257,14 +233,14 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
     private class Patrol : ChaceEnemyStateBase
     {
         // 目標の巡回ポイントの到着判定距離
-        float arrivalLangth = 1;
+        readonly float arrivalLangth = 0.7f;
 
         int patrolStep = 0;
 
-        Rigidbody rigidBody = null;
-        NavMeshAgent agent = null;
+        readonly Rigidbody rigidBody = null;
+        readonly NavMeshAgent agent = null;
 
-        public Patrol(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameterData parameter, ChaceEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, NavMeshAgent agent, Rigidbody rigidBody, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource, waypoints)
+        public Patrol(ChaceEnemyStateManager manager, Animator animator, Transform transform, PatrolEnemyParameterData parameter, ChaceEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, NavMeshAgent agent, Rigidbody rigidBody, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource, waypoints)
         {
             this.agent = agent;
             this.rigidBody = rigidBody;
@@ -314,11 +290,11 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
         {
             foreach (var enemy in chaceableObjects)
             {
-                Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
+                Ray toTargetRay = new (new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
                 RaycastHit toTargetHit;
                 if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) return;
 
-                IChaceable chaceableObject = null;
+                IChaceable chaceableObject;
                 if (!toTargetHit.transform.TryGetComponent<IChaceable>(out chaceableObject)) continue;
 
                 manager.chaceTarget = chaceableObject;
@@ -327,9 +303,9 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
             PatrolMovement();
             ChangePatrolPoint();
 
-            if (manager.chaceTarget != null) stateChanger.ChangeState(manager.alertState);
+            if (manager.chaceTarget != null) stateChanger.ChangeState(manager.AlertState);
 
-            if (waypoints.Count == 0) stateChanger.ChangeState(manager.idleState);
+            if (waypoints.Count == 0) stateChanger.ChangeState(manager.IdleState);
         }
 
         // 巡回する動き
@@ -347,10 +323,10 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
             {
                 Quaternion targetRotation = Quaternion.LookRotation(agent.steeringTarget - transform.position);
 
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, parameter.RotateSpeed_Patrol * Time.deltaTime);
             }
 
-            rigidBody.velocity = transform.forward * parameter.MoveSpeed;
+            rigidBody.velocity = transform.forward * parameter.MoveSpeed_Patrol;
         }
 
         // パトロールポイントを変える
@@ -382,9 +358,9 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
 
         float distance = 0;
 
-        Rigidbody rigidBody = null;
-        NavMeshAgent agent = null;
-        public Alert(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameterData parameter, ChaceEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, NavMeshAgent agent, Rigidbody rigidBody, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource, waypoints)
+        readonly Rigidbody rigidBody = null;
+        readonly NavMeshAgent agent = null;
+        public Alert(ChaceEnemyStateManager manager, Animator animator, Transform transform, PatrolEnemyParameterData parameter, ChaceEnemyStateManager stateHollder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, NavMeshAgent agent, Rigidbody rigidBody, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints) : base(manager, animator, transform, parameter, stateHollder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource, waypoints)
         {
             this.agent = agent;
             this.rigidBody = rigidBody;
@@ -416,13 +392,13 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
             foreach (var enemy in chaceableObjects)
             {
                 // ターゲットとの間にレイを繋ぐ
-                Ray toTargetRay = new Ray(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
+                Ray toTargetRay = new(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), new Vector3(enemy.chacebleTransform.position.x - transform.position.x, transform.position.y - 0.5f, enemy.chacebleTransform.position.z - transform.position.z));
                 RaycastHit toTargetHit;
                 if (!Physics.Raycast(toTargetRay, out toTargetHit, Mathf.Infinity, layerMask)) continue;
 
                 // レイに初めてヒットしたオブジェクトが
                 // 追跡対象インタフェースを持ってい場合、無視をする
-                IChaceable chaceableObject = null;
+                IChaceable chaceableObject;
                 if (!toTargetHit.transform.TryGetComponent<IChaceable>(out chaceableObject)) continue;
 
                 if (manager.chaceTarget == null) manager.chaceTarget = chaceableObject;
@@ -456,12 +432,12 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
                 // もしターゲットが攻撃範囲内ならば攻撃ステートへ移行
                 if (distance > parameter.AttackRange) return;
 
-                stateChanger.ChangeState(manager.attackState);
+                stateChanger.ChangeState(manager.AttackState);
             }
 
 
             // 警戒範囲内に追跡対象のオブジェクトがない場合、待機ステートへ移行
-            else stateChanger.ChangeState(manager.idleState);
+            else stateChanger.ChangeState(manager.IdleState);
         }
     }
     #endregion
@@ -475,9 +451,9 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
     {
         float countTime = 0;
 
-        BoxCollider weaponCollider = null;
+        readonly BoxCollider weaponCollider = null;
 
-        public Attack(ChaceEnemyStateManager manager, Animator animator, Transform transform, ChaceEnemyParameterData parameter, ChaceEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource, waypoints)
+        public Attack(ChaceEnemyStateManager manager, Animator animator, Transform transform, PatrolEnemyParameterData parameter, ChaceEnemyStateManager stateHolder, IStateChangeable stateChanger, List<IChaceable> chaceableObjects, VisionMeshCreator visionMeshCreator, BoxCollider weaponCollider, ChaceEnemyEffectData effect, AudioSource audioSource, List<Vector3> waypoints) : base(manager, animator, transform, parameter, stateHolder, stateChanger, chaceableObjects, visionMeshCreator, effect, audioSource, waypoints)
         {
             this.weaponCollider = weaponCollider;
         }
@@ -488,7 +464,7 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
             visionMeshCreator.ChangeMeshAlertMaterial();
 
             // 追跡対象のオブジェクトの行動停止用メソッドを呼び出す
-            IStoppable iStoppableObject = null;
+            IStoppable iStoppableObject;
             if (manager.chaceTarget.chacebleTransform.TryGetComponent<IStoppable>(out iStoppableObject))
             {
                 iStoppableObject?.OnStop();
@@ -509,7 +485,7 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
         public override void OnUpdate()
         {
             countTime += Time.deltaTime;
-            if (countTime > parameter.AttackCoolTime) stateChanger.ChangeState(manager.patrolState);
+            if (countTime > parameter.AttackCoolTime) stateChanger.ChangeState(manager.PatrolState);
 
         }
     }

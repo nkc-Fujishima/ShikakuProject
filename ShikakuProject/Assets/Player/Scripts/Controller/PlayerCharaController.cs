@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using R3;
 using System;
 using System.Threading;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -69,6 +70,9 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
     [SerializeField]
     private ParticleSystem _particleDamage;
+
+    [SerializeField]
+    private CapsuleCollider _capsuleCollider;
 
 
     private IState _iState = null;
@@ -554,6 +558,9 @@ public class PlayerCharaController : MonoBehaviour, IChaceable, IDamage, IStateC
 
         _buttonDetector.OnButtonBulletSelectLeftDown.RemoveListener(OnBulletSelectLeft);
         _buttonDetector.OnButtonBulletSelectRightDown.RemoveListener(OnBulletSelectRight);
+
+        _capsuleCollider.enabled = false;
+        Datas.Rigidbody.isKinematic = true;
 
         if (_particleDamage)
             Instantiate(_particleDamage, transform.position + transform.up, Quaternion.identity);

@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f357f5396b66594bb351530ee5e08c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parameter: {fileID: 11400000, guid: 8b0b99532f878ea48ba748428c4fe3ea, type: 2}
+  parameter: {fileID: 11400000, guid: 5dfad162a515e5a42b6adb4aee319055, type: 2}
   effect: {fileID: 11400000, guid: fb4ec6c07e4623e40aae0d9e426dd761, type: 2}
   cursor: {fileID: 1567893085837452608, guid: c8977cbd7a9bb8945aad43a1b0af48a0, type: 3}
   weapon: {fileID: 8763785850511494941}
