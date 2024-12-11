@@ -216,7 +216,6 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
 
             if (passedSeconds >= parameter.IdleTime)
             {
-                Debug.Log(waypoints.Count);
                 if (waypoints.Count == 0) return;
                     stateChanger.ChangeState(manager.PatrolState);
             }
