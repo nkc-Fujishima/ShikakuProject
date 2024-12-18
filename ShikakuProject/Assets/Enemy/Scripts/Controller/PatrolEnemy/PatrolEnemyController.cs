@@ -234,7 +234,7 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
         // 目標の巡回ポイントの到着判定距離
         readonly float arrivalLangth = 0.7f;
 
-        int patrolStep = 0;
+        int patrolStep = -1;
 
         readonly Rigidbody rigidBody = null;
         readonly NavMeshAgent agent = null;
@@ -282,6 +282,7 @@ public class PatrolEnemyController : EnemyControllerBase, IWaypointHolder
 
         public override void OnExit()
         {
+            patrolStep = -1;
             animator.SetBool("WalkFlag", false);
         }
 
