@@ -251,7 +251,7 @@ MonoBehaviour:
       RotationY: 0
     - TileType: 5
       ElementCount: 12
-      RotationY: 0
+      RotationY: 180
     - TileType: 0
       ElementCount: 0
       RotationY: 0

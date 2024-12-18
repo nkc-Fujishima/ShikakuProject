@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: StageImageData3
   m_EditorClassIdentifier: 
   stageImages:
-  - {fileID: 21300000, guid: 4db6da403d880034693f6f3f1279b356, type: 3}
-  - {fileID: 21300000, guid: 2864473ac64e3f149bd44cd315cf684f, type: 3}
-  - {fileID: 21300000, guid: 102dfb3f478807546a9996c71c7883c0, type: 3}
-  - {fileID: 21300000, guid: 31f398740d314894eb7a3e189d530dd5, type: 3}
-  - {fileID: 21300000, guid: 802b3fefa444f814a9e7be39f6c3b18e, type: 3}
-  - {fileID: 21300000, guid: da6ebf39c6e828d4c98d3e7d46384248, type: 3}
+  - {fileID: 21300000, guid: f26789ab67d76134e824b73043e3eaa0, type: 3}
+  - {fileID: 21300000, guid: 71a6b3baf07f2ae4e93e9c8b281c1d53, type: 3}
+  - {fileID: 21300000, guid: 8ecc304e944921448b281e5f4d55ec0b, type: 3}
+  - {fileID: 21300000, guid: 171fc64100999974abe1828a12ae9acd, type: 3}
+  - {fileID: 21300000, guid: b11c1e2d2cb674a4898a811e712e5cfd, type: 3}
+  - {fileID: 21300000, guid: 9cd37e016597ea443a304aae6c542137, type: 3}
